@@ -70,7 +70,7 @@ class Fun(commands.Cog):
         await ctx.send(embed=e)
     
     # Duel Command
-    @bot.command(aliases=["leud", "Duel", "leuD"])
+    @commands.command(aliases=["leud", "Duel", "leuD"])
     async def duel(self, ctx, user:discord.Member):
 
         challengerid = ctx.author
@@ -88,7 +88,7 @@ class Fun(commands.Cog):
         def check(reaction, user):
             return user.id == challengeeid.id and str(reaction.emoji) in ReactList and reaction.message.id == message.id
         try:
-            reaction, user = await bot.wait_for("reaction_add", timeout=30.0, check=check)
+            reaction, user = await self.bot.wait_for("reaction_add", timeout=30.0, check=check)
         except asyncio.TimeoutError:
             await ctx.channel.send(f"{challengeeid.mention} didn't react in time! The duel was called off!")
         else:
@@ -107,7 +107,7 @@ class Fun(commands.Cog):
                 await message.add_reaction("1️⃣") # Adding reactions
                 await message.add_reaction("2️⃣")
                 await message.add_reaction("3️⃣")
-                reaction, user = await bot.wait_for("reaction_add")
+                reaction, user = await self.bot.wait_for("reaction_add")
                 duel_guess1 = reaction.emoji
             
                 e = discord.Embed(color=0xc700ff)
@@ -119,7 +119,7 @@ class Fun(commands.Cog):
                 await message.add_reaction("1️⃣") # Adding reactions
                 await message.add_reaction("2️⃣")
                 await message.add_reaction("3️⃣")
-                reaction, user = await bot.wait_for("reaction_add")
+                reaction, user = await self.bot.wait_for("reaction_add")
                 duel_guess2 = reaction.emoji
             
                 if duel_number == duel_guess1 and duel_number == duel_guess2: # Comparing if the bot's number equals the user1 guess and the user2 guess
