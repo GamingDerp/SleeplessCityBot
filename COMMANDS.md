@@ -12,7 +12,7 @@ info | Shows information about the bot | `info`
 test | Tests if the bot is up | `test`
 ping | Shows a users ping | `ping`
 suggest | Lets users make a suggestion for the server/bot | `suggest <suggestion>`
-remind | Sets a reminder for a user about a task | `remind <number><shortened time length> <task> (remind 1m do thing)`
+remind | Sets a reminder for a user about a task | `remind <number><abbreviated time length> <task>`
 
 ## 🎉 Fun
 Command | Description | Usage
@@ -59,7 +59,7 @@ purge | Mass deletes messages | `purge <number of messages>`
 ban | Bans a user from the server | `ban @user`
 unban | Unbans a user from the server | `unban @user`
 kick | Kicks a user from the server | `kick @user`
-timeout | Puts a user in "timeout" | `timeout @user <time (in minutes)> <reason>`
+timeout | Puts a user in "timeout" | `timeout @user <number><abbreviated time length> <reason>`
 warn | Warns a user | `warn @user <reason>`
 warnlist | Checks the warns of a user | `warnlist @user`
 delwarn | Deletes a specified warn from a users warn list | `delwarn @user <warn number>`
