@@ -21,7 +21,7 @@ class Misc(commands.Cog):
         e.add_field(name="📅 Joined On", value=user.joined_at.strftime("`%B %d, %Y %H:%M %p`"))
         if user.premium_since:
             e.add_field(name=f"<a:DiscordBoost:1121298549657829436> Boosting", value=user.premium_since.strftime("`%B %d, %Y %H:%M %p`"))
-        e.add_field(name="👑 Highest Role", value=user.top_role.mention)
+        e.add_field(name="👑 Top Role", value=user.top_role.mention)
         e.add_field(name="🎲 Activity", value=f"{user.activity.name}" if user.activity is not None else None)
         e.add_field(name="🚦 Status", value=user.status)
   
