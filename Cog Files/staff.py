@@ -3,9 +3,6 @@ from discord.ext import commands
 from datetime import datetime, timedelta
 import json
 
-intents = discord.Intents.all()
-bot = commands.Bot(command_prefix="!", intents=intents)
-###################################[ STAFF COMMANDS ]###################################
 # Staff Commands Class
 class Staff(commands.Cog):
     def __init__(self, bot):
@@ -190,7 +187,7 @@ class Staff(commands.Cog):
             await ctx.send(embed=e)
 
     # Delwarn Command
-    @bot.command(aliases=["nrawled", "Delwarn", "nrawleD"])
+    @commands.command(aliases=["nrawled", "Delwarn", "nrawleD"])
     async def delwarn(self, ctx, member:discord.Member, warn_index:int):
         role = discord.utils.get(ctx.guild.roles, name="🔆 Senior Mod")
         user = ctx.author
@@ -238,7 +235,7 @@ class Staff(commands.Cog):
             e = discord.Embed(color=0xc700ff)
             e.description = "🚨 That is a(n) **High Staff command**! You don't have the required perms! 🚨"
             await ctx.send(embed=e)
-###################################[ ADDING COG ]###################################
-# Adding cog to bot
+
+
 async def setup(bot):
     await bot.add_cog(Staff(bot))
