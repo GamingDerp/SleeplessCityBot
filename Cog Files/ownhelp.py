@@ -3,10 +3,9 @@ from discord.ext import commands
 from datetime import datetime, timedelta
 import asyncio
 
+# Bot Owner User ID
 owner_id = 532706491438727169
-intents = discord.Intents.all()
-bot = commands.Bot(command_prefix="!", intents=intents)
-###################################[ OWNER COMMANDS ]###################################
+
 # OwnHelp Commands Class
 class OwnHelp(commands.Cog):
     def __init__(self, bot):
@@ -62,7 +61,7 @@ class OwnHelp(commands.Cog):
             e = discord.Embed(color=0xe02da9)
             e.description = "🚨 That is a(n) **Owner command**! You don't have the required perms! 🚨"
             await ctx.send(embed=e)
-###################################[ ADDING COG ]###################################
-# Adding cog to bot
+
+
 async def setup(bot):
     await bot.add_cog(OwnHelp(bot))
