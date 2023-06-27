@@ -2,10 +2,9 @@ import discord
 from discord.ext import commands
 import random
 
+# bot owner id
 owner_id = 532706491438727169
-intents = discord.Intents.all()
-bot = commands.Bot(command_prefix="!", intents=intents)
-###################################[ ACTION CLASS ]###################################
+
 # Action Commands Class
 class Action(commands.Cog):
     def __init__(self, bot):
@@ -242,7 +241,7 @@ class Action(commands.Cog):
         e.description = f"{ctx.author.mention} cuddles with {user.mention}!"
         e.set_image(url="https://media.discordapp.net/attachments/807071768258805764/1106848675025666128/AnimeCuddlingGif.gif"),
         await ctx.send(embed=e)
-###################################[ ADDING COG ]###################################
-# Adding cog to bot
+
+
 async def setup(bot):
     await bot.add_cog(Action(bot))
