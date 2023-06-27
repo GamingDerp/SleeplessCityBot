@@ -1,10 +1,9 @@
 import discord
 from discord.ext import commands
 
+# Bots User ID
 bot_id = 1103103994777309205
-intents = discord.Intents.all()
-bot = commands.Bot(command_prefix="!", intents=intents)
-###################################[ GENERAL EVENTS ]###################################
+
 # Events Commands Class
 class Events(commands.Cog):
     def __init__(self, bot):
@@ -58,7 +57,7 @@ class Events(commands.Cog):
         e = discord.Embed(color=0xc700ff)
         e.description = f"👋 {member.name} left! 👋"
         await channel.send(embed=e)
-###################################[ ADDING COG ]###################################
-# Adding cog to bot
+
+
 async def setup(bot):
     await bot.add_cog(Events(bot))
