@@ -2,9 +2,6 @@ import discord
 from discord.ext import commands
 from datetime import datetime, timedelta
 
-intents = discord.Intents.all()
-bot = commands.Bot(command_prefix="!", intents=intents)
-###################################[ LOGGING EVENTS ]###################################
 # Logging Events Class
 class Logs(commands.Cog):
     def __init__(self, bot):
@@ -230,6 +227,6 @@ class Logs(commands.Cog):
             e.timestamp = datetime.utcnow()
             await channel.send(embed=e)
     
-# Adding cog to bot
+
 async def setup(bot):
     await bot.add_cog(Logs(bot))
