@@ -1,7 +1,7 @@
 [![Join - Sleepless Nights](https://img.shields.io/badge/Join-Sleepless_Nights-7289da?logo=Discord)](https://discord.gg/UecWG8pK7r)
-[![v - 0.7.8](https://img.shields.io/badge/v-0.7.8-FF0000)](https://)
+[![v - 0.7.9](https://img.shields.io/badge/v-0.7.9-FF0000)](https://)
 [![python - 3.11.2](https://img.shields.io/badge/python-3.11.2-0096FF?logo=Python)](https://)
-[![discord.py - 2.3.0](https://img.shields.io/badge/discord.py-2.3.0-FFFF00?logo=Python)](https://github.com/Rapptz/discord.py)
+[![discord.py - 2.3.1](https://img.shields.io/badge/discord.py-2.3.1-FFFF00?logo=Python)](https://github.com/Rapptz/discord.py)
 
 
 # ✨ SleeplessNightsBot ✨
@@ -11,7 +11,7 @@ Private commands/menus will not be counted in the "Features" section.
 
 
 # 📋 Features
-**39** commands across **5** different categories.
+**40** commands across **5** different categories.
 
 - 📌 **General:** `Help`, `Info`, `Test`, `Ping`, `Suggest`, `Remind`
 - 🎉 **Fun:** `Coinflip`, `Ask`, `Reverse`, `Lovetest`, `Cute`, `Duel` and **1** more!
