@@ -4,8 +4,7 @@ from datetime import datetime, timedelta
 import time
 
 # Stores when the bot was started
-intents = discord.Intents.all()
-bot = commands.Bot(command_prefix="!", intents=intents)
+bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
 bot.launch_time = datetime.utcnow()
 
 # General Commands Embed
