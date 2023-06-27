@@ -51,7 +51,6 @@ class OwnHelp(commands.Cog):
     # Revive Command -- OWNER
     @commands.command(aliases=["eviver", "Revive", "eviveR"])
     async def revive(self, ctx, user:discord.Member):
-
         if ctx.author.id == owner_id:
             e = discord.Embed(color=0xe02da9)
             e.description = f"{ctx.author.mention} revives {user.mention}!"
