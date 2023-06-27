@@ -3,9 +3,6 @@ from discord.ext import commands
 import random
 import asyncio
 
-intents = discord.Intents.all()
-bot = commands.Bot(command_prefix="!", intents=intents)
-###################################[ FUN CLASS ]###################################
 # Fun Commands Class
 class Fun(commands.Cog):
     def __init__(self, bot):
@@ -147,7 +144,7 @@ class Fun(commands.Cog):
                             
             elif str(reaction.emoji) == "❌":
                 await ctx.channel.send(f"{challengeeid.mention} has declined the duel!")
-###################################[ ADDING COG ]###################################
-# Adding cog to bot
+
+
 async def setup(bot):
     await bot.add_cog(Fun(bot))
