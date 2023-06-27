@@ -3,9 +3,6 @@ from discord.ext import commands
 from datetime import datetime, timedelta
 import asyncio
 
-intents = discord.Intents.all()
-bot = commands.Bot(command_prefix="!", intents=intents)
-###################################[ MISC COMMANDS ]###################################
 # Misc Commands Class
 class Misc(commands.Cog):
     def __init__(self, bot):
@@ -174,8 +171,19 @@ class Misc(commands.Cog):
         e.description = "⏰ Started Reminder ⏰"
         e.add_field(name="Time", value=time)
         e.add_field(name="Task", value=task)
-        e.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar.url),
+        e.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar.url)
+        e.timestamp = datetime.utcnow()
         await ctx.send(embed=e)
+        
+        channel = self.bot.get_channel(1119185446950408232)
+        e = discord.Embed(color=0xc700ff)
+        e.set_thumbnail(url=ctx.author.avatar.url)
+        e.set_author(name="⏰ User Set Reminder")
+        e.add_field(name="__User__", value=ctx.author.mention)
+        e.add_field(name="__Time__", value=time, inline=False)
+        e.add_field(name="__Task__", value=task, inline=False)
+        e.timestamp = datetime.utcnow()
+        await channel.send(embed=e)
     
         await asyncio.sleep(converted_time)
         await ctx.send(ctx.author.mention)
@@ -183,7 +191,7 @@ class Misc(commands.Cog):
         e.description = "⏰ Time's Up ⏰"
         e.add_field(name="Task", value=task)
         await ctx.send(embed=e)
-###################################[ ADDING COG ]###################################
-# Adding cog to bot
+
+
 async def setup(bot):
     await bot.add_cog(Misc(bot))
