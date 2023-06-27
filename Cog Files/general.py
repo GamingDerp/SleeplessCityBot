@@ -3,9 +3,11 @@ from discord.ext import commands
 from datetime import datetime, timedelta
 import time
 
+# Stores when the bot was started
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="!", intents=intents)
-###################################[ HELP MENU EMBEDS ]###################################
+bot.launch_time = datetime.utcnow()
+
 # General Commands Embed
 ge = discord.Embed(color=0xc700ff)
 ge.add_field(
@@ -75,7 +77,7 @@ se.add_field(
           f"\n> • `WarnList`"
           f"\n> • `DelWarn`",
 )
-###################################[ HELP MENU VIEW ]###################################
+
 # Help Menu Dropdown
 class Dropdown(discord.ui.Select):
     def __init__(self):
@@ -106,15 +108,13 @@ class DropdownView(discord.ui.View):
     def __init__(self):
         super().__init__()
 
-        self.add_item(Dropdown())
-###################################[ GENERAL CLASS ]###################################
-bot.launch_time = datetime.utcnow() # Stores the time the bot started
+        self.add_item(Dropdown()) 
 
 # General Commands Class
 class General(commands.Cog):
     def __init__(self, bot):
-        self.bot = bot
-
+        self.bot = bot 
+    
     # Help Command
     @commands.command(aliases=["pleh", "Help", "pleH"])
     async def help(self, ctx):
@@ -152,7 +152,7 @@ class General(commands.Cog):
             name="✧ __Statistics__",
             value=f"> **Prefix:** !"
                   f"\n> **Commands:** [40]"
-			      f"\n> **Code:** 1,340 Lines"
+			      f"\n> **Code:** 1,307 Lines"
                   f"\n> **Ping:** {round(self.bot.latency * 1000)}ms"
                   f"\n> **Users:** {true_member_count}"
         	      f"\n> **Uptime:** {days}**d** {hours}**h** {minutes}**m** {seconds}**s**",
@@ -199,7 +199,7 @@ class General(commands.Cog):
         vote = await channel.send(embed=se)
         await vote.add_reaction("✅")
         await vote.add_reaction("❌")
-###################################[ ADDING COG ]###################################
-# Adding cog to bot
+
+
 async def setup(bot):
     await bot.add_cog(General(bot))
