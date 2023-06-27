@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 import random
 
-# bot owner id
+# Bot Owner User ID
 owner_id = 532706491438727169
 
 # Action Commands Class
