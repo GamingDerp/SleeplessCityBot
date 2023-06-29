@@ -41,6 +41,14 @@ class Action(commands.Cog):
         e.description = f"{ctx.author.mention} kidnaps {user.mention}!"
         e.set_image(url="https://media.discordapp.net/attachments/807071768258805764/1107074673361047673/AnimeKidnapGif.gif"),
         await ctx.send(embed=e)
+    
+    # Punt Command
+    @commands.command(aliases=["tnup", "Punt", "tnuP"])
+    async def punt(self, ctx, user:discord.Member):
+        e = discord.Embed(color=0xc700ff)
+        e.description = f"{ctx.author.mention} punts {user.mention}!"
+        e.set_image(url="https://cdn.discordapp.com/attachments/807071768258805764/1123844694888165417/KickGif.gif"),
+        await ctx.send(embed=e)
 
     # Strangle Command
     @commands.command(aliases=["elgnarts", "Strangle", "elgnartS"])
