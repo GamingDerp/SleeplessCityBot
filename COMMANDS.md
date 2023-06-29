@@ -32,6 +32,7 @@ bonk | Bonks another user | `bonk @user`
 slap | Slaps another user | `slap @user`
 throw | Throws another user off a cliff | `throw @user`
 kidnap | Kidnaps another user | `kidnap @user`
+punt | Punts another user | `punt @user`
 strangle | Strangles another user | `strangle @user`
 stab | Stabs another user | `stab @user`
 shoot | Shoots another user | `shoot @user`
