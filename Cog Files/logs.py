@@ -14,7 +14,7 @@ class Logs(commands.Cog):
         e = discord.Embed(color=0xc700ff)
         e.set_author(name="🗑️ Message Deleted")
         e.set_thumbnail(url=f"{message.author.avatar.url}")
-        e.description = f"A message by {message.author.mention} was deleted \n<:Reply:1119188935059456071> In <#{message.channel.id}> \n \n> {message.content}"
+        e.description = f"A message by {message.author.mention} was deleted \n<:Reply:1123773242327441468> In <#{message.channel.id}> \n \n> {message.content}"
         e.timestamp = datetime.utcnow()
         await channel.send(embed=e)
 
@@ -28,7 +28,7 @@ class Logs(commands.Cog):
             e = discord.Embed(color=0xc700ff)
             e.set_author(name="📝 Message Edited")
             e.set_thumbnail(url=f"{before.author.avatar.url}")
-            e.description = f"{before.author.mention} edited their message \n<:Reply:1119188935059456071> In <#{before.channel.id}>" 
+            e.description = f"{before.author.mention} edited their message \n<:Reply:1123773242327441468> In <#{before.channel.id}>" 
             e.add_field(name="__Before__", value=f"> {before.content}")
             e.add_field(name="__After__", value=f"> {after.content}", inline=False)
             e.timestamp = datetime.utcnow()
