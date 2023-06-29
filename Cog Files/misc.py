@@ -8,6 +8,11 @@ class Misc(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         
+# Misc Commands Class
+class Misc(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
+        
     # WhoIs Command
     @commands.command(aliases=["siohw", "Whois", "siohW"])
     async def whois(self, ctx, user:discord.Member):
@@ -27,36 +32,39 @@ class Misc(commands.Cog):
   
         badgelist = ""
         if user.public_flags.hypesquad_brilliance:
-            badgelist += "<:hypesquad_brilliance:1121351972973457408>"
+            badgelist += "<:HypeSquadBrilliance:1123772502024405053> "
         if user.public_flags.hypesquad_bravery:
-            badgelist += "<:hypesquad_bravery:1121351970297499749>"
+            badgelist += "<:HypeSquadBravery:1123772444994437240> "
         if user.public_flags.hypesquad_balance:
-            badgelist += "<:hypesquad_balance:1121351968590405752>"
+            badgelist += "<:HypeSquadBalance:1123772443069259897> "
         if user.public_flags.bug_hunter:
-            badgelist += "<:bughunter:1121351959102902272>"
+            badgelist += "<:BugHunter:1123772432679981057> "
         if user.public_flags.bug_hunter_level_2:
-            badgelist += "<:bughunterevel_2:1121351961082593382>"
+            badgelist += "<:BugHunterLevel2:1123772435150422086> "
         if user.public_flags.early_verified_bot_developer:
-            badgelist += "<:earlyverifiedbot_developer:1121352190787854466>"
+            badgelist += "<:EarlyVerifiedBotDeveloper:1123772440338776064> "
         if user.public_flags.verified_bot_developer:
-            badgelist += "<:earlyverifiedbot_developer:1121352190787854466>"
+            badgelist += "<:EarlyVerifiedBotDeveloper:1123772440338776064> "
         if user.public_flags.active_developer:
-            badgelist += "<:activedeveloper:1121467730596478987>"
+            badgelist += "<:ActiveDeveloper:1123772429307744287>"
         if user.public_flags.hypesquad:
-            badgelist += "<:HypeSquadEvents:1121470574779183225>"
+            badgelist += "<:HypeSquadEvents:1123772447125155963> "
         if user.public_flags.early_supporter:
-            badgelist += "<:earlysupporter:1121351962588352552>"
+            badgelist += "<:EarlySupporter:1123772438380019762>"
         if user.public_flags.discord_certified_moderator:
-            badgelist += "<:ModeratorProgramsAlumni:1122285991571505232>"
+            badgelist += "<:ModeratorProgramsAlumni:1123772518365409370> "
         if user.public_flags.staff:
-            badgelist += "<:staff:1121352209486073916>"
+            badgelist += "<:Staff:1123772450430267393> "
         if user.public_flags.partner:
-            badgelist += "<:partneredserver_owner:1121352208378761277>"
+            badgelist += "<:Partner:1123774032932769812> "
         if badgelist == "":
             badgelist += "None"
-        
         e.add_field(name="🧬 Flags", value=badgelist)
         e.add_field(name="🤖 Bot?", value=user.bot)
+        if user.status != user.mobile_status:
+            e.add_field(name="📺 Device", value="Desktop")
+        elif user.status != user.desktop_status:
+            e.add_field(name="📺 Device", value="Mobile")
         req = await self.bot.http.request(discord.http.Route("GET", "/users/{uid}", uid=user.id))
         banner_id = req["banner"]
         if banner_id:
@@ -65,16 +73,6 @@ class Misc(commands.Cog):
             e.set_image(url=banner_url)
         else:
             e.add_field(name="📰 Banner", value="None")
-        e.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar.url),
-        e.timestamp = datetime.utcnow()
-        await ctx.send(embed=e)
-    
-    # Avatar Command
-    @commands.command(aliases=["ratava", "Avatar", "ratavA"])
-    async def avatar(self, ctx, user:discord.Member):
-        e = discord.Embed(color=0xc700ff)
-        e.set_author(name="User's Avatar"),
-        e.set_image(url=user.avatar.url),
         e.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar.url),
         e.timestamp = datetime.utcnow()
         await ctx.send(embed=e)
