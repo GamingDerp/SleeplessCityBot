@@ -29,37 +29,30 @@ class Misc(commands.Cog):
         e.add_field(name="👑 Top Role", value=user.top_role.mention)
         e.add_field(name="🎲 Activity", value=f"{user.activity.name}" if user.activity is not None else None)
         e.add_field(name="🚦 Status", value=user.status)
-  
-        badgelist = ""
-        if user.public_flags.hypesquad_brilliance:
-            badgelist += "<:HypeSquadBrilliance:1123772502024405053> "
-        if user.public_flags.hypesquad_bravery:
-            badgelist += "<:HypeSquadBravery:1123772444994437240> "
-        if user.public_flags.hypesquad_balance:
-            badgelist += "<:HypeSquadBalance:1123772443069259897> "
-        if user.public_flags.bug_hunter:
-            badgelist += "<:BugHunter:1123772432679981057> "
-        if user.public_flags.bug_hunter_level_2:
-            badgelist += "<:BugHunterLevel2:1123772435150422086> "
-        if user.public_flags.early_verified_bot_developer:
-            badgelist += "<:EarlyVerifiedBotDeveloper:1123772440338776064> "
-        if user.public_flags.verified_bot_developer:
-            badgelist += "<:EarlyVerifiedBotDeveloper:1123772440338776064> "
-        if user.public_flags.active_developer:
-            badgelist += "<:ActiveDeveloper:1123772429307744287>"
-        if user.public_flags.hypesquad:
-            badgelist += "<:HypeSquadEvents:1123772447125155963> "
-        if user.public_flags.early_supporter:
-            badgelist += "<:EarlySupporter:1123772438380019762>"
-        if user.public_flags.discord_certified_moderator:
-            badgelist += "<:ModeratorProgramsAlumni:1123772518365409370> "
-        if user.public_flags.staff:
-            badgelist += "<:Staff:1123772450430267393> "
-        if user.public_flags.partner:
-            badgelist += "<:Partner:1123774032932769812> "
-        if badgelist == "":
-            badgelist += "None"
-        e.add_field(name="🧬 Flags", value=badgelist)
+        emotes = {
+            "hypesquad_brilliance": "<:HypeSquadBrilliance:1123772502024405053>",
+            "hypesquad_bravery": "<:HypeSquadBravery:1123772444994437240>",
+            "hypesquad_balance": "<:HypeSquadBalance:1123772443069259897>",
+            "bug_hunter": "<:BugHunter:1123772432679981057>",
+            "bug_hunter_level_2": "<:BugHunterLevel2:1123772435150422086>",
+            "early_verified_bot_developer": "<:EarlyVerifiedBotDeveloper:1123772440338776064>",
+            "verified_bot_developer": "<:EarlyVerifiedBotDeveloper:1123772440338776064>",
+            "active_developer": "<:ActiveDeveloper:1123772429307744287>",
+            "hypesquad": "<:HypeSquadEvents:1123772447125155963>",
+            "early_supporter": "<:EarlySupporter:1123772438380019762>",
+            "discord_certified_moderator": "<:ModeratorProgramsAlumni:1123772518365409370>",
+            "staff": "<:Staff:1123772450430267393>",
+            "partner": "<:Partner:1123774032932769812>"
+        }
+        badges = [
+            emoji
+            for f in user.public_flags.all()
+            if (emoji := emotes.get(f.name))
+        ]
+        if badges:
+            e.add_field(name="🧬 Flags", value=" ".join(badges))
+        else:
+            e.add_field(name="🧬 Flags", value="None")
         e.add_field(name="🤖 Bot?", value=user.bot)
         if user.status != user.mobile_status:
             e.add_field(name="📺 Device", value="Desktop")
