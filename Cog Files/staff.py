@@ -30,16 +30,10 @@ class Staff(commands.Cog):
         user = ctx.author
     
         if role in user.roles:
-            if reason is None:
-                e = discord.Embed(color=0xFf0000)
-                e.description = f"<:BanHammer:1120488412558921848> {member.mention} has been banned! <:BanHammer:1120488412558921848>"
-                await member.ban()
-                await ctx.channel.send(embed=e)
-            else:
-                e = discord.Embed(color=0xFf0000)
-                e.description = f"<:BanHammer:1120488412558921848> {member.mention} has been banned! <:BanHammer:1120488412558921848> \n**Reason:** {reason}"
-                await member.ban()
-                await ctx.channel.send(embed=e)
+            e = discord.Embed(color=0xFf0000)
+            e.description = f"<:BanHammer:1120488412558921848> {member.mention} has been banned! <:BanHammer:1120488412558921848> \n**Reason:** {reason}"
+            await member.ban()
+            await ctx.channel.send(embed=e)
         else:
             e = discord.Embed(color=0xc700ff)
             e.description = "🚨 That is a(n) **Staff command**! You don't have the required perms! 🚨"
