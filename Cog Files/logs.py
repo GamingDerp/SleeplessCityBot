@@ -116,6 +116,12 @@ class Logs(commands.Cog):
             e.add_field(name="__After__", value=f"> {after.display_name}", inline=False)
             e.timestamp = datetime.utcnow()
             await channel.send(embed=e)
+        if before.avatar.url != after.avatar.url:
+            e = discord.Embed(color=0xc700ff)
+            e.set_author(name="🏮 Avatar Update")
+            e.set_thumbnail(url=f"{after.avatar.url}")
+            e.add_field(name="__Member__", value=f"> {before.mention}")
+            e.timestamp = datetime.utcnow()
         
     # User Update Log Event
     @commands.Cog.listener()
