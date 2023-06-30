@@ -15,7 +15,7 @@ class OniHelp(commands.Cog):
     # OniHelp Command
     @commands.command(aliases=["plehino", "Onihelp", "plehinO"])
     async def onihelp(self, ctx):
-        if ctx.author.id == oni_id:
+        if ctx.author.id is oni_id:
             e = discord.Embed(color=0xf28aad)
             e.set_thumbnail(url="https://media.discordapp.net/attachments/807071768258805764/1112068793515122728/HelloKitty.png")
             e.description = f"💗 Oni Commands 💗"
@@ -36,7 +36,7 @@ class OniHelp(commands.Cog):
     # Vore Command
     @commands.command(aliases=["erov", "Vore", "eroV"])
     async def vore(self, ctx, user:discord.Member):
-        if ctx.author.id == oni_id or ctx.author.id == kaoru_id:
+        if ctx.author.id is oni_id or ctx.author.id is kaoru_id:
             e = discord.Embed(color=0xf28aad)
             e.description = f"{ctx.author.mention} vores {user.mention}!"
             with open("cogs/vore.txt") as f:
@@ -51,7 +51,7 @@ class OniHelp(commands.Cog):
     # Motorboat Command
     @commands.command(aliases=["taobrotom", "Motorboat", "taobrotoM"])
     async def motorboat(self, ctx, user:discord.Member):
-        if ctx.author.id == oni_id or ctx.author.id == kaoru_id:
+        if ctx.author.id is oni_id or ctx.author.id is kaoru_id:
             e = discord.Embed(color=0xf28aad)
             e.description = f"{ctx.author.mention} motorboats {user.mention}!"
             e.set_image(url="https://media.discordapp.net/attachments/807071768258805764/1114112965533245481/OniMotorboatGif.gif"),
