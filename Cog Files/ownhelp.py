@@ -14,7 +14,7 @@ class OwnHelp(commands.Cog):
     # Owner Help Command
     @commands.command(aliases=["plehnwo", "Ownhelp", "plehnwO"])
     async def ownhelp(self, ctx):
-        if ctx.author.id is owner_id:
+        if ctx.author.id == owner_id:
             e = discord.Embed(color=0xe02da9)
             e.set_thumbnail(url="https://media.discordapp.net/attachments/807071768258805764/1114258238335090698/OwnerThumbnail.png")
             e.description = "👾 Owner Commands 👾"
@@ -35,7 +35,7 @@ class OwnHelp(commands.Cog):
     # Nuke Command -- OWNER (joke command)
     @commands.command(aliases=["ekun", "Nuke", "ekuN"])
     async def nuke(self, ctx):
-        if ctx.author.id is owner_id:
+        if ctx.author.id == owner_id:
             await ctx.send("Nuking server in...3")
             await asyncio.sleep(0.85)
             await ctx.send(content="Nuking server in...2")
@@ -51,7 +51,7 @@ class OwnHelp(commands.Cog):
     # Revive Command -- OWNER
     @commands.command(aliases=["eviver", "Revive", "eviveR"])
     async def revive(self, ctx, user:discord.Member):
-        if ctx.author.id is owner_id:
+        if ctx.author.id == owner_id:
             e = discord.Embed(color=0xe02da9)
             e.description = f"{ctx.author.mention} revives {user.mention}!"
             e.set_image(url="https://media.discordapp.net/attachments/807071768258805764/1114248146986467328/ReviveGif.gif"),
