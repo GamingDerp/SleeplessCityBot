@@ -30,7 +30,7 @@ class OniHelp(commands.Cog):
             await ctx.send(embed=e)
         else:
             e = discord.Embed(color=0xf28aad)
-            e.description = "🚨 That is a(n) **Oni command**! You don't have the required perms! 🚨"
+            e.description = "🚨 That is a **Oni** command! You don't have the required perms! 🚨"
             await ctx.send(embed=e)
 
     # Vore Command
@@ -45,7 +45,7 @@ class OniHelp(commands.Cog):
                 await ctx.send(embed=e)
         else:
             e = discord.Embed(color=0xf28aad)
-            e.description = "🚨 That is a(n) **Oni command**! You don't have the required perms! 🚨"
+            e.description = "🚨 That is a **Oni** command! You don't have the required perms! 🚨"
             await ctx.send(embed=e)
 
     # Motorboat Command
@@ -58,7 +58,7 @@ class OniHelp(commands.Cog):
             await ctx.send(embed=e)
         else:
             e = discord.Embed(color=0xf28aad)
-            e.description = "🚨 That is a(n) **Oni command**! You don't have the required perms! 🚨"
+            e.description = "🚨 That is a **Oni** command! You don't have the required perms! 🚨"
             await ctx.send(embed=e)
 
 
