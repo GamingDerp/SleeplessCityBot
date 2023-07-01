@@ -15,7 +15,11 @@ class Action(commands.Cog):
     async def bonk(self, ctx, user:discord.Member):
         e = discord.Embed(color=0xc700ff)
         e.description = f"{ctx.author.mention} bonks {user.mention}!"
-        e.set_image(url="https://media.discordapp.net/attachments/807071768258805764/1109240042238513233/BonkGif.gif"),
+        bonkgifs = [
+            "https://media.discordapp.net/attachments/807071768258805764/1109240042238513233/BonkGif.gif", 
+            "https://media.discordapp.net/attachments/807071768258805764/1124387823076769863/Bonk2Gif.gif"
+        ]
+        e.set_image(url=random.choice(bonkgifs)),
         await ctx.send(embed=e)
 
     # Slap Command
