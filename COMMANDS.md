@@ -12,7 +12,7 @@ info | Shows information about the bot | `info`
 test | Tests if the bot is up | `test`
 ping | Shows a users ping | `ping`
 suggest | Lets users make a suggestion for the server/bot | `suggest <suggestion>`
-remind | Sets a reminder for a user about a task | `remind <number><abbreviated time length> <task>`
+poll | Creates a poll | `poll <question>`
 
 ## 🎉 Fun
 Command | Description | Usage
@@ -52,6 +52,7 @@ avatar | Sends the profile picture of another user | `avatar @user`
 snipe | Shows a recently deleted message and who sent it | `snipe`
 deathhelp | Shows the methods of death for the "deathnote" commands | `deathhelp`
 pickle | Sends the "Pickle Rick" quote | `/pickle`
+remind | Sets a reminder for a user about a task | `remind <number><abbreviated time length> <task>`
 
 ## 🔰 Staff
 Command | Description | Usage
