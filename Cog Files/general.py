@@ -16,7 +16,7 @@ ge.add_field(
           f"\n> • `Test`"
           f"\n> • `Ping`"
           f"\n> • `Suggest`"
-          f"\n> • `Remind`",
+          f"\n> • `Poll`",
 )
 
 # Fun Commands Embed
@@ -61,7 +61,8 @@ me.add_field(
           f"\n> • `Avatar`"
           f"\n> • `Snipe`"
           f"\n> • `Deathhelp`"
-          f"\n> • `Pickle` - /slash",
+          f"\n> • `Pickle` - /slash"
+          f"\n> • `Remind`",
 )
 
 # Staff Commands Embed
@@ -86,7 +87,7 @@ class Dropdown(discord.ui.Select):
             discord.SelectOption(label="General Commands",description="Help, Info, Test, Ping, Suggest +1 More", emoji="📌"),
             discord.SelectOption(label="Fun Commands", description="Coinflip, Ask, Reverse, Say, Lovetest +2 More", emoji="🎉"),
             discord.SelectOption(label="Action Commands", description="Bonk, Slap, Throw, Kidnap, Punt +10 More", emoji="🎯"),
-            discord.SelectOption(label="Misc Commands", description="Whois, Avatar, Snipe, Deathhelp, Pickle", emoji="🧮"),
+            discord.SelectOption(label="Misc Commands", description="Whois, Avatar, Snipe, Deathhelp, Pickle +1 More", emoji="🧮"),
             discord.SelectOption(label="Staff Commands", description="Purge, Ban, Unban, Kick, Timeout +3 More", emoji="🔰"),
         ]
 
@@ -151,11 +152,11 @@ class General(commands.Cog):
         e.add_field(
             name="✧ __Statistics__",
             value=f"> **Prefix:** !"
-                  f"\n> **Commands:** [41]"
-		  f"\n> **Code:** 1,313 Lines"
+                  f"\n> **Commands:** [42]"
+			      f"\n> **Code:** 1,307 Lines"
                   f"\n> **Ping:** {round(self.bot.latency * 1000)}ms"
                   f"\n> **Users:** {true_member_count}"
-                  f"\n> **Uptime:** {days}**d** {hours}**h** {minutes}**m** {seconds}**s**",
+        	      f"\n> **Uptime:** {days}**d** {hours}**h** {minutes}**m** {seconds}**s**",
             inline=False
         )
         e.add_field(
@@ -197,6 +198,17 @@ class General(commands.Cog):
         se.timestamp = datetime.utcnow()
         channel = self.bot.get_channel(1065657740573286523)
         vote = await channel.send(embed=se)
+        await vote.add_reaction("✅")
+        await vote.add_reaction("❌")
+    
+    # Poll Command
+    @commands.command(aliases=["llop", "Poll", "lloP"])
+    async def poll(self, ctx, *, question):
+        pe = discord.Embed(color=0xc700ff)
+        pe.set_author(name=f"Poll by {ctx.message.author}", icon_url=ctx.author.avatar.url)
+        pe.description = f"> {question}"
+        pe.timestamp = datetime.utcnow()
+        vote = await ctx.send(embed=pe)
         await vote.add_reaction("✅")
         await vote.add_reaction("❌")
 
