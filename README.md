@@ -1,5 +1,5 @@
 [![Join - Sleepless Nights](https://img.shields.io/badge/Join-Sleepless_Nights-7289da?logo=Discord)](https://discord.gg/UecWG8pK7r)
-[![v - 0.8.1](https://img.shields.io/badge/v-0.8.1-FF0000)](https://)
+[![v - 0.8.2](https://img.shields.io/badge/v-0.8.2-FF0000)](https://)
 [![python - 3.11.2](https://img.shields.io/badge/python-3.11.2-0096FF?logo=Python)](https://)
 [![discord.py - 2.3.1](https://img.shields.io/badge/discord.py-2.3.1-FFFF00?logo=Python)](https://github.com/Rapptz/discord.py)
 
@@ -11,12 +11,12 @@ Private commands/menus will not be counted in the "Features" section.
 
 
 # 📋 Features
-**41** commands across **5** different categories.
+**42** commands across **5** different categories.
 
-- 📌 **General:** `Help`, `Info`, `Test`, `Ping`, `Suggest`, `Remind`
+- 📌 **General:** `Help`, `Info`, `Test`, `Ping`, `Suggest`, `Poll`
 - 🎉 **Fun:** `Coinflip`, `Ask`, `Reverse`, `Lovetest`, `Cute`, `Duel` and **1** more!
-- 🎯 **Action:** `Bonk`, `Slap`, `Throw`, `Kidnap`, `Punt` and **10** more!
-- 🧮 **Misc:** `Whois`, `Avatar`, `Snipe`, `Deathhelp`, `Pickle`
+- 🎯 **Action:** `Bonk`, `Slap`, `Throw`, `Kidnap`, `Punt`, `Strangle` and **9** more!
+- 🧮 **Misc:** `Whois`, `Avatar`, `Snipe`, `Deathhelp`, `Pickle`, `Remind`
 - 🔰 **Staff:** `Purge`, `Ban`, `Unban`, `Kick`, `Timeout`, `Warn` and **2** more!
 - **Full list of commands:** [Here](https://github.com/GamingDerp/SleeplessNightsBot/blob/main/COMMANDS.md)
 
