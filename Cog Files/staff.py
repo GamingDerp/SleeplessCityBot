@@ -19,7 +19,7 @@ class Staff(commands.Cog):
             await ctx.channel.purge(limit=limit)
         else:
             e = discord.Embed(color=0xc700ff)
-            e.description = "🚨 That is a(n) **Staff command**! You don't have the required perms! 🚨"
+            e.description = "🚨 That is a **High Staff** command! You don't have the required perms! 🚨"
             await ctx.send(embed=e)
             await ctx.message.delete()
 
@@ -36,7 +36,7 @@ class Staff(commands.Cog):
             await ctx.channel.send(embed=e)
         else:
             e = discord.Embed(color=0xc700ff)
-            e.description = "🚨 That is a(n) **Staff command**! You don't have the required perms! 🚨"
+            e.description = "🚨 That is a **High Staff** command! You don't have the required perms! 🚨"
             await ctx.send(embed=e)
         
     # Unban Command
@@ -53,7 +53,7 @@ class Staff(commands.Cog):
             await ctx.channel.send(embed=e)
         else:
             e = discord.Embed(color=0xc700ff)
-            e.description = "🚨 That is a(n) **Staff command**! You don't have the required perms! 🚨"
+            e.description = "🚨 That is a **High Staff** command! You don't have the required perms! 🚨"
             await ctx.send(embed=e)
 
     # Kick Command
@@ -81,35 +81,42 @@ class Staff(commands.Cog):
             await channel.send(embed=e)
         else:
             e = discord.Embed(color=0xc700ff)
-            e.description = "🚨 That is a(n) **Staff command**! You don't have the required perms! 🚨"
+            e.description = "🚨 That is a **Staff** command! You don't have the required perms! 🚨"
             await ctx.send(embed=e)
 
     # Timeout Command
     @commands.command(aliases=["tuoemit", "Timeout", "tuoemiT"])
     async def timeout(self, ctx, member:discord.Member, duration, *, reason=None):
+        role = discord.utils.get(ctx.guild.roles, name="💠 Moderator")
+        user = ctx.author
         time_units = {"s": 1, "m": 60, "h": 3600, "d": 86400}  # Mapping time units to seconds
         unit = duration[-1]
         amount = int(duration[:-1])
         seconds = amount * time_units[unit]
         
-        e = discord.Embed(color=0xc700ff)
-        e.description = f"⏳ Timeout! ⏳ \n **User:** {member.mention} \n **Reason:** {reason} \n **Time:** {duration}"
-        await member.timeout(timedelta(seconds=seconds), reason=reason)
-        await ctx.send(embed=e)
+        if role in user.roles:
+            e = discord.Embed(color=0xc700ff)
+            e.description = f"⏳ Timeout! ⏳ \n **User:** {member.mention} \n **Reason:** {reason} \n **Time:** {duration}"
+            await member.timeout(timedelta(seconds=seconds), reason=reason)
+            await ctx.send(embed=e)
     
-        channel = self.bot.get_channel(1119185446950408232)
-        timed = member.mention
-        timer = ctx.author.mention
-        time = {seconds}     
-        e = discord.Embed(color=0xc700ff)
-        e.set_author(name="⏳ User Timed Out")
-        e.set_thumbnail(url=member.avatar.url)
-        e.add_field(name="__Member__", value=f"> {timed}")
-        e.add_field(name="__Reason__", value=f"> {reason}", inline=False)
-        e.add_field(name="__Time__", value=f"> {duration}", inline=False)
-        e.add_field(name="__Staff Member__", value=f"> {timer}", inline=False)
-        e.timestamp = datetime.utcnow()
-        await channel.send(embed=e)
+            channel = self.bot.get_channel(1119185446950408232)
+            timed = member.mention
+            timer = ctx.author.mention
+            time = {seconds}     
+            e = discord.Embed(color=0xc700ff)
+            e.set_author(name="⏳ User Timed Out")
+            e.set_thumbnail(url=member.avatar.url)
+            e.add_field(name="__Member__", value=f"> {timed}")
+            e.add_field(name="__Reason__", value=f"> {reason}", inline=False)
+            e.add_field(name="__Time__", value=f"> {duration}", inline=False)
+            e.add_field(name="__Staff Member__", value=f"> {timer}", inline=False)
+            e.timestamp = datetime.utcnow()
+            await channel.send(embed=e)
+        else:
+            e = discord.Embed(color=0xc700ff)
+            e.description = "🚨 That is a **Staff** command! You don't have the required perms! 🚨"
+            await ctx.send(embed=e)
 
     # Warn Command
     @commands.command(aliases=["nraw", "Warn", "nraW"])
@@ -147,7 +154,7 @@ class Staff(commands.Cog):
             await channel.send(embed=e)
         else:
             e = discord.Embed(color=0xc700ff)
-            e.description = "🚨 That is a(n) **Staff command**! You don't have the required perms! 🚨"
+            e.description = "🚨 That is a **Staff** command! You don't have the required perms! 🚨"
             await ctx.send(embed=e)
 
     # WarnList Command
@@ -177,7 +184,7 @@ class Staff(commands.Cog):
             await ctx.send(embed=e)
         else:
             e = discord.Embed(color=0xc700ff)
-            e.description = "🚨 That is a(n) **Staff command**! You don't have the required perms! 🚨"
+            e.description = "🚨 That is a **Staff** command! You don't have the required perms! 🚨"
             await ctx.send(embed=e)
 
     # Delwarn Command
@@ -227,7 +234,7 @@ class Staff(commands.Cog):
             await channel.send(embed=e)
         else:
             e = discord.Embed(color=0xc700ff)
-            e.description = "🚨 That is a(n) **High Staff command**! You don't have the required perms! 🚨"
+            e.description = "🚨 That is a **High Staff** command! You don't have the required perms! 🚨"
             await ctx.send(embed=e)
 
 
