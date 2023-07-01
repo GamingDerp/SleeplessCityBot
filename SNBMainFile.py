@@ -6,8 +6,7 @@ from discord.ext import commands
 from datetime import datetime, timedelta
 
 # Bot Intents & Defining Bot
-intents = discord.Intents.all()
-bot = commands.Bot(command_prefix="!", intents=intents)
+bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
 bot.remove_command('help')    
 
 # Loading Cogs
@@ -18,11 +17,12 @@ async def load():
             
 async def main():
     await load()
-    await bot.start('TOKEN')
+    await bot.start("TOKEN")
 
 # Startup Event
 @bot.listen()
 async def on_ready():
     await print(f"---------------------------------------- \n| Logged in as {bot.user} | \n| ID: {bot.user.id}              |\n----------------------------------------")
+
 
 asyncio.run(main())
