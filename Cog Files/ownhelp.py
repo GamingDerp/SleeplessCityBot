@@ -29,7 +29,7 @@ class OwnHelp(commands.Cog):
             await ctx.send(embed=e)
         else:
             e = discord.Embed(color=0xe02da9)
-            e.description = "🚨 That is a(n) **Owner command**! You don't have the required perms! 🚨"
+            e.description = "🚨 That is a **Owner** command! You don't have the required perms! 🚨"
             await ctx.send(embed=e)
 
     # Nuke Command -- OWNER (joke command)
@@ -45,7 +45,7 @@ class OwnHelp(commands.Cog):
             await ctx.send("https://cdn.discordapp.com/attachments/807071768258805764/1103594669050441788/rick-roll.gif")
         else:
             e = discord.Embed(color=0xe02da9)
-            e.description = "🚨 That is a(n) **Owner command**! You don't have the required perms! 🚨"
+            e.description = "🚨 That is a **Owner** command! You don't have the required perms! 🚨"
             await ctx.send(embed=e)
 
     # Revive Command -- OWNER
@@ -58,7 +58,7 @@ class OwnHelp(commands.Cog):
             await ctx.send(embed=e)
         else:
             e = discord.Embed(color=0xe02da9)
-            e.description = "🚨 That is a(n) **Owner command**! You don't have the required perms! 🚨"
+            e.description = "🚨 That is a **Owner** command! You don't have the required perms! 🚨"
             await ctx.send(embed=e)
 
 
