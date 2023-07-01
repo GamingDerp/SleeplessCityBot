@@ -153,10 +153,10 @@ class General(commands.Cog):
             name="✧ __Statistics__",
             value=f"> **Prefix:** !"
                   f"\n> **Commands:** [42]"
-			      f"\n> **Code:** 1,307 Lines"
+		  f"\n> **Code:** 1,326 Lines"
                   f"\n> **Ping:** {round(self.bot.latency * 1000)}ms"
                   f"\n> **Users:** {true_member_count}"
-        	      f"\n> **Uptime:** {days}**d** {hours}**h** {minutes}**m** {seconds}**s**",
+                  f"\n> **Uptime:** {days}**d** {hours}**h** {minutes}**m** {seconds}**s**",
             inline=False
         )
         e.add_field(
