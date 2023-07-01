@@ -7,7 +7,7 @@ import asyncio
 class Fun(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        
+
     # Coinflip Command
     @commands.command(aliases=["pilfnioc", "Coinflip", "plifnioC"])
     async def coinflip(self, ctx):
