@@ -1,184 +1,231 @@
 import discord
 from discord.ext import commands
 from datetime import datetime, timedelta
-import asyncio
 
-# Misc Commands Class
-class Misc(commands.Cog):
+# Logging Events Class
+class Logs(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        
-# Misc Commands Class
-class Misc(commands.Cog):
-    def __init__(self, bot):
-        self.bot = bot
-        
-    # WhoIs Command
-    @commands.command(aliases=["siohw", "Whois", "siohW", "WHOIS", "SIOHW"])
-    async def whois(self, ctx, user:discord.Member):
-        e = discord.Embed(color=0xc700ff)
-        e.set_author(name=f"Gathering Information..."),
-        e.set_thumbnail(url=user.avatar.url)
-        e.add_field(name="📍 Mention", value=user.mention)
-        e.add_field(name="🔖 ID", value=user.id)
-        e.add_field(name="📑 Nickname", value=user.display_name)
-        e.add_field(name="📅 Created On", value=user.created_at.strftime("`%B %d, %Y %H:%M %p`"))
-        e.add_field(name="📅 Joined On", value=user.joined_at.strftime("`%B %d, %Y %H:%M %p`"))
-        if user.premium_since:
-            e.add_field(name=f"<a:DiscordBoost:1121298549657829436> Boosting", value=user.premium_since.strftime("`%B %d, %Y %H:%M %p`"))
-        e.add_field(name="👑 Top Role", value=user.top_role.mention)
-        e.add_field(name="🎲 Activity", value=f"{user.activity.name}" if user.activity is not None else None)
-        e.add_field(name="🚦 Status", value=user.status)
-        emotes = {
-            "hypesquad_brilliance": "<:HypeSquadBrilliance:1123772502024405053>",
-            "hypesquad_bravery": "<:HypeSquadBravery:1123772444994437240>",
-            "hypesquad_balance": "<:HypeSquadBalance:1123772443069259897>",
-            "bug_hunter": "<:BugHunter:1123772432679981057>",
-            "bug_hunter_level_2": "<:BugHunterLevel2:1123772435150422086>",
-            "early_verified_bot_developer": "<:EarlyVerifiedBotDeveloper:1123772440338776064>",
-            "verified_bot_developer": "<:EarlyVerifiedBotDeveloper:1123772440338776064>",
-            "active_developer": "<:ActiveDeveloper:1123772429307744287>",
-            "hypesquad": "<:HypeSquadEvents:1123772447125155963>",
-            "early_supporter": "<:EarlySupporter:1123772438380019762>",
-            "discord_certified_moderator": "<:ModeratorProgramsAlumni:1123772518365409370>",
-            "staff": "<:Staff:1123772450430267393>",
-            "partner": "<:Partner:1123774032932769812>"
-        }
-        badges = [
-            emoji
-            for f in user.public_flags.all()
-            if (emoji := emotes.get(f.name))
-        ]
-        if badges:
-            e.add_field(name="🧬 Flags", value=" ".join(badges))
-        else:
-            e.add_field(name="🧬 Flags", value="None")
-        e.add_field(name="🤖 Bot?", value=user.bot)
-        if user.status != user.mobile_status:
-            e.add_field(name="📺 Device", value="Desktop")
-        elif user.status != user.desktop_status:
-            e.add_field(name="📺 Device", value="Mobile")
-        req = await self.bot.http.request(discord.http.Route("GET", "/users/{uid}", uid=user.id))
-        banner_id = req["banner"]
-        if banner_id:
-            banner_url = f"https://cdn.discordapp.com/banners/{user.id}/{banner_id}?size=1024"
-            e.add_field(name="📰 Banner", value="**Linked Below**")
-            e.set_image(url=banner_url)
-        else:
-            e.add_field(name="📰 Banner", value="None")
-        e.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar.url),
-        e.timestamp = datetime.utcnow()
-        await ctx.send(embed=e)
-    
-    # Snipe Event
-    sniped_message = None
 
+    # Deleted Message Log Event
     @commands.Cog.listener()
     async def on_message_delete(self, message):
-        global sniped_message
-        sniped_message = message
-
-    # Snipe Command
-    @commands.command(aliases=["epins", "Snipe", "epinS", "SNIPE", "EPINS"])
-    async def snipe(self, ctx):
-        global sniped_message
-        if sniped_message is None:
-            await ctx.send("There are no recently deleted messages to snipe.")
-            return
-
-        if sniped_message.content:
-            e = discord.Embed(color=0xc700ff)
-            e.set_author(name=sniped_message.author.name, icon_url=sniped_message.author.avatar.url)
-            e.description = f"> {sniped_message.content}"
-            await ctx.send(embed=e)
-        elif sniped_message.attachments:
-            attachment_url = sniped_message.attachments[0].url
-            e = discord.Embed(color=0xc700ff)
-            e.set_author(name=sniped_message.author.name, icon_url=sniped_message.author.avatar.url)
-            e.set_image(url=attachment_url)
-            await ctx.send(embed=e)
-
-        sniped_message = None  # Reset sniped message after displaying
-        
-    # Deathnote Help Command
-    @commands.command(aliases=["plehhtaed", "Deathhelp", "plehhtaeD", "DEATHNOTEHELP", "PLEHHTAED"])
-    async def deathhelp(self, ctx):
-        e = discord.Embed(color=0xc700ff)
-        e.description = "☠️ Available Death Methods ☠️"
-        e.add_field(
-            name="__Death Options__",
-            value=f"\n> 🗻 Cliff"
-                  f"\n> 🚝 Train"
-                  f"\n> 🏊🏼 Drown"
-                  f"\n> 🗿 Crush"
-                  f"\n> 🌭 Choke"
-                  f"\n> 🚗 Car Crash"
-                  f"\n> 🔪 Murder"
-                  f"\n> ⚡️ Shock"
-                  f"\n> 🔥 Fire"
-                  f"\n> 💥 Explosion"
-                  f"\n> 🌩 Lightning"
-                  f"\n> 🌋 Volcano"
-                  f"\n> 🌪 Tornado"
-                  f"\n> 🧱 Earthquake"
-                  f"\n> 🌊 Hurricane",
-        )
-        e.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar.url),
-        e.timestamp = datetime.utcnow()
-        await ctx.send(embed=e)
-
-    # Pickle Rick Command
-    @commands.hybrid_command(name="pickle", description="Sends pickle rick")
-    async def pickle(self, ctx):
-            await ctx.send("I'M PICCKLLE RIIIIIICCCKKKK 🥒")
-
-    # Remind Command
-    @commands.command(aliases=["dnimer", "Remind", "dnimeR", "REMIND", "DNIMER"])
-    async def remind(self, ctx, time, *, task):
-        def convert(time):
-            pos = ['s', 'm', 'h', 'd']
-            time_dict = {"s": 1, "m": 60, "h": 3600, "d": 3600*24}
-            unit = time[-1]
-            if unit not in pos:
-                return -1
-            try:
-                val = int(time[:-1])
-            except:
-                return -2
-            return val * time_dict[unit]
-        converted_time = convert(time)
-        if converted_time == -1:
-            await ctx.send("You didn't input the time correctly!")
-            return
-        if converted_time == -2:
-            await ctx.send("The time must be an integer!")
-            return
-
-        e = discord.Embed(color=0xc700ff)
-        e.description = "⏰ Started Reminder ⏰"
-        e.add_field(name="Time", value=time)
-        e.add_field(name="Task", value=task)
-        e.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar.url)
-        e.timestamp = datetime.utcnow()
-        await ctx.send(embed=e)
-
         channel = self.bot.get_channel(1119185446950408232)
         e = discord.Embed(color=0xc700ff)
-        e.set_thumbnail(url=ctx.author.avatar.url)
-        e.set_author(name="⏰ User Set Reminder")
-        e.add_field(name="__User__", value=ctx.author.mention)
-        e.add_field(name="__Time__", value=time, inline=False)
-        e.add_field(name="__Task__", value=task, inline=False)
+        e.set_author(name="🗑️ Message Deleted")
+        e.set_thumbnail(url=f"{message.author.avatar.url}")
+        e.description = f"A message by {message.author.mention} was deleted \n<:Reply:1123773242327441468> In <#{message.channel.id}> \n \n> {message.content}"
         e.timestamp = datetime.utcnow()
         await channel.send(embed=e)
- 
-        await asyncio.sleep(converted_time)
-        await ctx.send(ctx.author.mention)
-        e = discord.Embed(color=0xc700ff)
-        e.description = "⏰ Time's Up ⏰"
-        e.add_field(name="Task", value=task)
-        await ctx.send(embed=e)
 
+    # Edited Message Log Event
+    @commands.Cog.listener()
+    async def on_message_edit(self, before, after):
+        if before.author.bot: 
+            return
+        else:
+            channel = self.bot.get_channel(1119185446950408232)
+            e = discord.Embed(color=0xc700ff)
+            e.set_author(name="📝 Message Edited")
+            e.set_thumbnail(url=f"{before.author.avatar.url}")
+            e.description = f"{before.author.mention} edited their message \n<:Reply:1123773242327441468> In <#{before.channel.id}>" 
+            e.add_field(name="__Before__", value=f"> {before.content}")
+            e.add_field(name="__After__", value=f"> {after.content}", inline=False)
+            e.timestamp = datetime.utcnow()
+            await channel.send(embed=e)
+
+    # Member Join Log Event
+    @commands.Cog.listener()
+    async def on_member_join(self, member):
+        channel = self.bot.get_channel(1119185446950408232)
+        e = discord.Embed(color=0x00ff05)
+        e.set_author(name="📈 Member Joined")
+        e.set_thumbnail(url=f"{member.avatar.url}")
+        e.add_field(name="__Member__", value=f"> {member.mention}")
+        e.timestamp = datetime.utcnow()
+        await channel.send(embed=e)
+
+    # Member Remove Log Event
+    @commands.Cog.listener()
+    async def on_member_remove(self, member):
+        channel = self.bot.get_channel(1119185446950408232)
+        e = discord.Embed(color=0xFf0e00)
+        e.set_author(name="📉 Member Left")
+        e.set_thumbnail(url=f"{member.avatar.url}")
+        e.add_field(name="__Member__", value=f"> {member.mention}")
+        e.timestamp = datetime.utcnow()
+        await channel.send(embed=e)
+    
+    # Member Ban Log Event
+    @commands.Cog.listener()
+    async def on_member_ban(self, guild, member):
+        channel = self.bot.get_channel(1119185446950408232)
+        logs = [log async for log in guild.audit_logs(limit=1, action=discord.AuditLogAction.ban)]
+        logs = logs[0]
+    
+        e = discord.Embed(color=0xFf0e00)
+        e.set_author(name="🚨 Member Banned")
+        e.set_thumbnail(url=f"{member.avatar.url}")
+        e.add_field(name="__Member__", value=f"> {member.mention}")
+        e.add_field(name="__Ban Reason__", value=f"> {logs.reason}", inline=False)
+        e.add_field(name="__Staff Member__", value=f"> {logs.user.mention}", inline=False)
+        e.timestamp = datetime.utcnow()
+        await channel.send(embed=e)
+    
+    # Member Unban Log Event
+    @commands.Cog.listener()
+    async def on_member_unban(self, guild, member):
+        channel = self.bot.get_channel(1119185446950408232)
+        e = discord.Embed(color=0x00ff05)
+        e.set_author(name="✨ Member Unbanned")
+        e.set_thumbnail(url=f"{member.avatar.url}")
+        e.add_field(name="__Member__", value=f"> {member.mention}")
+        e.timestamp = datetime.utcnow()
+        await channel.send(embed=e)
+
+    # Member Update Log Event
+    @commands.Cog.listener()
+    async def on_member_update(self, before, after):
+        channel = self.bot.get_channel(1119185446950408232) 
+        if len(before.roles) > len(after.roles):
+            droles = next(droles for droles in before.roles if droles not in after.roles)
+            e = discord.Embed(color=0xc700ff)
+            e.set_author(name="🧮 Role Update")
+            e.set_thumbnail(url=f"{before.avatar.url}")
+            e.add_field(name="__Member__", value=f"> {before.mention}")
+            e.add_field(name="__Role__", value=f"> ❌ {droles}", inline=False)
+            e.timestamp = datetime.utcnow()
+            await channel.send(embed=e)
+        else:
+            if len(before.roles) < len(after.roles):
+                aroles = next(aroles for aroles in after.roles if aroles not in before.roles)
+                e = discord.Embed(color=0xc700ff)
+                e.set_author(name="🧮 Role Update")
+                e.set_thumbnail(url=f"{before.avatar.url}")
+                e.add_field(name="__Member__", value=f"> {before.mention}")
+                e.add_field(name="__Role__", value=f"> ✅ {aroles}", inline=False)
+                e.timestamp = datetime.utcnow()
+                await channel.send(embed=e)          
+        if before.display_name != after.display_name:
+            e = discord.Embed(color=0xc700ff)
+            e.set_author(name="🧾 Nickname Update")
+            e.set_thumbnail(url=f"{before.avatar.url}")
+            e.add_field(name="__Member__", value=f"> {before.mention}")
+            e.add_field(name="__Before__", value=f"> {before.display_name}", inline=False)
+            e.add_field(name="__After__", value=f"> {after.display_name}", inline=False)
+            e.timestamp = datetime.utcnow()
+            await channel.send(embed=e)
+        
+    # User Update Log Event
+    @commands.Cog.listener()
+    async def on_user_update(self, before, after):
+        channel = self.bot.get_channel(1119185446950408232)
+        if before.name != after.name:
+            e = discord.Embed(color=0xc700ff)
+            e.set_author(name="🧾 Account Name Update")
+            e.set_thumbnail(url=f"{before.avatar.url}")
+            e.add_field(name="__Member__", value=f"> {before.mention}")
+            e.add_field(name="__Before__", value=f"> {before.name}#{before.discriminator}", inline=False)
+            e.add_field(name="__After__", value=f"> {after.name}#{after.discriminator}", inline=False)
+            e.timestamp = datetime.utcnow()
+            await channel.send(embed=e)
+
+    # Channel Created Log Event
+    @commands.Cog.listener()
+    async def on_guild_channel_create(self, channel):
+        chan = self.bot.get_channel(1119185446950408232)
+        e = discord.Embed(color=0x00ff05)
+        e.set_author(name="📥 Channel Created")
+        e.add_field(name="__Name__", value=f"> {channel.name}")
+        e.add_field(name="__Mention__", value=f"> {channel.mention}", inline=False)
+        e.add_field(name="__Channel ID__", value=f"> {channel.id}", inline=False)
+        e.timestamp = datetime.utcnow()
+        await chan.send(embed=e)
+    
+    # Channel Deleted Log Event
+    @commands.Cog.listener()
+    async def on_guild_channel_delete(self, channel):
+        chan = self.bot.get_channel(1119185446950408232)
+        e = discord.Embed(color=0xFf0e00)
+        e.set_author(name="📤 Channel Deleted")
+        e.add_field(name="__Name__", value=f"> {channel.name}")
+        e.add_field(name="__Mention__", value=f"> {channel.mention}", inline=False)
+        e.add_field(name="__Channel ID__", value=f"> {channel.id}", inline=False)
+        e.timestamp = datetime.utcnow()
+        await chan.send(embed=e)
+
+    # Voice Channel Log Event
+    @commands.Cog.listener()
+    async def on_voice_state_update(self, member, before, after):
+        chan = self.bot.get_channel(1119185446950408232)
+        if before.channel and after.channel and before.channel != after.channel:
+            e = discord.Embed(color=0xc700ff)
+            e.set_author(name="🔊 Moved VC's")
+            e.add_field(name="__User__", value=f"> {member.mention}")
+            e.add_field(name="__Moved From__", value=f"> {before.channel.name}", inline=False)
+            e.add_field(name="__Moved To__", value=f"> {after.channel.name}", inline=False)
+            e.timestamp = datetime.utcnow()
+            await chan.send(embed=e)
+        elif before.channel and not after.channel:
+            e = discord.Embed(color=0xc700ff)
+            e.set_author(name="🔊 Left VC")
+            e.add_field(name="__User__", value=f"> {member.mention}")
+            e.add_field(name="__Left__", value=f"> {before.channel.name}", inline=False)
+            e.timestamp = datetime.utcnow()
+            await chan.send(embed=e)
+        elif not before.channel and after.channel:
+            e = discord.Embed(color=0xc700ff)
+            e.set_author(name="🔊 Joined VC")
+            e.add_field(name="__User__", value=f"> {member.mention}")
+            e.add_field(name="__Joined__", value=f"> {after.channel.name}", inline=False)
+            e.timestamp = datetime.utcnow()
+            await chan.send(embed=e)
+            
+    # Role Create Log Event
+    @commands.Cog.listener()
+    async def on_guild_role_create(self, role):
+        channel = self.bot.get_channel(1119185446950408232)
+        e = discord.Embed(color=0x00ff05)
+        e.set_author(name="🎭 Role Created")
+        e.add_field(name="__Role Mention__", value=f"> {role.mention}")
+        e.add_field(name="__Role Name__", value=f"> {role.name}", inline=False)
+        e.add_field(name="__Role ID__", value=f"> {role.id}", inline=False)
+        e.timestamp = datetime.utcnow()
+        await channel.send(embed=e)
+        
+    # Role Delete Log Event
+    @commands.Cog.listener()
+    async def on_guild_role_delete(self, role):
+        channel = self.bot.get_channel(1119185446950408232)
+        e = discord.Embed(color=0xFf0e00)
+        e.set_author(name="🎭 Role Deleted")
+        e.add_field(name="__Role Mention__", value=f"> {role.mention}")
+        e.add_field(name="__Role Name__", value=f"> {role.name}", inline=False)
+        e.add_field(name="__Role ID__", value=f"> {role.id}", inline=False)
+        e.timestamp = datetime.utcnow()
+        await channel.send(embed=e)
+        
+    # Role Update Log Event
+    @commands.Cog.listener()
+    async def on_guild_role_update(self, before, after):
+        channel = self.bot.get_channel(1119185446950408232)
+        if before.name != after.name:
+            e = discord.Embed(color=0xc700ff)
+            e.set_author(name="🎭 Role Update")
+            e.add_field(name="__Before__", value=f"> {before.mention}")
+            e.add_field(name="__After__", value=f"> {after.mention}", inline=False)
+            e.add_field(name="__Role ID__", value=f"> {after.id}", inline=False)
+            e.timestamp = datetime.utcnow()
+            await channel.send(embed=e)
+        if before.color != after.color:
+            e = discord.Embed(color=0xc700ff)
+            e.set_author(name="🎭 Role Update")
+            e.add_field(name="__Before__", value=f"> {before.color}")
+            e.add_field(name="__After__", value=f"> {after.color}", inline=False)
+            e.add_field(name="__Role ID__", value=f"> {after.id}", inline=False)
+            e.timestamp = datetime.utcnow()
+            await channel.send(embed=e)
+    
 
 async def setup(bot):
-    await bot.add_cog(Misc(bot))
+    await bot.add_cog(Logs(bot))
