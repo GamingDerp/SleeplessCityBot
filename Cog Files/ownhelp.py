@@ -12,7 +12,7 @@ class OwnHelp(commands.Cog):
         self.bot = bot
         
     # Owner Help Command
-    @commands.command(aliases=["plehnwo", "Ownhelp", "plehnwO"])
+    @commands.command(aliases=["plehnwo", "Ownhelp", "plehnwO", "OWNHELP", "PLEHNWO"])
     async def ownhelp(self, ctx):
         if ctx.author.id == owner_id:
             e = discord.Embed(color=0xe02da9)
@@ -33,7 +33,7 @@ class OwnHelp(commands.Cog):
             await ctx.send(embed=e)
 
     # Nuke Command -- OWNER (joke command)
-    @commands.command(aliases=["ekun", "Nuke", "ekuN"])
+    @commands.command(aliases=["ekun", "Nuke", "ekuN", "NUKE", "EKUN"])
     async def nuke(self, ctx):
         if ctx.author.id == owner_id:
             await ctx.send("Nuking server in...3")
@@ -49,7 +49,7 @@ class OwnHelp(commands.Cog):
             await ctx.send(embed=e)
 
     # Revive Command -- OWNER
-    @commands.command(aliases=["eviver", "Revive", "eviveR"])
+    @commands.command(aliases=["eviver", "Revive", "eviveR", "REVIVE", "EVIVER"])
     async def revive(self, ctx, user:discord.Member):
         if ctx.author.id == owner_id:
             e = discord.Embed(color=0xe02da9)
