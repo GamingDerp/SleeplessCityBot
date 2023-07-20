@@ -38,6 +38,7 @@ ae = discord.Embed(color=0xc700ff)
 ae.add_field(
     name="🎯 __Action Commands__",
     value=f"> • `Sniff`"
+          f"\n> • `Bite`"
           f"\n> • `Bonk`"
           f"\n> • `Vomit`"
           f"\n> • `Slap`"
@@ -53,6 +54,7 @@ ae.add_field(
           f"\n> • `Highfive`"
           f"\n> • `Poke`"
           f"\n> • `Pat`"
+          f"\n> • `Lick`"
           f"\n> • `Hug`"
           f"\n> • `Kiss`"
           f"\n> • `Cuddle`",
@@ -156,10 +158,10 @@ class General(commands.Cog):
             name="✧ __Statistics__",
             value=f"> **Prefix:** !"
                   f"\n> **Commands:** [47]"
-		  f"\n> **Code:** 1,464 Lines"
+			      f"\n> **Code:** 1,464 Lines"
                   f"\n> **Ping:** {round(self.bot.latency * 1000)}ms"
                   f"\n> **Users:** {true_member_count}"
-        	  f"\n> **Uptime:** {days}**d** {hours}**h** {minutes}**m** {seconds}**s**",
+        	      f"\n> **Uptime:** {days}**d** {hours}**h** {minutes}**m** {seconds}**s**",
             inline=False
         )
         e.add_field(
@@ -226,7 +228,7 @@ class General(commands.Cog):
         msg = await ctx.send(embed=e)
         for i in range(len(options)):
             await msg.add_reaction(emoji_list[i])
-
+        
 
 async def setup(bot):
     await bot.add_cog(General(bot))
