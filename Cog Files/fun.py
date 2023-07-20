@@ -208,7 +208,7 @@ class Fun(commands.Cog):
                     await ctx.send(embed=e)
                 elif rps_choice1 == "🗿" and rps_choice2 == "✂️":
                     e = discord.Embed(color=0xc700ff) # Embed
-                    e.description = f"👑 {challengerid.mention} won the match, choosing **rock**! 👑"
+                    e.description = f"👑 {challengeeid.mention} won the match, choosing **rock**! 👑"
                     e.set_image(url="https://media.discordapp.net/attachments/807071768258805764/1131033598074568774/RockGif.gif"),
                     await ctx.send(embed=e)
                 # Paper
