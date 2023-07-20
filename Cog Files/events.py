@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+from discord.ui import Button, View
 
 # Bots User ID
 bot_id = 1103103994777309205
@@ -19,25 +20,11 @@ class Events(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, message):
         if str(bot_id) in message.content:
-            await message.channel.send("I've been summoned! If you need me do `!help` <:CatWave:1093435504688644137>")
+            await message.channel.send("I've been summoned! If you need me do `!help` <:CatWave:1123898399557693470>")
         if message.channel.id == 1065502975499440168: #counting channel id
             if message.content == '69':
                 await message.add_reaction('<:Troll:1065453655588884520>')
                 await self.bot.process_commands(message)
-        if message.type == discord.MessageType.premium_guild_subscription:
-            channel = self.bot.get_channel(1119185446950408232)
-            e = discord.Embed(color=0xc700ff)
-            e.set_author(name="💎 Server Boosted")
-            e.add_field(name="Booster", value=message.author)
-            await channel.send(embed=e)
-        
-            chan = self.bot.get_channel(1065473991940247624)
-            e = discord.Embed(color=0xc700ff)
-            e.set_author(name=f"💎 {message.author} boosted the server!")
-            e.description = f"Thank you {message.author.mention}!"
-            e.add_field(name="Recieved Perks", value="> Image Perms \n> Embed Perms \n> Video Perms \n> Streaming Perms \n*and access to the exclusive* ***Booster Chat!***")
-            e.timestamp = datetime.utcnow()
-            await chan.send(embed=e)
             
     # Welcomes new users when they join the server
     @commands.Cog.listener()
