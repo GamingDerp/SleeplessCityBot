@@ -10,8 +10,16 @@ class Action(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    # Sniff Command
+    @commands.command(aliases=["ffins", "Sniff", "ffinS", "SNIFF", "FFINS"])
+    async def sniff(self, ctx, user:discord.Member):
+        e = discord.Embed(color=0xc700ff)
+        e.description = f"{ctx.author.mention} sniffs {user.mention}!"
+        e.set_image(url="https://media.discordapp.net/attachments/807071768258805764/1131013212331069551/SniffingGif.gif"),
+        await ctx.send(embed=e)
+
     # Bonk Command
-    @commands.command(aliases=["knob", "Bonk", "knoB"])
+    @commands.command(aliases=["knob", "Bonk", "knoB", "BONK", "KNOB"])
     async def bonk(self, ctx, user:discord.Member):
         e = discord.Embed(color=0xc700ff)
         e.description = f"{ctx.author.mention} bonks {user.mention}!"
@@ -21,25 +29,54 @@ class Action(commands.Cog):
         ]
         e.set_image(url=random.choice(bonkgifs)),
         await ctx.send(embed=e)
+        
+    # Vomit Command
+    @commands.command(aliases=["timov", "Vomit", "timoV", "VOMIT", "TIMOV"])
+    async def vomit(self, ctx, user:discord.Member):
+        e = discord.Embed(color=0xc700ff)
+        e.description = f"{ctx.author.mention} vomits on {user.mention}!"
+        e.set_image(url="https://media.discordapp.net/attachments/807071768258805764/1131015043379626144/VomitGif.gif"),
+        await ctx.send(embed=e)
 
     # Slap Command
-    @commands.command(aliases=["pals", "Slap", "palS"])
+    @commands.command(aliases=["pals", "Slap", "palS", "SLAP", "PALS"])
     async def slap(self, ctx, user:discord.Member):
         e = discord.Embed(color=0xc700ff)
         e.description = f"{ctx.author.mention} slaps {user.mention}!"
         e.set_image(url="https://media.discordapp.net/attachments/807071768258805764/1106847432907685928/AnimeSlappingGif.gif"),
         await ctx.send(embed=e)
+        
+    # Punch Command
+    @commands.command(aliases=["hcnup", "Punch", "hcnuP", "PUNCH"])
+    async def slap(self, ctx, user:discord.Member):
+        e = discord.Embed(color=0xc700ff)
+        e.description = f"{ctx.author.mention} punches {user.mention}!"
+        e.set_image(url="https://media.discordapp.net/attachments/807071768258805764/1131018538577039390/PunchingGif.gif"),
+        await ctx.send(embed=e)
 
     # Throw Command
-    @commands.command(aliases=["worht", "Throw", "worhT"])
-    async def throw(self,ctx,user:discord.Member):
+    @commands.command(aliases=["worht", "Throw", "worhT", "THROW", "WORHT"])
+    async def throw(self, ctx, user:discord.Member):
         e = discord.Embed(color=0xc700ff)
         e.description = f"{ctx.author.mention} throws {user.mention} off a cliff!"
         e.set_image(url="https://media.discordapp.net/attachments/807071768258805764/1116579751897878558/ThrowGif.gif"),
         await ctx.send(embed=e)
+        
+    # Stalk Command
+    @commands.command(aliases=["lkats", "Stalk", "lkatS", "STALK", "LKATS"])
+    async def stalk(self, ctx, user:discord.Member):
+        chance_response = ["they got caught", "they didn't get caught"]
+        choice = random.choice(chance_response)
+        e = discord.Embed(color=0xc700ff)
+        e.description = f"{ctx.author.mention} stalks {user.mention} and {choice}!"
+        if choice == "they got caught":
+            e.set_image(url="https://cdn.discordapp.com/attachments/807071768258805764/1131011194325569616/CaughtStalkingGif.gif")
+        else:
+            e.set_image(url="https://media.discordapp.net/attachments/807071768258805764/1131011165644922940/StalkingGif.gif")
+        await ctx.send(embed=e)
 
     # Kidnap Command
-    @commands.command(aliases=["pandik", "Kidnap", "pandiK"])
+    @commands.command(aliases=["pandik", "Kidnap", "pandiK", "KIDNAP", "PANDIK"])
     async def kidnap(self, ctx, user:discord.Member):
         e = discord.Embed(color=0xc700ff)
         e.description = f"{ctx.author.mention} kidnaps {user.mention}!"
@@ -47,7 +84,7 @@ class Action(commands.Cog):
         await ctx.send(embed=e)
     
     # Punt Command
-    @commands.command(aliases=["tnup", "Punt", "tnuP"])
+    @commands.command(aliases=["tnup", "Punt", "tnuP", "PUNT", "TNUP"])
     async def punt(self, ctx, user:discord.Member):
         e = discord.Embed(color=0xc700ff)
         e.description = f"{ctx.author.mention} punts {user.mention}!"
@@ -55,7 +92,7 @@ class Action(commands.Cog):
         await ctx.send(embed=e)
 
     # Strangle Command
-    @commands.command(aliases=["elgnarts", "Strangle", "elgnartS"])
+    @commands.command(aliases=["elgnarts", "Strangle", "elgnartS", "STRANGLE", "ELGNARTS"])
     async def strangle(self, ctx, user:discord.Member):
         strangle_response = ["they crush their windpipes, killing them! RIP ☠️", f"causes them to faint!", f"they're hands slip, {user.mention} gets away!", f"they grab at {ctx.author.mention}, strangling them back!"]
         strangle_owner_response = ["it kills them! RIP ☠️", f"causes {user.mention} to faint!"]
@@ -72,7 +109,7 @@ class Action(commands.Cog):
             await ctx.send(embed=e)
         
     # Stab Command
-    @commands.command(aliases=["bats", "Stab", "batS"])
+    @commands.command(aliases=["bats", "Stab", "batS", "STAB", "BATS"])
     async def stab(self, ctx, user:discord.Member):
         stab_response = ["it kills them! RIP ☠️", "they bleed out! RIP ☠️","they missed!", f"due to their momentum, the knife comes back and stabs {ctx.author.mention}!"]
         stab_owner_response = ["it kills them! RIP ☠️", f"{user.mention} bleeds out! RIP ☠️"]
@@ -89,7 +126,7 @@ class Action(commands.Cog):
             await ctx.send(embed=e)
     
     # Shoot Command
-    @commands.command(aliases=["toohs", "Shoot", "toohS"], pass_context=True)
+    @commands.command(aliases=["toohs", "Shoot", "toohS", "SHOOT", "TOOHS"])
     async def shoot(self, ctx, user:discord.Member):
         shoot_response = ["it kills them! RIP ☠️", "it goes straight through their skull! RIP ☠️","it does nothing! They have a body of steel!", f"it ricochets off the wall and kills {ctx.author.mention}! RIP ☠️", "the gun jams!"]
         shoot_owner_response = ["it kills them! RIP ☠️", "it goes straight through their skull! RIP ☠️"]
@@ -106,7 +143,7 @@ class Action(commands.Cog):
             await ctx.send(embed=e)
 
     # Deathnote Command
-    @commands.command(aliases=["etonhtaed", "Deathnote", "etonhtaeD"])
+    @commands.command(aliases=["etonhtaed", "Deathnote", "etonhtaeD", "DEATHNOTE", "ETONHTAED"])
     async def deathnote(self, ctx, user:discord.Member, *, arg):
         
         # Embeds
@@ -175,39 +212,39 @@ class Action(commands.Cog):
         e15.set_image(url="https://media.discordapp.net/attachments/807071768258805764/1116947898169557002/HurricaneGif.gif")
 
         # Comparing the user arg to the statements
-        if arg.lower() == "cliff":
+        if arg.lower() == "cliff" or "ffilc":
             await ctx.send(embed=e1)
-        if arg.lower() == "train":
+        if arg.lower() == "train" or "niart":
             await ctx.send(embed=e2)
-        if arg.lower() == "drown":
+        if arg.lower() == "drown" or "nword":
             await ctx.send(embed=e3)
-        if arg.lower() == "crush":
+        if arg.lower() == "crush" or "hsurc":
             await ctx.send(embed=e4)
-        if arg.lower() == "choke":
+        if arg.lower() == "choke" or "ekohc":
             await ctx.send(embed=e5)
-        if arg.lower() == "car crash":
+        if arg.lower() == "car crash" or "hsarc rac":
             await ctx.send(embed=e6)
-        if arg.lower() == "murder":
+        if arg.lower() == "murder" or "redrum":
             await ctx.send(embed=e7)
-        if arg.lower() == "shock":
+        if arg.lower() == "shock" or "kcohs":
             await ctx.send(embed=e8)
-        if arg.lower() == "fire":
+        if arg.lower() == "fire" or "erif":
             await ctx.send(embed=e9)
-        if arg.lower() == "explosion":
+        if arg.lower() == "explosion" or "noisolpxe":
             await ctx.send(embed=e10)
-        if arg.lower() == "lightning":
+        if arg.lower() == "lightning" or "gninthgil":
             await ctx.send(embed=e11)
-        if arg.lower() == "volcano":
+        if arg.lower() == "volcano" or "onaclov":
             await ctx.send(embed=e12)
-        if arg.lower() == "tornado":
+        if arg.lower() == "tornado" or "odanrot":
             await ctx.send(embed=e13)
-        if arg.lower() == "earthquake":
+        if arg.lower() == "earthquake" or "ekauqhtrae":
             await ctx.send(embed=e14)
-        if arg.lower() == "hurricane":
+        if arg.lower() == "hurricane" or "enacirruh":
             await ctx.send(embed=e15)
 
     # Highfive Command
-    @commands.command(aliases=["evifhgih", "Highfive", "evifhgiH"])
+    @commands.command(aliases=["evifhgih", "Highfive", "evifhgiH", "HIGHFIVE", "EVIFHGIH"])
     async def highfive(self, ctx, user:discord.Member): 
         e = discord.Embed(color=0xc700ff)
         e.description = f"{ctx.author.mention} highfives {user.mention}!"
@@ -215,7 +252,7 @@ class Action(commands.Cog):
         await ctx.send(embed=e)
 
     # Poke Command
-    @commands.command(aliases=["ekop", "Poke", "ekoP"])
+    @commands.command(aliases=["ekop", "Poke", "ekoP", "POKE", "EKOP"])
     async def poke(self, ctx, user:discord.Member):
         e = discord.Embed(color=0xc700ff)
         e.description = f"{ctx.author.mention} pokes {user.mention}!"
@@ -223,7 +260,7 @@ class Action(commands.Cog):
         await ctx.send(embed=e)
 
     # Pat Command
-    @commands.command(aliases=["tap", "Pat", "taP"])
+    @commands.command(aliases=["tap", "Pat", "taP", "PAT", "TAP"])
     async def pat(self, ctx, user:discord.Member):
         e = discord.Embed(color=0xc700ff)
         e.description = f"{ctx.author.mention} pats {user.mention}!"
@@ -231,7 +268,7 @@ class Action(commands.Cog):
         await ctx.send(embed=e)
     
     # Hug Command
-    @commands.command(aliases=["guh", "Hug", "guH"])
+    @commands.command(aliases=["guh", "Hug", "guH", "HUG", "GUH"])
     async def hug(self, ctx, user:discord.Member):  
         e = discord.Embed(color=0xc700ff)
         e.description = f"{ctx.author.mention} hugs {user.mention}!"
@@ -239,7 +276,7 @@ class Action(commands.Cog):
         await ctx.send(embed=e)
 
     # Kiss Command
-    @commands.command(aliases=["ssik", "Kiss", "ssiK"])
+    @commands.command(aliases=["ssik", "Kiss", "ssiK", "KISS", "SSIK"])
     async def kiss(self, ctx, user:discord.Member):
         e = discord.Embed(color=0xc700ff)
         e.description = f"{ctx.author.mention} kisses {user.mention}!"
@@ -247,7 +284,7 @@ class Action(commands.Cog):
         await ctx.send(embed=e)
 
     # Cuddle Command
-    @commands.command(aliases=["eldduc", "Cuddle", "eldduC"])
+    @commands.command(aliases=["eldduc", "Cuddle", "eldduC", "CUDDLE", "ELDDUC"])
     async def cuddle(self, ctx, user:discord.Member): 
         e = discord.Embed(color=0xc700ff)
         e.description = f"{ctx.author.mention} cuddles with {user.mention}!"
