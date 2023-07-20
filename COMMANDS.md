@@ -24,7 +24,7 @@ say | Says the users input text | `say <text>`
 lovetest | Gives a love percentage between two users | `lovetest`
 cute | Sends a picture of a cute animal | `cute`
 duel | Allows two users to duel in a guessing-game | `duel @user`
-rp | Allows two users to play 'rock paper scissors' | `rps @user`
+rps | Allows two users to play 'rock paper scissors' | `rps @user`
 
 ## 🎯 Action
 Command | Description | Usage
