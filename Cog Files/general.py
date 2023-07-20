@@ -16,7 +16,7 @@ ge.add_field(
           f"\n> • `Test`"
           f"\n> • `Ping`"
           f"\n> • `Suggest`"
-          f"\n> • `Poll`",
+          f"\n> • `Poll` - Slash",
 )
 
 # Fun Commands Embed
@@ -29,16 +29,21 @@ fe.add_field(
           f"\n> • `Say`"
           f"\n> • `Lovetest`"
           f"\n> • `Cute`"
-          f"\n> • `Duel`",
+          f"\n> • `Duel`"
+          f"\n> • `Rps`",
 )
 
 # Action Commands Embed
 ae = discord.Embed(color=0xc700ff)
 ae.add_field(
     name="🎯 __Action Commands__",
-    value=f"> • `Bonk`"
+    value=f"> • `Sniff`"
+          f"\n> • `Bonk`"
+          f"\n> • `Vomit`"
           f"\n> • `Slap`"
+          f"\n> • `Punch`"
           f"\n> • `Throw`"
+          f"\n> • `Stalk`"
           f"\n> • `Kidnap`"
           f"\n> • `Punt`"
           f"\n> • `Strangle`"
@@ -117,7 +122,7 @@ class General(commands.Cog):
         self.bot = bot 
     
     # Help Command
-    @commands.command(aliases=["pleh", "Help", "pleH"])
+    @commands.command(aliases=["pleh", "Help", "pleH", "HELP", "PLEH"])
     async def help(self, ctx):
         e = discord.Embed(color=0xc700ff)
         e.set_thumbnail(url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
@@ -136,27 +141,25 @@ class General(commands.Cog):
         await ctx.send(embed=e, view=view)
         
     # Info Command
-    @commands.command(aliases=["ofni", "Info", "ofnI"])
+    @commands.command(aliases=["ofni", "Info", "ofnI", "INFO", "OFNI"])
     async def info(self, ctx):
         delta_uptime = datetime.utcnow() - bot.launch_time
         hours, remainder = divmod(int(delta_uptime.total_seconds()), 3600)
         minutes, seconds = divmod(remainder, 60)
         days, hours = divmod(hours, 24)
-    
         member_count = len(ctx.guild.members) # includes bots
         true_member_count = len([m for m in ctx.guild.members if not m.bot]) # doesn't include bots
-        
         e = discord.Embed(color=0xc700ff)
         e.set_thumbnail(url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
         e.description = f"🤖 Bot Information 🤖"
         e.add_field(
             name="✧ __Statistics__",
             value=f"> **Prefix:** !"
-                  f"\n> **Commands:** [42]"
-		  f"\n> **Code:** 1,328 Lines"
+                  f"\n> **Commands:** [47]"
+		  f"\n> **Code:** 1,526 Lines"
                   f"\n> **Ping:** {round(self.bot.latency * 1000)}ms"
                   f"\n> **Users:** {true_member_count}"
-                  f"\n> **Uptime:** {days}**d** {hours}**h** {minutes}**m** {seconds}**s**",
+        	  f"\n> **Uptime:** {days}**d** {hours}**h** {minutes}**m** {seconds}**s**",
             inline=False
         )
         e.add_field(
@@ -174,12 +177,12 @@ class General(commands.Cog):
         await ctx.send(embed=e)
 
     # Test Command
-    @commands.command(aliases=["tset", "Test", "tseT"])
+    @commands.command(aliases=["tset", "Test", "tseT", "TEST", "TSET"])
     async def test(self, ctx):
         await ctx.send("I'm up!")
 
     # Ping Command
-    @commands.command(aliases=["gnip", "Ping", "gniP"])
+    @commands.command(aliases=["gnip", "Ping", "gniP", "PING", "GNIP"])
     async def ping(self, ctx):
         e = discord.Embed(color=0xc700ff)
         e.add_field(
@@ -190,27 +193,39 @@ class General(commands.Cog):
         await ctx.send(embed=e)
 
     # Suggest Command
-    @commands.command(aliases=["tseggus", "Suggest", "tsegguS"])
+    @commands.command(aliases=["tseggus", "Suggest", "tsegguS", "SUGGEST", "TSEGGUS"])
     async def suggest(self, ctx, *, suggestion):
         se = discord.Embed(color=0xc700ff)
         se.set_author(name=f"Suggested by {ctx.message.author}", icon_url=ctx.author.avatar.url)
-        se.description = f"> {suggestion}"
+        se.set_thumbnail(url=ctx.author.avatar.url)
+        se.description = suggestion
         se.timestamp = datetime.utcnow()
         channel = self.bot.get_channel(1065657740573286523)
         vote = await channel.send(embed=se)
         await vote.add_reaction("✅")
         await vote.add_reaction("❌")
-    
-    # Poll Command
-    @commands.command(aliases=["llop", "Poll", "lloP"])
-    async def poll(self, ctx, *, question):
-        pe = discord.Embed(color=0xc700ff)
-        pe.set_author(name=f"Poll by {ctx.message.author}", icon_url=ctx.author.avatar.url)
-        pe.description = f"> {question}"
-        pe.timestamp = datetime.utcnow()
-        vote = await ctx.send(embed=pe)
-        await vote.add_reaction("✅")
-        await vote.add_reaction("❌")
+        
+    # Poll Command - Slash
+    @commands.hybrid_command(name="poll", description="Create a poll!")
+    async def poll(self, ctx, question:str, option1:str=None, option2:str=None, option3:str=None, option4:str=None, option5:str=None):
+        options = [option1, option2, option3, option4, option5]
+        options = [option for option in options if option is not None]
+        emoji_list = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣"]      
+        if not options:
+            await ctx.send("Please provide at least two options for the poll.")
+            return
+        if len(options) > 5:
+            await ctx.send("You can only have up to 5 options in the poll.")
+            return       
+        e = discord.Embed(color=0xc700ff)
+        e.title = f"📊 **{question}** 📊"
+        description_text = ""
+        for i, option in enumerate(options):
+            description_text += f"\n{emoji_list[i]} {option}"
+        e.description = description_text
+        msg = await ctx.send(embed=e)
+        for i in range(len(options)):
+            await msg.add_reaction(emoji_list[i])
 
 
 async def setup(bot):
