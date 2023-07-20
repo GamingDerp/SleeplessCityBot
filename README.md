@@ -11,11 +11,11 @@ Private commands/menus will not be counted in the "Features" section.
 
 
 # 📋 Features
-**42** commands across **5** different categories.
+**47** commands across **5** different categories.
 
 - 📌 **General:** `Help`, `Info`, `Test`, `Ping`, `Suggest`, `Poll`
 - 🎉 **Fun:** `Coinflip`, `Ask`, `Reverse`, `Lovetest`, `Cute`, `Duel` and **1** more!
-- 🎯 **Action:** `Bonk`, `Slap`, `Throw`, `Kidnap`, `Punt`, `Strangle` and **9** more!
+- 🎯 **Action:** `Sniff`, `Bonk`, `Vomit`, `Slap`, `Punch`, `Throw` and **13** more!
 - 🧮 **Misc:** `Whois`, `Avatar`, `Snipe`, `Deathhelp`, `Pickle`, `Remind`
 - 🔰 **Staff:** `Purge`, `Ban`, `Unban`, `Kick`, `Timeout`, `Warn` and **2** more!
 - **Full list of commands:** [Here](https://github.com/GamingDerp/SleeplessNightsBot/blob/main/COMMANDS.md)
@@ -24,7 +24,7 @@ Private commands/menus will not be counted in the "Features" section.
 - Welcome/Leaving Messages
 - Responds when pinged
 - Adds "Troll Face" when '69' is counted to in `#counting`
-- All command names can be used backwards, example: `!pleh` (!help)
+- All command names can be used backwards and in all caps, example: `!pleh` (!help)
 - Logging Events
 
 # 📑 Credit
