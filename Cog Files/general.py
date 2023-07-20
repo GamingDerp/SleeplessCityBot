@@ -158,7 +158,7 @@ class General(commands.Cog):
             name="✧ __Statistics__",
             value=f"> **Prefix:** !"
                   f"\n> **Commands:** [49]"
-		  f"\n> **Code:** 1,492 Lines"
+		  f"\n> **Code:** 1,490 Lines"
                   f"\n> **Ping:** {round(self.bot.latency * 1000)}ms"
                   f"\n> **Users:** {true_member_count}"
         	  f"\n> **Uptime:** {days}**d** {hours}**h** {minutes}**m** {seconds}**s**",
