@@ -9,7 +9,7 @@ class Staff(commands.Cog):
         self.bot = bot
         
     # Purge Command
-    @commands.command(aliases=["egrup", "Purge", "egruP"], pass_context=True)
+    @commands.command(aliases=["egrup", "Purge", "egruP", "PURGE", "EGRUP"], pass_context=True)
     async def purge(self, ctx, limit:int):
         role = discord.utils.get(ctx.guild.roles, name="🔆 Senior Mod")
         user = ctx.author
@@ -24,7 +24,7 @@ class Staff(commands.Cog):
             await ctx.message.delete()
 
     # Ban Command
-    @commands.command(aliases=["nab", "Ban", "naB"])
+    @commands.command(aliases=["nab", "Ban", "naB", "BAN", "NAB"])
     async def ban(self, ctx, member:discord.Member, *, reason=None):
         role = discord.utils.get(ctx.guild.roles, name="🔆 Senior Mod")
         user = ctx.author
@@ -40,7 +40,7 @@ class Staff(commands.Cog):
             await ctx.send(embed=e)
         
     # Unban Command
-    @commands.command(aliases=["nabnu", "Unban", "nabnU"])
+    @commands.command(aliases=["nabnu", "Unban", "nabnU", "UNBAN", "NABNU"])
     async def unban(self, ctx, id:int):
         member = await self.bot.fetch_user(id)
         role = discord.utils.get(ctx.guild.roles, name="🔆 Senior Mod")
@@ -57,7 +57,7 @@ class Staff(commands.Cog):
             await ctx.send(embed=e)
 
     # Kick Command
-    @commands.command(aliases=["kcik", "Kick", "kciK"])
+    @commands.command(aliases=["kcik", "Kick", "kciK", "KICK", "KCIK"])
     async def kick(self, ctx, member:discord.Member, *, reason=None):
         role = discord.utils.get(ctx.guild.roles, name="💠 Moderator")
         user = ctx.author
@@ -85,7 +85,7 @@ class Staff(commands.Cog):
             await ctx.send(embed=e)
 
     # Timeout Command
-    @commands.command(aliases=["tuoemit", "Timeout", "tuoemiT"])
+    @commands.command(aliases=["tuoemit", "Timeout", "tuoemiT", "TIMEOUT", "TUOEMIT"])
     async def timeout(self, ctx, member:discord.Member, duration, *, reason=None):
         role = discord.utils.get(ctx.guild.roles, name="💠 Moderator")
         user = ctx.author
@@ -119,7 +119,7 @@ class Staff(commands.Cog):
             await ctx.send(embed=e)
 
     # Warn Command
-    @commands.command(aliases=["nraw", "Warn", "nraW"])
+    @commands.command(aliases=["nraw", "Warn", "nraW", "WARN", "NRAW"])
     async def warn(self, ctx, member: discord.Member, *, reason=None):
         role = discord.utils.get(ctx.guild.roles, name="🧸 Helper")
         user = ctx.author
@@ -158,7 +158,7 @@ class Staff(commands.Cog):
             await ctx.send(embed=e)
 
     # WarnList Command
-    @commands.command(aliases=["tsilnraw", "Warnlist", "tsilnraW"])
+    @commands.command(aliases=["tsilnraw", "Warnlist", "tsilnraW", "WARNLIST", "TSILNRAW"])
     async def warnlist(self, ctx, member:discord.Member):
         role = discord.utils.get(ctx.guild.roles, name="🧸 Helper")
         user = ctx.author
@@ -188,7 +188,7 @@ class Staff(commands.Cog):
             await ctx.send(embed=e)
 
     # Delwarn Command
-    @commands.command(aliases=["nrawled", "Delwarn", "nrawleD"])
+    @commands.command(aliases=["nrawled", "Delwarn", "nrawleD", "DELWARN", "NRAWLED"])
     async def delwarn(self, ctx, member:discord.Member, warn_index:int):
         role = discord.utils.get(ctx.guild.roles, name="🔆 Senior Mod")
         user = ctx.author
