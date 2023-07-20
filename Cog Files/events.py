@@ -44,6 +44,18 @@ class Events(commands.Cog):
         e = discord.Embed(color=0xc700ff)
         e.description = f"👋 {member.name} left! 👋"
         await channel.send(embed=e)
+    
+    # Sends a message when a user boosts the server
+    @commands.Cog.listener()
+    async def on_member_update(self, before, after):
+        if before.premium_since is None and after.premium_since is not None:
+            channel = self.bot.get_channel(1065473991940247624)
+            e = discord.Embed(color=0xff73fa)
+            e.title = f"<a:DiscordBoost:1121298549657829436> {after.name} boosted the server!"
+            e.set_thumbnail(url=after.avatar_url)
+            e.description = f"Thank you {after.mention}! \nYou'll now recieve these perks: \n> Image Perms \n> Embed Perms \n> Video Perms \n> Streaming Perms \n*and access to the exclusive <#1065651827703554109>!*"
+            e.add_field(name="Boost Level", value=after.premium_since.boost_level)
+            await channel.send(embed=e)
 
 
 async def setup(bot):
