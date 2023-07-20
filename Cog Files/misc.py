@@ -14,7 +14,7 @@ class Misc(commands.Cog):
         self.bot = bot
         
     # WhoIs Command
-    @commands.command(aliases=["siohw", "Whois", "siohW"])
+    @commands.command(aliases=["siohw", "Whois", "siohW", "WHOIS", "SIOHW"])
     async def whois(self, ctx, user:discord.Member):
         e = discord.Embed(color=0xc700ff)
         e.set_author(name=f"Gathering Information..."),
@@ -79,7 +79,7 @@ class Misc(commands.Cog):
         sniped_message = message
 
     # Snipe Command
-    @commands.command(aliases=["epins", "Snipe", "epinS"])
+    @commands.command(aliases=["epins", "Snipe", "epinS", "SNIPE", "EPINS"])
     async def snipe(self, ctx):
         global sniped_message
         if sniped_message is None:
@@ -101,7 +101,7 @@ class Misc(commands.Cog):
         sniped_message = None  # Reset sniped message after displaying
         
     # Deathnote Help Command
-    @commands.command(aliases=["plehhtaed", "Deathhelp", "plehhtaeD"])
+    @commands.command(aliases=["plehhtaed", "Deathhelp", "plehhtaeD", "DEATHNOTEHELP", "PLEHHTAED"])
     async def deathhelp(self, ctx):
         e = discord.Embed(color=0xc700ff)
         e.description = "☠️ Available Death Methods ☠️"
@@ -133,31 +133,27 @@ class Misc(commands.Cog):
             await ctx.send("I'M PICCKLLE RIIIIIICCCKKKK 🥒")
 
     # Remind Command
-    @commands.command(aliases=["dnimer", "Remind", "dnimeR"])
+    @commands.command(aliases=["dnimer", "Remind", "dnimeR", "REMIND", "DNIMER"])
     async def remind(self, ctx, time, *, task):
         def convert(time):
             pos = ['s', 'm', 'h', 'd']
             time_dict = {"s": 1, "m": 60, "h": 3600, "d": 3600*24}
             unit = time[-1]
-
             if unit not in pos:
                 return -1
             try:
                 val = int(time[:-1])
             except:
                 return -2
- 
             return val * time_dict[unit]
-
         converted_time = convert(time)
-    
         if converted_time == -1:
             await ctx.send("You didn't input the time correctly!")
             return
         if converted_time == -2:
             await ctx.send("The time must be an integer!")
             return
-    
+
         e = discord.Embed(color=0xc700ff)
         e.description = "⏰ Started Reminder ⏰"
         e.add_field(name="Time", value=time)
@@ -165,7 +161,7 @@ class Misc(commands.Cog):
         e.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar.url)
         e.timestamp = datetime.utcnow()
         await ctx.send(embed=e)
-        
+
         channel = self.bot.get_channel(1119185446950408232)
         e = discord.Embed(color=0xc700ff)
         e.set_thumbnail(url=ctx.author.avatar.url)
@@ -175,7 +171,7 @@ class Misc(commands.Cog):
         e.add_field(name="__Task__", value=task, inline=False)
         e.timestamp = datetime.utcnow()
         await channel.send(embed=e)
-    
+ 
         await asyncio.sleep(converted_time)
         await ctx.send(ctx.author.mention)
         e = discord.Embed(color=0xc700ff)
