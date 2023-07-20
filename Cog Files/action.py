@@ -17,7 +17,21 @@ class Action(commands.Cog):
         e.description = f"{ctx.author.mention} sniffs {user.mention}!"
         e.set_image(url="https://media.discordapp.net/attachments/807071768258805764/1131013212331069551/SniffingGif.gif"),
         await ctx.send(embed=e)
-
+    
+    # Bite Command
+    @commands.command(aliases=["etib", "Bite", "etiB", "BITE", "ETIB"])
+    async def bite(self, ctx, user:discord.Member):
+        e = discord.Embed(color=0xc700ff)
+        e.description = f"{ctx.author.mention} bites {user.mention}!"
+        bitegif = [
+            "https://media.discordapp.net/attachments/807071768258805764/1131664029052588122/AnimeBite3.gif", 
+            "https://media.discordapp.net/attachments/807071768258805764/1131664029505556561/AnimeBite1.gif", 
+            "https://media.discordapp.net/attachments/807071768258805764/1131664029929189516/AnimeBite2.gif"
+        ]
+        bite_choice = random.choice(bitegif)
+        e.set_image(url=bitegif),
+        await ctx.send(embed=e)
+    
     # Bonk Command
     @commands.command(aliases=["knob", "Bonk", "knoB", "BONK", "KNOB"])
     async def bonk(self, ctx, user:discord.Member):
@@ -212,35 +226,35 @@ class Action(commands.Cog):
         e15.set_image(url="https://media.discordapp.net/attachments/807071768258805764/1116947898169557002/HurricaneGif.gif")
 
         # Comparing the user arg to the statements
-        if arg.lower() == "cliff" or "ffilc":
+        if arg.lower() == "cliff" or arg.lower() == "ffilc":
             await ctx.send(embed=e1)
-        if arg.lower() == "train" or "niart":
+        if arg.lower() == "train" or arg.lower() == "niart":
             await ctx.send(embed=e2)
-        if arg.lower() == "drown" or "nword":
+        if arg.lower() == "drown" or arg.lower() == "nword":
             await ctx.send(embed=e3)
-        if arg.lower() == "crush" or "hsurc":
+        if arg.lower() == "crush" or arg.lower() == "hsurc":
             await ctx.send(embed=e4)
-        if arg.lower() == "choke" or "ekohc":
+        if arg.lower() == "choke" or arg.lower() == "ekohc":
             await ctx.send(embed=e5)
-        if arg.lower() == "car crash" or "hsarc rac":
+        if arg.lower() == "car crash" or arg.lower() == "hsarc rac":
             await ctx.send(embed=e6)
-        if arg.lower() == "murder" or "redrum":
+        if arg.lower() == "murder" or arg.lower() == "redrum":
             await ctx.send(embed=e7)
-        if arg.lower() == "shock" or "kcohs":
+        if arg.lower() == "shock" or arg.lower() == "kcohs":
             await ctx.send(embed=e8)
-        if arg.lower() == "fire" or "erif":
+        if arg.lower() == "fire" or arg.lower() == "erif":
             await ctx.send(embed=e9)
-        if arg.lower() == "explosion" or "noisolpxe":
+        if arg.lower() == "explosion" or arg.lower() == "noisolpxe":
             await ctx.send(embed=e10)
-        if arg.lower() == "lightning" or "gninthgil":
+        if arg.lower() == "lightning" or arg.lower() == "gninthgil":
             await ctx.send(embed=e11)
-        if arg.lower() == "volcano" or "onaclov":
+        if arg.lower() == "volcano" or arg.lower() == "onaclov":
             await ctx.send(embed=e12)
-        if arg.lower() == "tornado" or "odanrot":
+        if arg.lower() == "tornado" or arg.lower() == "odanrot":
             await ctx.send(embed=e13)
-        if arg.lower() == "earthquake" or "ekauqhtrae":
+        if arg.lower() == "earthquake" or arg.lower() == "ekauqhtrae":
             await ctx.send(embed=e14)
-        if arg.lower() == "hurricane" or "enacirruh":
+        if arg.lower() == "hurricane" or arg.lower() == "enacirruh":
             await ctx.send(embed=e15)
 
     # Highfive Command
@@ -267,6 +281,20 @@ class Action(commands.Cog):
         e.set_image(url="https://cdn.discordapp.com/attachments/807071768258805764/1106851615320846386/AnimePatGif.gif"),
         await ctx.send(embed=e)
     
+    # Lick Command
+    @commands.command(aliases=["kcil", "Lick", "kciL", "LICK", "KCIL"])
+    async def lick(self, ctx, user:discord.Member):
+        e = discord.Embed(color=0xc700ff)
+        e.description = f"{ctx.author.mention} lick {user.mention}!"
+        lickgif = [
+            "https://media.discordapp.net/attachments/807071768258805764/1131664016289300532/AnimeLick2.gif", 
+            "https://media.discordapp.net/attachments/807071768258805764/1131664016868130978/AnimeLick3.gif", 
+            "https://media.discordapp.net/attachments/807071768258805764/1131664017476288582/AnimeLick1.gif"
+        ]
+        lick_choice = random.choice(lickgif)
+        e.set_image(url=lickgif),
+        await ctx.send(embed=e)
+
     # Hug Command
     @commands.command(aliases=["guh", "Hug", "guH", "HUG", "GUH"])
     async def hug(self, ctx, user:discord.Member):  
