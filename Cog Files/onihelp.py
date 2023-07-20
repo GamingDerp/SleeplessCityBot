@@ -13,7 +13,7 @@ class OniHelp(commands.Cog):
         self.bot = bot
 
     # OniHelp Command
-    @commands.command(aliases=["plehino", "Onihelp", "plehinO"])
+    @commands.command(aliases=["plehino", "Onihelp", "plehinO", "ONIHELP", "PLEHINO"])
     async def onihelp(self, ctx):
         if ctx.author.id == oni_id:
             e = discord.Embed(color=0xf28aad)
@@ -34,7 +34,7 @@ class OniHelp(commands.Cog):
             await ctx.send(embed=e)
 
     # Vore Command
-    @commands.command(aliases=["erov", "Vore", "eroV"])
+    @commands.command(aliases=["erov", "Vore", "eroV", "VORE", "EROV"])
     async def vore(self, ctx, user:discord.Member):
         if ctx.author.id == oni_id or ctx.author.id == kaoru_id:
             e = discord.Embed(color=0xf28aad)
@@ -49,7 +49,7 @@ class OniHelp(commands.Cog):
             await ctx.send(embed=e)
 
     # Motorboat Command
-    @commands.command(aliases=["taobrotom", "Motorboat", "taobrotoM"])
+    @commands.command(aliases=["taobrotom", "Motorboat", "taobrotoM", "MOTORBOAT", "TAOBROTOM"])
     async def motorboat(self, ctx, user:discord.Member):
         if ctx.author.id == oni_id or ctx.author.id == kaoru_id:
             e = discord.Embed(color=0xf28aad)
