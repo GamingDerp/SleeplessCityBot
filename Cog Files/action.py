@@ -28,8 +28,7 @@ class Action(commands.Cog):
             "https://media.discordapp.net/attachments/807071768258805764/1131664029505556561/AnimeBite1.gif", 
             "https://media.discordapp.net/attachments/807071768258805764/1131664029929189516/AnimeBite2.gif"
         ]
-        bite_choice = random.choice(bitegif)
-        e.set_image(url=bitegif),
+        e.set_image(url=random.choice(bitegif)),
         await ctx.send(embed=e)
     
     # Bonk Command
@@ -291,8 +290,7 @@ class Action(commands.Cog):
             "https://media.discordapp.net/attachments/807071768258805764/1131664016868130978/AnimeLick3.gif", 
             "https://media.discordapp.net/attachments/807071768258805764/1131664017476288582/AnimeLick1.gif"
         ]
-        lick_choice = random.choice(lickgif)
-        e.set_image(url=lickgif),
+        e.set_image(url=random.choice(lickgif)),
         await ctx.send(embed=e)
 
     # Hug Command
