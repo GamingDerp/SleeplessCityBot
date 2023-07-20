@@ -30,6 +30,7 @@ rps | Allows two users to play 'rock paper scissors' | `rps @user`
 Command | Description | Usage
 --- | --- | ---
 sniff | Sniffs another user | `sniff @user`
+bite | Bites another user | `bite @user`
 bonk | Bonks another user | `bonk @user`
 vomit | Vomits on another user | `vomit @user`
 slap | Slaps another user | `slap @user`
@@ -45,6 +46,7 @@ deathnote | Lets a user choose the method of death for another user | `deathnote
 highfive | Highfives another user | `highfive @user`
 poke | Pokes another user | `poke @user`
 pat | Pats another user | `pat @user`
+lick | Licks another user | `lick @user`
 hug | Hugs another user | `hug @user`
 kiss | Kisses another user | `kiss @user`
 cuddle | Cuddles another user | `cuddle @user`
