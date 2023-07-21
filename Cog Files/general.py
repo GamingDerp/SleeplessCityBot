@@ -1,3 +1,4 @@
+import os
 import discord
 from discord.ext import commands
 from datetime import datetime, timedelta
@@ -183,6 +184,19 @@ class General(commands.Cog):
     async def test(self, ctx):
         await ctx.send("I'm up!")
 
+    # Count Command
+    @commands.command()
+    async def count(self, ctx):
+        total_lines = 22
+        cog_directory = "./cogs"
+        for filename in os.listdir(cog_directory):
+            if filename.endswith(".py"):
+                with open(os.path.join(cog_directory, filename), "r") as file:
+                    lines = file.readlines()
+                    non_empty_lines = [line.strip() for line in lines if line.strip()]
+                    total_lines += len(non_empty_lines)
+        await ctx.send(f"Total lines of code in cogs: {total_lines}")
+        
     # Ping Command
     @commands.command(aliases=["gnip", "Ping", "gniP", "PING", "GNIP"])
     async def ping(self, ctx):
