@@ -152,6 +152,14 @@ class General(commands.Cog):
         days, hours = divmod(hours, 24)
         member_count = len(ctx.guild.members) # includes bots
         true_member_count = len([m for m in ctx.guild.members if not m.bot]) # doesn't include bots
+        total_lines = 22
+        cog_directory = "./cogs"
+        for filename in os.listdir(cog_directory):
+            if filename.endswith(".py"):
+                with open(os.path.join(cog_directory, filename), "r") as file:
+                    lines = file.readlines()
+                    non_empty_lines = [line.strip() for line in lines if line.strip()]
+                    total_lines += len(non_empty_lines)
         e = discord.Embed(color=0xc700ff)
         e.set_thumbnail(url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
         e.description = f"🤖 Bot Information 🤖"
@@ -159,7 +167,7 @@ class General(commands.Cog):
             name="✧ __Statistics__",
             value=f"> **Prefix:** !"
                   f"\n> **Commands:** [49]"
-			      f"\n> **Code:** 1,490 Lines"
+			      f"\n> **Code:** {total_lines} Lines"
                   f"\n> **Ping:** {round(self.bot.latency * 1000)}ms"
                   f"\n> **Users:** {true_member_count}"
         	      f"\n> **Uptime:** {days}**d** {hours}**h** {minutes}**m** {seconds}**s**",
@@ -183,19 +191,6 @@ class General(commands.Cog):
     @commands.command(aliases=["tset", "Test", "tseT", "TEST", "TSET"])
     async def test(self, ctx):
         await ctx.send("I'm up!")
-
-    # Count Command
-    @commands.command()
-    async def count(self, ctx):
-        total_lines = 22
-        cog_directory = "./cogs"
-        for filename in os.listdir(cog_directory):
-            if filename.endswith(".py"):
-                with open(os.path.join(cog_directory, filename), "r") as file:
-                    lines = file.readlines()
-                    non_empty_lines = [line.strip() for line in lines if line.strip()]
-                    total_lines += len(non_empty_lines)
-        await ctx.send(f"Total lines of code in cogs: {total_lines}")
         
     # Ping Command
     @commands.command(aliases=["gnip", "Ping", "gniP", "PING", "GNIP"])
