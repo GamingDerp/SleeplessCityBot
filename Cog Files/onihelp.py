@@ -45,8 +45,8 @@ class OniHelp(commands.Cog):
                 "https://media.discordapp.net/attachments/1065475897441914951/1112083146343723252/OniVoreGif3.gif"
             ]
             voregif = random.choice(vgifs)
-                e.set_image(url=voregif),
-                await ctx.send(embed=e)
+            e.set_image(url=voregif),
+            await ctx.send(embed=e)
         else:
             e = discord.Embed(color=0xf28aad)
             e.description = "🚨 That is a **Oni** command! You don't have the required perms! 🚨"
