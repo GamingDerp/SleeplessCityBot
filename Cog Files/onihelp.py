@@ -54,7 +54,12 @@ class OniHelp(commands.Cog):
         if ctx.author.id == oni_id or ctx.author.id == kaoru_id:
             e = discord.Embed(color=0xf28aad)
             e.description = f"{ctx.author.mention} motorboats {user.mention}!"
-            e.set_image(url="https://media.discordapp.net/attachments/807071768258805764/1114112965533245481/OniMotorboatGif.gif"),
+            mgifs = [
+                "https://media.discordapp.net/attachments/807071768258805764/1114112965533245481/OniMotorboatGif.gif", 
+                "https://media.discordapp.net/attachments/807071768258805764/1132211752914923580/MotorBoat2Gif.gif"
+            ]
+            motogif = random.choice(mgifs)
+            e.set_image(url=motogif),
             await ctx.send(embed=e)
         else:
             e = discord.Embed(color=0xf28aad)
