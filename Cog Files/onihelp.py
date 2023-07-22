@@ -39,9 +39,13 @@ class OniHelp(commands.Cog):
         if ctx.author.id == oni_id or ctx.author.id == kaoru_id:
             e = discord.Embed(color=0xf28aad)
             e.description = f"{ctx.author.mention} vores {user.mention}!"
-            with open("cogs/vore.txt") as f:
-                vore = f.readlines()
-                e.set_image(url=random.choice(vore)),
+            vgifs = [
+                "https://media.discordapp.net/attachments/1065475897441914951/1112083252572860517/OniVoreGif1.gif", 
+                "https://media.discordapp.net/attachments/1065475897441914951/1112083145974612008/OniVoreGif2.gif", 
+                "https://media.discordapp.net/attachments/1065475897441914951/1112083146343723252/OniVoreGif3.gif"
+            ]
+            voregif = random.choice(vgifs)
+                e.set_image(url=voregif),
                 await ctx.send(embed=e)
         else:
             e = discord.Embed(color=0xf28aad)
