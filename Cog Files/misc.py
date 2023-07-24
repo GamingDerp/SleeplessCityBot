@@ -42,7 +42,7 @@ class Misc(commands.Cog):
             "early_supporter": "<:EarlySupporter:1123772438380019762>",
             "discord_certified_moderator": "<:ModeratorProgramsAlumni:1123772518365409370>",
             "staff": "<:Staff:1123772450430267393>",
-            "partner": "<:Partner:1123774032932769812>"
+            "partner": "<:Partner:1123774032932769812>",
         }
         badges = [
             emoji
@@ -69,15 +69,22 @@ class Misc(commands.Cog):
         e.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar.url),
         e.timestamp = datetime.utcnow()
         await ctx.send(embed=e)
-    
-    # Snipe Event
-    sniped_message = None
 
+    # Snipe Events
+    sniped_message = None
+    
     @commands.Cog.listener()
     async def on_message_delete(self, message):
         global sniped_message
         sniped_message = message
-
+        
+    @commands.Cog.listener()
+    async def on_message_edit(self, before, after):
+        if before.author.bot: 
+            return
+        global sniped_message
+        sniped_message = before
+        
     # Snipe Command
     @commands.command(aliases=["epins", "Snipe", "epinS", "SNIPE", "EPINS"])
     async def snipe(self, ctx):
@@ -131,7 +138,7 @@ class Misc(commands.Cog):
     @commands.hybrid_command(name="pickle", description="Sends pickle rick")
     async def pickle(self, ctx):
             await ctx.send("I'M PICCKLLE RIIIIIICCCKKKK 🥒")
-
+        
     # Remind Command
     @commands.command(aliases=["dnimer", "Remind", "dnimeR", "REMIND", "DNIMER"])
     async def remind(self, ctx, time, *, task):
