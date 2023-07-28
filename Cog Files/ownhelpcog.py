@@ -7,7 +7,7 @@ import asyncio
 owner_id = 532706491438727169
 
 # OwnHelp Commands Class
-class OwnHelp(commands.Cog):
+class OwnHelpCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         
@@ -63,4 +63,4 @@ class OwnHelp(commands.Cog):
 
 
 async def setup(bot):
-    await bot.add_cog(OwnHelp(bot))
+    await bot.add_cog(OwnHelpCog(bot))
