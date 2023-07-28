@@ -1,6 +1,7 @@
 import os
 import discord
 import asyncio
+import aiosqlite
 from discord.utils import get
 from discord.ext import commands
 from datetime import datetime, timedelta
