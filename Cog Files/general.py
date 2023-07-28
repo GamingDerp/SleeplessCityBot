@@ -138,7 +138,7 @@ class General(commands.Cog):
                   f"\n> 🧮 `Misc Commands`"
                   f"\n> 🔰 `Staff Commands`",
         )
-        e.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar.url),
+        e.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar.url)
         e.timestamp = datetime.utcnow()
         view = DropdownView()
         await ctx.send(embed=e, view=view)
@@ -167,10 +167,10 @@ class General(commands.Cog):
             name="✧ __Statistics__",
             value=f"> **Prefix:** !"
                   f"\n> **Commands:** [48]"
-		  f"\n> **Code:** {total_lines} Lines"
+			      f"\n> **Code:** {total_lines} Lines"
                   f"\n> **Ping:** {round(self.bot.latency * 1000)}ms"
                   f"\n> **Users:** {true_member_count}"
-        	  f"\n> **Uptime:** {days}**d** {hours}**h** {minutes}**m** {seconds}**s**",
+        	      f"\n> **Uptime:** {days}**d** {hours}**h** {minutes}**m** {seconds}**s**",
             inline=False
         )
         e.add_field(
@@ -183,7 +183,7 @@ class General(commands.Cog):
             value=f"<:GitHub:1123773190238392504> [Repo Link](https://github.com/GamingDerp/SleeplessNightsBot)",
             inline=False
         )
-        e.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar.url),
+        e.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar.url)
         e.timestamp = datetime.utcnow()
         await ctx.send(embed=e)
 
