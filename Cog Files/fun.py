@@ -61,7 +61,7 @@ class Fun(commands.Cog):
     async def cute(self, ctx):
         e = discord.Embed(color=0xc700ff)
         e.set_author(name="Cute", icon_url=ctx.author.avatar.url)
-        with open("cogs/cute.txt") as f:
+        with open("txts/cute.txt") as f:
             cute = f.readlines()
         e.set_image(url=random.choice(cute))
         await ctx.send(embed=e)
