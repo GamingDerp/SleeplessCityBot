@@ -6,7 +6,7 @@ import random
 owner_id = 532706491438727169
 
 # Action Commands Class
-class Action(commands.Cog):
+class ActionCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -319,4 +319,4 @@ class Action(commands.Cog):
 
 
 async def setup(bot):
-    await bot.add_cog(Action(bot))
+    await bot.add_cog(ActionCog(bot))
