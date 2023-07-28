@@ -212,8 +212,8 @@ class Logs(commands.Cog):
         if before.name != after.name:
             e = discord.Embed(color=0xc700ff)
             e.set_author(name="🎭 Role Update")
-            e.add_field(name="__Before__", value=f"> {before.mention}")
-            e.add_field(name="__After__", value=f"> {after.mention}", inline=False)
+            e.add_field(name="__Before__", value=f"> {before.name}")
+            e.add_field(name="__After__", value=f"> {after.name}", inline=False)
             e.add_field(name="__Role ID__", value=f"> {after.id}", inline=False)
             e.timestamp = datetime.utcnow()
             await channel.send(embed=e)
