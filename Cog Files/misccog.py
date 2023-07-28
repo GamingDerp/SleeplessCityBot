@@ -2,14 +2,9 @@ import discord
 from discord.ext import commands
 from datetime import datetime, timedelta
 import asyncio
-
-# Misc Commands Class
-class Misc(commands.Cog):
-    def __init__(self, bot):
-        self.bot = bot
         
 # Misc Commands Class
-class Misc(commands.Cog):
+class MiscCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         
@@ -163,8 +158,8 @@ class Misc(commands.Cog):
 
         e = discord.Embed(color=0xc700ff)
         e.description = "⏰ Started Reminder ⏰"
-        e.add_field(name="Time", value=time)
-        e.add_field(name="Task", value=task)
+        e.add_field(name="__Time__", value=time)
+        e.add_field(name="__Task__", value=task)
         e.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar.url)
         e.timestamp = datetime.utcnow()
         await ctx.send(embed=e)
@@ -188,4 +183,4 @@ class Misc(commands.Cog):
 
 
 async def setup(bot):
-    await bot.add_cog(Misc(bot))
+    await bot.add_cog(MiscCog(bot))
