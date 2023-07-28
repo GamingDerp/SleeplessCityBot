@@ -7,7 +7,7 @@ import time
 bot_id = 1103103994777309205
 
 # Events Commands Class
-class Events(commands.Cog):
+class EventsCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -76,4 +76,4 @@ class Events(commands.Cog):
 
 
 async def setup(bot):
-    await bot.add_cog(Events(bot))
+    await bot.add_cog(EventsCog(bot))
