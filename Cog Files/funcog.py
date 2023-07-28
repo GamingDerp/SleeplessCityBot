@@ -4,7 +4,7 @@ import random
 import asyncio
 
 # Fun Commands Class
-class Fun(commands.Cog):
+class FunCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -249,4 +249,4 @@ class Fun(commands.Cog):
 
 
 async def setup(bot):
-    await bot.add_cog(Fun(bot))
+    await bot.add_cog(FunCog(bot))
