@@ -8,7 +8,7 @@ oni_id = 700958482454806574
 kaoru_id = 545792399209660416
 
 # OniHelp Commands Class
-class OniHelp(commands.Cog):
+class OniHelpCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -72,4 +72,4 @@ class OniHelp(commands.Cog):
 
 
 async def setup(bot):
-    await bot.add_cog(OniHelp(bot))
+    await bot.add_cog(OniHelpCog(bot))
