@@ -5,6 +5,7 @@ import aiosqlite
 from discord.utils import get
 from discord.ext import commands
 from datetime import datetime, timedelta
+import time
 
 # Bot Intents & Defining Bot
 bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
