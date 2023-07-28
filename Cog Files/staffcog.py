@@ -1,19 +1,41 @@
 import discord
 from discord.ext import commands
 from datetime import datetime, timedelta
-import json
+import time
+import aiosqlite
 
 # Staff Commands Class
-class Staff(commands.Cog):
+class StaffCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        
+    
+    # Creating table on startup   
+    @commands.Cog.listener()
+    async def on_ready(self):
+        await self.create_table()
+    
+    # Creates the database table if it doesn't exist
+    async def create_table(self):
+        async with aiosqlite.connect("dbs/warnlist.db") as db:
+            await db.execute('''
+                CREATE TABLE IF NOT EXISTS warns (
+                    user_id INTEGER,
+                    reason TEXT
+                )
+            ''')
+            await db.commit()
+            
+    # Fetches warns for a user
+    async def get_warns(self, user_id):
+        async with aiosqlite.connect("dbs/warnlist.db") as db:
+            cursor = await db.execute("SELECT reason FROM warns WHERE user_id = ?", (user_id,))
+            warns = await cursor.fetchall()
+            return warns
+    
     # Purge Command
     @commands.command(aliases=["egrup", "Purge", "egruP", "PURGE", "EGRUP"], pass_context=True)
     async def purge(self, ctx, limit:int):
-        role = discord.utils.get(ctx.guild.roles, name="🔆 Detective")
-        user = ctx.author
-        if role in user.roles:
+        if discord.utils.get(ctx.author.roles, name="💠 Sergeant"):
             await ctx.message.delete()
             await ctx.channel.purge(limit=limit)
         else:
@@ -25,13 +47,11 @@ class Staff(commands.Cog):
     # Ban Command
     @commands.command(aliases=["nab", "Ban", "naB", "BAN", "NAB"])
     async def ban(self, ctx, member:discord.Member, *, reason=None):
-        role = discord.utils.get(ctx.guild.roles, name="🔆 Detective")
-        user = ctx.author
-        if role in user.roles:
+        if discord.utils.get(ctx.author.roles, name="🔆 Detective"):
             e = discord.Embed(color=0xFf0000)
             e.description = f"<:BanHammer:1120488412558921848> {member.mention} has been banned! <:BanHammer:1120488412558921848> \n**Reason:** {reason}"
-            await member.ban()
             await ctx.channel.send(embed=e)
+            await member.ban()
         else:
             e = discord.Embed(color=0xc700ff)
             e.description = "🚨 That is a **High Staff** command! You don't have the required perms! 🚨"
@@ -41,9 +61,7 @@ class Staff(commands.Cog):
     @commands.command(aliases=["nabnu", "Unban", "nabnU", "UNBAN", "NABNU"])
     async def unban(self, ctx, id:int):
         member = await self.bot.fetch_user(id)
-        role = discord.utils.get(ctx.guild.roles, name="🔆 Detective")
-        user = ctx.author    
-        if role in user.roles:
+        if discord.utils.get(ctx.author.roles, name="🔆 Detective"):
             e = discord.Embed(color=0xc700ff)
             e.description = f":pray: {member.mention} has been unbanned! :pray:"
             await ctx.guild.unban(member)
@@ -56,13 +74,13 @@ class Staff(commands.Cog):
     # Kick Command
     @commands.command(aliases=["kcik", "Kick", "kciK", "KICK", "KCIK"])
     async def kick(self, ctx, member:discord.Member, *, reason=None):
-        role = discord.utils.get(ctx.guild.roles, name="💠 Sergeant")
-        user = ctx.author
-        if role in user.roles:
+        if discord.utils.get(ctx.author.roles, name="💠 Sergeant"):
             e = discord.Embed(color=0xc700ff)
             e.description = f"{member.mention} has been kicked! \n**Reason:** {reason}"
             await member.kick()
-            await ctx.channel.send(embed=e)            
+            await ctx.channel.send(embed=e)
+            
+            # Sending kick log to log channel
             channel = self.bot.get_channel(1119185446950408232)
             staff = ctx.author.mention
             kicked = member.mention
@@ -82,17 +100,17 @@ class Staff(commands.Cog):
     # Timeout Command
     @commands.command(aliases=["tuoemit", "Timeout", "tuoemiT", "TIMEOUT", "TUOEMIT"])
     async def timeout(self, ctx, member:discord.Member, duration, *, reason=None):
-        role = discord.utils.get(ctx.guild.roles, name="💠 Sergeant")
-        user = ctx.author
         time_units = {"s": 1, "m": 60, "h": 3600, "d": 86400}  # Mapping time units to seconds
         unit = duration[-1]
         amount = int(duration[:-1])
         seconds = amount * time_units[unit]
-        if role in user.roles:
+        if discord.utils.get(ctx.author.roles, name="🧸 Officer"):
             e = discord.Embed(color=0xc700ff)
             e.description = f"⏳ Timeout! ⏳ \n **User:** {member.mention} \n **Reason:** {reason} \n **Time:** {duration}"
             await member.timeout(timedelta(seconds=seconds), reason=reason)
             await ctx.send(embed=e)
+            
+            # Sending timeout log to log channel
             channel = self.bot.get_channel(1119185446950408232)
             timed = member.mention
             timer = ctx.author.mention
@@ -114,20 +132,18 @@ class Staff(commands.Cog):
     # Warn Command
     @commands.command(aliases=["nraw", "Warn", "nraW", "WARN", "NRAW"])
     async def warn(self, ctx, member: discord.Member, *, reason=None):
-        role = discord.utils.get(ctx.guild.roles, name="🧸 Police Officer")
-        user = ctx.author
-        if role in user.roles:
-            with open('cogs/warns.json', 'r') as file:
-                warns = json.load(file)
-            if str(member.id) not in warns:
-                warns[str(member.id)] = []
-            warns[str(member.id)].append(reason)
-            with open('cogs/warns.json', 'w') as file:
-                json.dump(warns, file, indent=4)
+        if discord.utils.get(ctx.author.roles, name="🧸 Officer"):
+            async with aiosqlite.connect("dbs/warnlist.db") as db:
+                await db.execute("INSERT INTO warns (user_id, reason) VALUES (?, ?)", (member.id, reason))
+                await db.commit()
             e = discord.Embed(color=0xc700ff)
-            e.description = f"⚠️ Warning! ️⚠️ \n **User:** {member.mention} \n **Reason:** {reason}"
+            e.description = f"⚠️ Warning ️⚠️"
+            e.add_field(name=f"**User:**", value=member.mention, inline=False)
+            e.add_field(name=f"**Reason:**", value=reason, inline=False)
             e.timestamp = datetime.utcnow()
             await ctx.send(embed=e)
+            
+            # Sending warn log to log channel
             channel = self.bot.get_channel(1119185446950408232)
             warned = member.mention
             warner = ctx.author.mention
@@ -147,22 +163,17 @@ class Staff(commands.Cog):
     # WarnList Command
     @commands.command(aliases=["tsilnraw", "Warnlist", "tsilnraW", "WARNLIST", "TSILNRAW"])
     async def warnlist(self, ctx, member:discord.Member):
-        role = discord.utils.get(ctx.guild.roles, name="🧸 Police Officer")
-        user = ctx.author
-        if role in user.roles:
-            with open("cogs/warns.json", "r") as file:
-                warns = json.load(file)
-            if str(member.id) not in warns:
-                await ctx.send("No warns found for this user.")
-                return
-            warn_list = warns[str(member.id)]
-            warn_count = len(warn_list)
-            e = discord.Embed(color=0xc700ff)
-            e.set_author(name=f"{member.name}'s Warns")
-            e.description=f"Warns: **{warn_count}**"
-            for index, reason in enumerate(warn_list, start=1):
-                e.add_field(name=f"__Warn {index}__", value=f"> {reason}", inline=False)
-            await ctx.send(embed=e)
+        if discord.utils.get(ctx.author.roles, name="🧸 Officer"):
+            warns = await self.get_warns(member.id)
+            if warns:
+                e = discord.Embed(color=0xc700ff)
+                warn_list_str = "\n\n".join([f"__**Warn {index}**__ \n> {warn[0]}" for index, warn in enumerate(warns, start=1)])
+                e.set_author(name=f"🧾 {member.name}'s Warns 🧾")
+                e.description = warn_list_str
+                e.timestamp = datetime.utcnow()
+                await ctx.send(embed=e)
+            else:
+                await ctx.send(f"No warns found for {member.name}.")
         else:
             e = discord.Embed(color=0xc700ff)
             e.description = "🚨 That is a **Staff** command! You don't have the required perms! 🚨"
@@ -171,45 +182,41 @@ class Staff(commands.Cog):
     # Delwarn Command
     @commands.command(aliases=["nrawled", "Delwarn", "nrawleD", "DELWARN", "NRAWLED"])
     async def delwarn(self, ctx, member:discord.Member, warn_index:int):
-        role = discord.utils.get(ctx.guild.roles, name="🔆 Detective")
-        user = ctx.author
-        if role in user.roles:
-            with open("cogs/warns.json", "r") as file:
-                warns = json.load(file)
-            if str(member.id) not in warns:
-                await ctx.send("No warns found for this user.")
+        if discord.utils.get(ctx.author.roles, name="🔆 Detective"):
+            warns = await self.get_warns(member.id)
+            if not warns:
+                await ctx.send(f"No warns found for `{member.name}`.")
                 return
-            warn_list = warns[str(member.id)]
-            if warn_index < 1 or warn_index > len(warn_list):
-                await ctx.send("Invalid warn index.")
-                return
-            removed_warn = warn_list.pop(warn_index - 1)
-            with open("cogs/warns.json", "w") as file:
-                json.dump(warns, file, indent=4)
-            e = discord.Embed(color=0xc700ff)
-            e.add_field(
-                name="🔅 Warn Removed",
-                value=f"**Warn #:** {warn_index}"
-                      f"\n**Member:** {member.mention}"
-                      f"\n**Warn:** *{removed_warn}*",
-            )
-            e.timestamp = datetime.utcnow()
-            await ctx.send(embed=e)
-            channel = self.bot.get_channel(1119185446950408232)
-            unwarned = member.mention
-            unwarner = ctx.author.mention
-            e = discord.Embed(color=0xc700ff)
-            e.set_author(name="🔅 User Warn Removed")
-            e.set_thumbnail(url=member.avatar.url)
-            e.add_field(name="__Member__", value=f"> {unwarned}")
-            e.add_field(name="__Staff Member__", value=f"> {unwarner}", inline=False)
-            e.timestamp = datetime.utcnow()
-            await channel.send(embed=e)
+
+            if 1 <= warn_index <= len(warns):
+                warn_to_remove = warns[warn_index - 1][0]
+                async with aiosqlite.connect("dbs/warnlist.db") as db:
+                    await db.execute('DELETE FROM warns WHERE user_id = ? AND reason = ?', (member.id, warn_to_remove))
+                    await db.commit()
+                e = discord.Embed(color=0xc700ff)
+                e.set_author(name="♻️ Warn Removed ♻️")
+                e.description = f"**Warn #:** {warn_index} \n**Member:** {member.mention}"
+                e.timestamp = datetime.utcnow()
+                await ctx.send(embed=e)
+                
+                # Sending delwarn log to log channel
+                channel = self.bot.get_channel(1119185446950408232)
+                unwarned = member.mention
+                unwarner = ctx.author.mention
+                e = discord.Embed(color=0xc700ff)
+                e.set_author(name="♻️ User Warn Removed")
+                e.set_thumbnail(url=member.avatar.url)
+                e.add_field(name="__**Member**__", value=f"> {unwarned}", inline=False)
+                e.add_field(name="__**Staff Member**__", value=f"> {unwarner}", inline=False)
+                e.timestamp = datetime.utcnow()
+                await channel.send(embed=e)
+            else:
+                await ctx.send("Invalid warn number. Do `!delwarn <user> <warn number>`")
         else:
             e = discord.Embed(color=0xc700ff)
             e.description = "🚨 That is a **High Staff** command! You don't have the required perms! 🚨"
             await ctx.send(embed=e)
-
+            
 
 async def setup(bot):
-    await bot.add_cog(Staff(bot))
+    await bot.add_cog(StaffCog(bot))
