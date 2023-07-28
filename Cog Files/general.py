@@ -128,8 +128,8 @@ class General(commands.Cog):
     @commands.command(aliases=["pleh", "Help", "pleH", "HELP", "PLEH"])
     async def help(self, ctx):
         e = discord.Embed(color=0xc700ff)
+        e.set_author(name="Bot Commands", icon_url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
         e.set_thumbnail(url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
-        e.description = "✨ Choose the menu you're looking for! ✨"
         e.add_field(
             name="✧ __Command Menus__",
             value=f"> 📌 `General Commands`"
@@ -161,8 +161,8 @@ class General(commands.Cog):
                     non_empty_lines = [line.strip() for line in lines if line.strip()]
                     total_lines += len(non_empty_lines)
         e = discord.Embed(color=0xc700ff)
+        e.set_author(name="Bot Information", icon_url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
         e.set_thumbnail(url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
-        e.description = f"🤖 Bot Information 🤖"
         e.add_field(
             name="✧ __Statistics__",
             value=f"> **Prefix:** !"
