@@ -113,14 +113,14 @@ class Dropdown(discord.ui.Select):
         if self.values[0] == "Staff Commands":
             await interaction.response.send_message(embed=se, ephemeral=True)
 
+# DropdownView Class
 class DropdownView(discord.ui.View):
     def __init__(self):
         super().__init__()
-
         self.add_item(Dropdown()) 
 
 # General Commands Class
-class General(commands.Cog):
+class GeneralCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot 
     
@@ -152,7 +152,7 @@ class General(commands.Cog):
         days, hours = divmod(hours, 24)
         member_count = len(ctx.guild.members) # includes bots
         true_member_count = len([m for m in ctx.guild.members if not m.bot]) # doesn't include bots
-        total_lines = 22
+        total_lines = 24
         cog_directory = "./cogs"
         for filename in os.listdir(cog_directory):
             if filename.endswith(".py"):
@@ -166,7 +166,7 @@ class General(commands.Cog):
         e.add_field(
             name="✧ __Statistics__",
             value=f"> **Prefix:** !"
-                  f"\n> **Commands:** [48]"
+                  f"\n> **Commands:** [49]"
 			      f"\n> **Code:** {total_lines} Lines"
                   f"\n> **Ping:** {round(self.bot.latency * 1000)}ms"
                   f"\n> **Users:** {true_member_count}"
@@ -240,4 +240,4 @@ class General(commands.Cog):
         
 
 async def setup(bot):
-    await bot.add_cog(General(bot))
+    await bot.add_cog(GeneralCog(bot))
