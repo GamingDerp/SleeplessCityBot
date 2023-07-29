@@ -14,6 +14,7 @@ ge.add_field(
     name="📌 __General Commands__",
     value=f"> • `Help`"
           f"\n> • `Info`"
+          f"\n> • `SetPrefix`"
           f"\n> • `Test`"
           f"\n> • `Ping`"
           f"\n> • `Suggest`"
@@ -92,7 +93,7 @@ class Dropdown(discord.ui.Select):
     def __init__(self):
 
         options = [
-            discord.SelectOption(label="General Commands",description="Help, Info, Test, Ping, Suggest +1 More", emoji="📌"),
+            discord.SelectOption(label="General Commands",description="Help, Info, SetPrefix, Test, Ping +2 More", emoji="📌"),
             discord.SelectOption(label="Fun Commands", description="Coinflip, Ask, Reverse, Say, Lovetest +2 More", emoji="🎉"),
             discord.SelectOption(label="Action Commands", description="Sniff, Bite, Bonk, Vomit, Slap +16 More", emoji="🎯"),
             discord.SelectOption(label="Misc Commands", description="Whois, Avatar, Snipe, Deathhelp, Pickle +1 More", emoji="🧮"),
@@ -165,8 +166,8 @@ class GeneralCog(commands.Cog):
         e.set_thumbnail(url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
         e.add_field(
             name="✧ __Statistics__",
-            value=f"> **Prefix:** !"
-                  f"\n> **Commands:** [49]"
+            value=f"> **Prefix:** {new_prefix}"
+                  f"\n> **Commands:** [50]"
 			      f"\n> **Code:** {total_lines} Lines"
                   f"\n> **Ping:** {round(self.bot.latency * 1000)}ms"
                   f"\n> **Users:** {true_member_count}"
@@ -186,12 +187,18 @@ class GeneralCog(commands.Cog):
         e.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar.url)
         e.timestamp = datetime.utcnow()
         await ctx.send(embed=e)
-
+    
+    # SetPrefix Command
+    @commands.command(aliases=["xiferptes", "SetPrefix", "xiferPteS", "SETPREFIX", "XIFERPTES"])
+    async def setprefix(self, ctx, new_prefix):
+        self.bot.command_prefix = new_prefix
+        await ctx.send(f"Server's prefix is now: `{new_prefix}`")
+    
     # Test Command
     @commands.command(aliases=["tset", "Test", "tseT", "TEST", "TSET"])
     async def test(self, ctx):
         await ctx.send("I'm up!")
-        
+
     # Ping Command
     @commands.command(aliases=["gnip", "Ping", "gniP", "PING", "GNIP"])
     async def ping(self, ctx):
