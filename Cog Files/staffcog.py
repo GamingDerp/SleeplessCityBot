@@ -49,7 +49,7 @@ class StaffCog(commands.Cog):
     async def ban(self, ctx, member:discord.Member, *, reason=None):
         if discord.utils.get(ctx.author.roles, name="🔆 Detective"):
             e = discord.Embed(color=0xFf0000)
-            e.description = f"<:BanHammer:1120488412558921848> {member.mention} has been banned! <:BanHammer:1120488412558921848> \n**Reason:** {reason}"
+            e.description = f"<:BanHammer:1123773333947813898> {member.mention} has been banned! <:BanHammer:1123773333947813898> \n**Reason:** {reason}"
             await ctx.channel.send(embed=e)
             await member.ban()
         else:
