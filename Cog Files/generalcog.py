@@ -3,6 +3,7 @@ import discord
 from discord.ext import commands
 from datetime import datetime, timedelta
 import time
+import aiosqlite
 
 # Stores when the bot was started
 bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
@@ -88,6 +89,13 @@ se.add_field(
           f"\n> • `DelWarn`",
 )
 
+# Config Commands Embed
+ce = discord.Embed(color=0xc700ff)
+ce.add_field(
+    name="⚙️ __Config Commands__",
+    value=f"> • `SetPrefix`"
+)
+
 # Help Menu Dropdown
 class Dropdown(discord.ui.Select):
     def __init__(self):
@@ -98,6 +106,7 @@ class Dropdown(discord.ui.Select):
             discord.SelectOption(label="Action Commands", description="Sniff, Bite, Bonk, Vomit, Slap +16 More", emoji="🎯"),
             discord.SelectOption(label="Misc Commands", description="Whois, Avatar, Snipe, Deathhelp, Pickle +1 More", emoji="🧮"),
             discord.SelectOption(label="Staff Commands", description="Purge, Ban, Unban, Kick, Timeout +3 More", emoji="🔰"),
+            discord.SelectOption(label="Config Commands", description="SetPrefix, SetHelp, SetMod, SetAdmin", emoji="⚙️"),
         ]
 
         super().__init__(min_values=1, max_values=1, options=options)
@@ -113,17 +122,52 @@ class Dropdown(discord.ui.Select):
             await interaction.response.send_message(embed=me, ephemeral=True)
         if self.values[0] == "Staff Commands":
             await interaction.response.send_message(embed=se, ephemeral=True)
+        if self.values[0] == "Config Commands":
+            await interaction.response.send_message(embed=se, ephemeral=True)
 
 # DropdownView Class
 class DropdownView(discord.ui.View):
     def __init__(self):
         super().__init__()
-        self.add_item(Dropdown()) 
-
+        self.add_item(Dropdown())      
+        
 # General Commands Class
 class GeneralCog(commands.Cog):
     def __init__(self, bot):
-        self.bot = bot 
+        self.bot = bot
+    
+    # Creating table on startup
+    @commands.Cog.listener()
+    async def on_ready(self):
+        await self.create_table()
+    
+    # Creates database table if one doesn't exist
+    async def create_table(self):
+        async with aiosqlite.connect("dbs/prefix.db") as conn:
+            await conn.execute(
+                """
+                CREATE TABLE IF NOT EXISTS prefixes (
+                    server_id INTEGER PRIMARY KEY,
+                    prefix TEXT NOT NULL
+                )
+                """
+            )
+    
+    # Grabs the current server's prefix
+    async def get_prefix(self, message):
+        async with aiosqlite.connect("dbs/prefix.db") as conn:
+            async with conn.execute("SELECT prefix FROM prefixes WHERE server_id = ?", (message.guild.id,)) as cursor:
+                result = await cursor.fetchone()
+                return result[0] if result else "!"  
+    
+    # SetPrefix Command
+    @commands.command(aliases=["xiferptes", "SetPrefix", "xiferPteS", "SETPREFIX", "XIFERPTES"])
+    async def setprefix(self, ctx, new_prefix):
+        self.bot.command_prefix = new_prefix
+        async with aiosqlite.connect("dbs/prefix.db") as conn:
+            await conn.execute("REPLACE INTO prefixes (server_id, prefix) VALUES (?, ?)", (ctx.guild.id, new_prefix))
+            await conn.commit()
+        await ctx.send(f"**{ctx.guild.name}** server prefix is now: `{new_prefix}`")
     
     # Help Command
     @commands.command(aliases=["pleh", "Help", "pleH", "HELP", "PLEH"])
@@ -137,7 +181,8 @@ class GeneralCog(commands.Cog):
                   f"\n> 🎉 `Fun Commands`"
                   f"\n> 🎯 `Action Commands`"
                   f"\n> 🧮 `Misc Commands`"
-                  f"\n> 🔰 `Staff Commands`",
+                  f"\n> 🔰 `Staff Commands`"
+                  f"\n> ⚙️ `Config Commands`",
         )
         e.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar.url)
         e.timestamp = datetime.utcnow()
@@ -147,6 +192,7 @@ class GeneralCog(commands.Cog):
     # Info Command
     @commands.command(aliases=["ofni", "Info", "ofnI", "INFO", "OFNI"])
     async def info(self, ctx):
+        current_prefix = await self.get_prefix(ctx.message)
         delta_uptime = datetime.utcnow() - bot.launch_time
         hours, remainder = divmod(int(delta_uptime.total_seconds()), 3600)
         minutes, seconds = divmod(remainder, 60)
@@ -166,7 +212,7 @@ class GeneralCog(commands.Cog):
         e.set_thumbnail(url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
         e.add_field(
             name="✧ __Statistics__",
-            value=f"> **Prefix:** {new_prefix}"
+            value=f"> **Prefix:** {current_prefix}"
                   f"\n> **Commands:** [50]"
 			      f"\n> **Code:** {total_lines} Lines"
                   f"\n> **Ping:** {round(self.bot.latency * 1000)}ms"
@@ -187,12 +233,6 @@ class GeneralCog(commands.Cog):
         e.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar.url)
         e.timestamp = datetime.utcnow()
         await ctx.send(embed=e)
-    
-    # SetPrefix Command
-    @commands.command(aliases=["xiferptes", "SetPrefix", "xiferPteS", "SETPREFIX", "XIFERPTES"])
-    async def setprefix(self, ctx, new_prefix):
-        self.bot.command_prefix = new_prefix
-        await ctx.send(f"Server's prefix is now: `{new_prefix}`")
     
     # Test Command
     @commands.command(aliases=["tset", "Test", "tseT", "TEST", "TSET"])
