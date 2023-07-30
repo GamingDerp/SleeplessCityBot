@@ -72,3 +72,8 @@ timeout | Puts a user in "timeout" | `timeout @user <number><abbreviated time le
 warn | Warns a user | `warn @user <reason>`
 warnlist | Checks the warns of a user | `warnlist @user`
 delwarn | Deletes a specified warn from a users warn list | `delwarn @user <warn number>`
+
+## ⚙️ Config
+Command | Description | Usage
+--- | --- | ---
+setprefix | Changes server prefix | `setprefix <prefix>`
