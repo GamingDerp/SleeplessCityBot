@@ -122,7 +122,7 @@ class Dropdown(discord.ui.Select):
         if self.values[0] == "Staff Commands":
             await interaction.response.send_message(embed=se, ephemeral=True)
         if self.values[0] == "Config Commands":
-            await interaction.response.send_message(embed=se, ephemeral=True)
+            await interaction.response.send_message(embed=ce, ephemeral=True)
 
 # DropdownView Class
 class DropdownView(discord.ui.View):
@@ -213,10 +213,10 @@ class GeneralCog(commands.Cog):
             name="✧ __Statistics__",
             value=f"> **Prefix:** {current_prefix}"
                   f"\n> **Commands:** [50]"
-			      f"\n> **Code:** {total_lines} Lines"
+		  f"\n> **Code:** {total_lines} Lines"
                   f"\n> **Ping:** {round(self.bot.latency * 1000)}ms"
                   f"\n> **Users:** {true_member_count}"
-        	      f"\n> **Uptime:** {days}**d** {hours}**h** {minutes}**m** {seconds}**s**",
+        	  f"\n> **Uptime:** {days}**d** {hours}**h** {minutes}**m** {seconds}**s**",
             inline=False
         )
         e.add_field(
