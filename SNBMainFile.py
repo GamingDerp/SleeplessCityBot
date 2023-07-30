@@ -26,5 +26,4 @@ async def main():
 async def on_ready():
     await print(f"---------------------------------------- \n| Logged in as {bot.user} | \n| ID: {bot.user.id}              |\n----------------------------------------")
 
-
 asyncio.run(main())
