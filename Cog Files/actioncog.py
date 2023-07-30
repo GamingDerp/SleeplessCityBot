@@ -23,12 +23,12 @@ class ActionCog(commands.Cog):
     async def bite(self, ctx, user:discord.Member):
         e = discord.Embed(color=0xc700ff)
         e.description = f"{ctx.author.mention} bites {user.mention}!"
-        bitegif = [
+        bitegifs = [
             "https://media.discordapp.net/attachments/807071768258805764/1131664029052588122/AnimeBite3.gif", 
             "https://media.discordapp.net/attachments/807071768258805764/1131664029505556561/AnimeBite1.gif", 
             "https://media.discordapp.net/attachments/807071768258805764/1131664029929189516/AnimeBite2.gif"
         ]
-        e.set_image(url=random.choice(bitegif)),
+        e.set_image(url=random.choice(bitegifs)),
         await ctx.send(embed=e)
     
     # Bonk Command
@@ -48,7 +48,11 @@ class ActionCog(commands.Cog):
     async def vomit(self, ctx, user:discord.Member):
         e = discord.Embed(color=0xc700ff)
         e.description = f"{ctx.author.mention} vomits on {user.mention}!"
-        e.set_image(url="https://media.discordapp.net/attachments/807071768258805764/1131015043379626144/VomitGif.gif"),
+        vomitgifs = [
+            "https://media.discordapp.net/attachments/807071768258805764/1131015043379626144/VomitGif.gif",
+            "https://media.discordapp.net/attachments/807071768258805764/1135341052065234964/VomitGif2.gif"
+        ]
+        e.set_image(url=random.choice(vomitgifs)),
         await ctx.send(embed=e)
 
     # Slap Command
