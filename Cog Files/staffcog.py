@@ -14,7 +14,7 @@ class StaffCog(commands.Cog):
     async def on_ready(self):
         await self.create_table()
     
-    # Creates the database table if it doesn't exist
+    # Creates database table if one doesn't exist
     async def create_table(self):
         async with aiosqlite.connect("dbs/warnlist.db") as db:
             await db.execute('''
@@ -106,7 +106,8 @@ class StaffCog(commands.Cog):
         seconds = amount * time_units[unit]
         if discord.utils.get(ctx.author.roles, name="🧸 Officer"):
             e = discord.Embed(color=0xc700ff)
-            e.description = f"⏳ Timeout! ⏳ \n **User:** {member.mention} \n **Reason:** {reason} \n **Time:** {duration}"
+            e.set_author(name="⏳ Timeout ⏳")
+            e.description = f"**User:** {member.mention} \n **Reason:** {reason} \n **Time:** {duration}"
             await member.timeout(timedelta(seconds=seconds), reason=reason)
             await ctx.send(embed=e)
             
