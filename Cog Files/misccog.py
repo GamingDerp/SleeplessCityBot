@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 from datetime import datetime, timedelta
+import time
 import asyncio
         
 # Misc Commands Class
@@ -91,7 +92,7 @@ class MiscCog(commands.Cog):
         if sniped_message.content:
             e = discord.Embed(color=0xc700ff)
             e.set_author(name=sniped_message.author.name, icon_url=sniped_message.author.avatar.url)
-            e.description = f"> {sniped_message.content}"
+            e.description = f"{sniped_message.content}"
             await ctx.send(embed=e)
         elif sniped_message.attachments:
             attachment_url = sniped_message.attachments[0].url
@@ -106,7 +107,7 @@ class MiscCog(commands.Cog):
     @commands.command(aliases=["plehhtaed", "Deathhelp", "plehhtaeD", "DEATHNOTEHELP", "PLEHHTAED"])
     async def deathhelp(self, ctx):
         e = discord.Embed(color=0xc700ff)
-        e.description = "☠️ Available Death Methods ☠️"
+        e.set_author(name="☠️ Available Death Methods ☠️")
         e.add_field(
             name="__Death Options__",
             value=f"\n> 🗻 Cliff"
@@ -181,6 +182,6 @@ class MiscCog(commands.Cog):
         e.add_field(name="Task", value=task)
         await ctx.send(embed=e)
 
-
+        
 async def setup(bot):
     await bot.add_cog(MiscCog(bot))
