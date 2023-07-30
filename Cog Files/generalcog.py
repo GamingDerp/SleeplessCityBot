@@ -15,7 +15,6 @@ ge.add_field(
     name="📌 __General Commands__",
     value=f"> • `Help`"
           f"\n> • `Info`"
-          f"\n> • `SetPrefix`"
           f"\n> • `Test`"
           f"\n> • `Ping`"
           f"\n> • `Suggest`"
@@ -93,7 +92,7 @@ se.add_field(
 ce = discord.Embed(color=0xc700ff)
 ce.add_field(
     name="⚙️ __Config Commands__",
-    value=f"> • `SetPrefix`"
+    value=f"> • `SetPrefix`",
 )
 
 # Help Menu Dropdown
@@ -101,12 +100,12 @@ class Dropdown(discord.ui.Select):
     def __init__(self):
 
         options = [
-            discord.SelectOption(label="General Commands",description="Help, Info, SetPrefix, Test, Ping +2 More", emoji="📌"),
+            discord.SelectOption(label="General Commands",description="Help, Info, Test, Ping, Suggest +1 More", emoji="📌"),
             discord.SelectOption(label="Fun Commands", description="Coinflip, Ask, Reverse, Say, Lovetest +2 More", emoji="🎉"),
             discord.SelectOption(label="Action Commands", description="Sniff, Bite, Bonk, Vomit, Slap +16 More", emoji="🎯"),
             discord.SelectOption(label="Misc Commands", description="Whois, Avatar, Snipe, Deathhelp, Pickle +1 More", emoji="🧮"),
             discord.SelectOption(label="Staff Commands", description="Purge, Ban, Unban, Kick, Timeout +3 More", emoji="🔰"),
-            discord.SelectOption(label="Config Commands", description="SetPrefix, SetHelp, SetMod, SetAdmin", emoji="⚙️"),
+            discord.SelectOption(label="Config Commands", description="SetPrefix", emoji="⚙️"),
         ]
 
         super().__init__(min_values=1, max_values=1, options=options)
