@@ -213,10 +213,10 @@ class GeneralCog(commands.Cog):
             name="✧ __Statistics__",
             value=f"> **Prefix:** {current_prefix}"
                   f"\n> **Commands:** [50]"
-		  f"\n> **Code:** {total_lines} Lines"
+			      f"\n> **Code:** {total_lines} Lines"
                   f"\n> **Ping:** {round(self.bot.latency * 1000)}ms"
                   f"\n> **Users:** {true_member_count}"
-        	  f"\n> **Uptime:** {days}**d** {hours}**h** {minutes}**m** {seconds}**s**",
+        	      f"\n> **Uptime:** {days}**d** {hours}**h** {minutes}**m** {seconds}**s**",
             inline=False
         )
         e.add_field(
@@ -252,6 +252,7 @@ class GeneralCog(commands.Cog):
     # Suggest Command
     @commands.command(aliases=["tseggus", "Suggest", "tsegguS", "SUGGEST", "TSEGGUS"])
     async def suggest(self, ctx, *, suggestion):
+        await ctx.send("Your suggestion has been added! Check <#1065657740573286523>!")
         se = discord.Embed(color=0xc700ff)
         se.set_author(name=f"Suggested by {ctx.message.author}", icon_url=ctx.author.avatar.url)
         se.set_thumbnail(url=ctx.author.avatar.url)
@@ -275,7 +276,7 @@ class GeneralCog(commands.Cog):
             await ctx.send("You can only have up to 5 options in the poll.")
             return       
         e = discord.Embed(color=0xc700ff)
-        e.title = f"📊 **{question}** 📊"
+        e.title = f"📊 **{question}**"
         description_text = ""
         for i, option in enumerate(options):
             description_text += f"\n{emoji_list[i]} {option}"
