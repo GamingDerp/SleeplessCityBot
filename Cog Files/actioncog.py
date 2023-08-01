@@ -162,103 +162,32 @@ class ActionCog(commands.Cog):
     # Deathnote Command
     @commands.command(aliases=["etonhtaed", "Deathnote", "etonhtaeD", "DEATHNOTE", "ETONHTAED"])
     async def deathnote(self, ctx, user:discord.Member, *, arg):
-        
-        # Embeds
-        ha = discord.Embed(color=0xc700ff)
-        ha.description = f"{user.mention} had a heart attack and died! RIP ☠️"
-        ha.set_image(url="https://media.discordapp.net/attachments/807071768258805764/1116945127810805820/HeartAttackGif.gif")
-    
-        e1 = discord.Embed(color=0xc700ff)
-        e1.description = f"{user.mention} fell off a cliff and died! RIP ☠️"
-        e1.set_image(url="https://media.discordapp.net/attachments/807071768258805764/1116815474852896890/FallOffCliffGif.gif")
-   
-        e2 = discord.Embed(color=0xc700ff)
-        e2.description = f"{user.mention} got ran over by a train and died! RIP ☠️"
-        e2.set_image(url="https://media.discordapp.net/attachments/807071768258805764/1116814851403165726/HitByTrainGif.gif")
-
-        e3 = discord.Embed(color=0xc700ff)
-        e3.description = f"{user.mention} drowned in a 2 inch pool! RIP ☠️"
-        e3.set_image(url="https://media.discordapp.net/attachments/807071768258805764/1116822537272316004/DrowningGif.gif")
-    
-        e4 = discord.Embed(color=0xc700ff)
-        e4.description = f"{user.mention} was crushed by a boulder and died! RIP ☠️"
-        e4.set_image(url="https://media.discordapp.net/attachments/807071768258805764/1116944054052204584/CrushedByBoulderGif.gif")
-    
-        e5 = discord.Embed(color=0xc700ff)
-        e5.description = f"{user.mention} choked on a hot dog and died! RIP ☠️"
-        e5.set_image(url="https://media.discordapp.net/attachments/807071768258805764/1116944567107854336/ChokingGif.gif")
-    
-        e6 = discord.Embed(color=0xc700ff)
-        e6.description = f"{user.mention} got into a car crash and died! RIP ☠️"
-        e6.set_image(url="https://media.discordapp.net/attachments/807071768258805764/1116944863032787105/CarCrashGif.gif")
-
-        e7 = discord.Embed(color=0xc700ff)
-        e7.description = f"{user.mention} was murdered! RIP ☠️"
-        e7.set_image(url="https://media.discordapp.net/attachments/807071768258805764/1116945578954334228/MurderGif.gif")
-
-        e8 = discord.Embed(color=0xc700ff)
-        e8.description = f"{user.mention} was shocked by 10,000 volts of electricity and died! RIP ☠️"
-        e8.set_image(url="https://media.discordapp.net/attachments/807071768258805764/1117941430439120936/ElectricShockGif.gif")
-
-        e9 = discord.Embed(color=0xc700ff)
-        e9.description = f"{user.mention} got caught in a fire and died! RIP ☠️"
-        e9.set_image(url="https://media.discordapp.net/attachments/807071768258805764/1116946041422495844/FireGif.gif")
-
-        e10 = discord.Embed(color=0xc700ff)
-        e10.description = f"{user.mention} swallowed tnt and exploded! RIP ☠️"
-        e10.set_image(url="https://media.discordapp.net/attachments/807071768258805764/1116946286361456750/ExplodingGif.gif")
-
-        e11 = discord.Embed(color=0xc700ff)
-        e11.description = f"{user.mention} got struck by lightning and died! RIP ☠️"
-        e11.set_image(url="https://media.discordapp.net/attachments/807071768258805764/1116946562329882725/LightningGif.gif")
-
-        e12 = discord.Embed(color=0xc700ff)
-        e12.description = f"{user.mention} fell into a volcano and died! RIP ☠️"
-        e12.set_image(url="https://media.discordapp.net/attachments/807071768258805764/1116946885542936576/VolcanoGif.gif")
-
-        e13 = discord.Embed(color=0xc700ff)
-        e13.description = f"{user.mention} got sucked into a tornado and died! RIP ☠️"
-        e13.set_image(url="https://media.discordapp.net/attachments/807071768258805764/1116947245598781576/TornadoGif.gif")
-
-        e14 = discord.Embed(color=0xc700ff)
-        e14.description = f"{user.mention} fell into a crack made by an earthquake and died! RIP ☠️"
-        e14.set_image(url="https://media.discordapp.net/attachments/807071768258805764/1116947453229404301/EarthquakeGif.gif")
-
-        e15 = discord.Embed(color=0xc700ff)
-        e15.description = f"{user.mention} got washed away in a hurricane and died! RIP ☠️"
-        e15.set_image(url="https://media.discordapp.net/attachments/807071768258805764/1116947898169557002/HurricaneGif.gif")
-
-        # Comparing the user arg to the statements
-        if arg.lower() == "cliff" or arg.lower() == "ffilc":
-            await ctx.send(embed=e1)
-        if arg.lower() == "train" or arg.lower() == "niart":
-            await ctx.send(embed=e2)
-        if arg.lower() == "drown" or arg.lower() == "nword":
-            await ctx.send(embed=e3)
-        if arg.lower() == "crush" or arg.lower() == "hsurc":
-            await ctx.send(embed=e4)
-        if arg.lower() == "choke" or arg.lower() == "ekohc":
-            await ctx.send(embed=e5)
-        if arg.lower() == "car crash" or arg.lower() == "hsarc rac":
-            await ctx.send(embed=e6)
-        if arg.lower() == "murder" or arg.lower() == "redrum":
-            await ctx.send(embed=e7)
-        if arg.lower() == "shock" or arg.lower() == "kcohs":
-            await ctx.send(embed=e8)
-        if arg.lower() == "fire" or arg.lower() == "erif":
-            await ctx.send(embed=e9)
-        if arg.lower() == "explosion" or arg.lower() == "noisolpxe":
-            await ctx.send(embed=e10)
-        if arg.lower() == "lightning" or arg.lower() == "gninthgil":
-            await ctx.send(embed=e11)
-        if arg.lower() == "volcano" or arg.lower() == "onaclov":
-            await ctx.send(embed=e12)
-        if arg.lower() == "tornado" or arg.lower() == "odanrot":
-            await ctx.send(embed=e13)
-        if arg.lower() == "earthquake" or arg.lower() == "ekauqhtrae":
-            await ctx.send(embed=e14)
-        if arg.lower() == "hurricane" or arg.lower() == "enacirruh":
-            await ctx.send(embed=e15)
+        deaths = {
+            "cliff": ("fell off a cliff and died!", "https://media.discordapp.net/attachments/807071768258805764/1116815474852896890/FallOffCliffGif.gif"),
+            "train": ("got ran over by a train and died!", "https://media.discordapp.net/attachments/807071768258805764/1116814851403165726/HitByTrainGif.gif"),
+            "drown": ("drowned in a 2-inch pool and died!", "https://media.discordapp.net/attachments/807071768258805764/1116822537272316004/DrowningGif.gif"),
+            "crush": ("was crushed by a boulder and died!", "https://media.discordapp.net/attachments/807071768258805764/1116944054052204584/CrushedByBoulderGif.gif"),
+            "choke": ("choked on a hot dog and died!", "https://media.discordapp.net/attachments/807071768258805764/1116944567107854336/ChokingGif.gif"),
+            "car crash": ("got into a car crash and died!", "https://media.discordapp.net/attachments/807071768258805764/1116944863032787105/CarCrashGif.gif"),
+            "murder": ("was murdered!", "https://media.discordapp.net/attachments/807071768258805764/1116945578954334228/MurderGif.gif"),
+            "shock": ("was shocked by 10,000 volts of electricity and died!", "https://media.discordapp.net/attachments/807071768258805764/1117941430439120936/ElectricShockGif.gif"),
+            "fire": ("got caught in a fire and died!", "https://media.discordapp.net/attachments/807071768258805764/1116946041422495844/FireGif.gif"),
+            "explosion": ("swallowed TNT and exploded!", "https://media.discordapp.net/attachments/807071768258805764/1116946286361456750/ExplodingGif.gif"),
+            "lightning": ("got struck by lightning and died!", "https://media.discordapp.net/attachments/807071768258805764/1116946562329882725/LightningGif.gif"),
+            "volcano": ("fell into a volcano and died!", "https://media.discordapp.net/attachments/807071768258805764/1116946885542936576/VolcanoGif.gif"),
+            "tornado": ("got sucked into a tornado and died!", "https://media.discordapp.net/attachments/807071768258805764/1116947245598781576/TornadoGif.gif"),
+            "earthquake": ("fell into a crack made by an earthquake and died!", "https://media.discordapp.net/attachments/807071768258805764/1116947453229404301/EarthquakeGif.gif"),
+            "hurricane": ("got washed away in a hurricane and died!", "https://media.discordapp.net/attachments/807071768258805764/1116947898169557002/HurricaneGif.gif"),
+        }
+        arg = arg.lower()
+        if arg in deaths:
+            death_description, image_url = deaths[arg]
+            e = discord.Embed(color=0xc700ff)
+            e.description = f"{user.mention} {death_description} RIP ☠️"
+            e.set_image(url=image_url)
+            await ctx.send(embed=e)
+        else:
+            await ctx.send("Invalid death method!")
 
     # Highfive Command
     @commands.command(aliases=["evifhgih", "Highfive", "evifhgiH", "HIGHFIVE", "EVIFHGIH"])
