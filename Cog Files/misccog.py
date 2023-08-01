@@ -14,7 +14,8 @@ class MiscCog(commands.Cog):
     async def whois(self, ctx, user:discord.Member):
         e = discord.Embed(color=0xc700ff)
         e.set_author(name=f"Gathering Information..."),
-        e.set_thumbnail(url=user.avatar.url)
+        if user.avatar:
+            e.set_thumbnail(url=user.avatar.url)
         e.add_field(name="📍 Mention", value=user.mention)
         e.add_field(name="🔖 ID", value=user.id)
         e.add_field(name="📑 Nickname", value=user.display_name)
@@ -159,8 +160,8 @@ class MiscCog(commands.Cog):
 
         e = discord.Embed(color=0xc700ff)
         e.description = "⏰ Started Reminder ⏰"
-        e.add_field(name="__Time__", value=time)
-        e.add_field(name="__Task__", value=task)
+        e.add_field(name="Time", value=time)
+        e.add_field(name="Task", value=task)
         e.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar.url)
         e.timestamp = datetime.utcnow()
         await ctx.send(embed=e)
@@ -169,9 +170,9 @@ class MiscCog(commands.Cog):
         e = discord.Embed(color=0xc700ff)
         e.set_thumbnail(url=ctx.author.avatar.url)
         e.set_author(name="⏰ User Set Reminder")
-        e.add_field(name="__User__", value=ctx.author.mention)
-        e.add_field(name="__Time__", value=time, inline=False)
-        e.add_field(name="__Task__", value=task, inline=False)
+        e.add_field(name="User", value=ctx.author.mention)
+        e.add_field(name="Time", value=time, inline=False)
+        e.add_field(name="Task", value=task, inline=False)
         e.timestamp = datetime.utcnow()
         await channel.send(embed=e)
  
