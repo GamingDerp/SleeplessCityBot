@@ -20,10 +20,10 @@ async def load():
 async def main():
     await load()
     await bot.start("TOKEN")
-
+    
 # Startup Event
 @bot.listen()
 async def on_ready():
-    await print(f"---------------------------------------- \n| Logged in as {bot.user} | \n| ID: {bot.user.id}              |\n----------------------------------------")
+    await print(f"Logged in as {bot.user} \nID: {bot.user.id}")
 
 asyncio.run(main())
