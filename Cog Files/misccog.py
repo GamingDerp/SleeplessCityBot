@@ -89,11 +89,10 @@ class MiscCog(commands.Cog):
         if sniped_message is None:
             await ctx.send("There are no recently deleted messages to snipe.")
             return
-
         if sniped_message.content:
             e = discord.Embed(color=0xc700ff)
             e.set_author(name=sniped_message.author.name, icon_url=sniped_message.author.avatar.url)
-            e.description = f"{sniped_message.content}"
+            e.description = f"> {sniped_message.content}"
             await ctx.send(embed=e)
         elif sniped_message.attachments:
             attachment_url = sniped_message.attachments[0].url
@@ -101,7 +100,6 @@ class MiscCog(commands.Cog):
             e.set_author(name=sniped_message.author.name, icon_url=sniped_message.author.avatar.url)
             e.set_image(url=attachment_url)
             await ctx.send(embed=e)
-
         sniped_message = None  # Reset sniped message after displaying
         
     # Deathnote Help Command
