@@ -14,7 +14,11 @@ class LogCog(commands.Cog):
         e = discord.Embed(color=0xc700ff)
         e.set_author(name="🗑️ Message Deleted")
         e.set_thumbnail(url=f"{message.author.avatar.url}")
-        e.description = f"A message by {message.author.mention} was deleted \n<:Reply:1123773242327441468> In <#{message.channel.id}> \n \n> {message.content}"
+        if sniped_message.content:
+            e.description = f"A message by {message.author.mention} was deleted \n<:Reply:1123773242327441468> In <#{message.channel.id}> \n \n> {message.content}"
+        if sniped_message.attachments:
+            attachment_url = sniped_message.attachments[0].url
+            e.set_image(url=attachment_url)
         e.timestamp = datetime.utcnow()
         await channel.send(embed=e)
 
@@ -62,7 +66,6 @@ class LogCog(commands.Cog):
         channel = self.bot.get_channel(1119185446950408232)
         logs = [log async for log in guild.audit_logs(limit=1, action=discord.AuditLogAction.ban)]
         logs = logs[0]
-    
         e = discord.Embed(color=0xFf0e00)
         e.set_author(name="🚨 Member Banned")
         e.set_thumbnail(url=f"{member.avatar.url}")
