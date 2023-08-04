@@ -10,17 +10,16 @@ class LogCog(commands.Cog):
     # Deleted Message Log Event
     @commands.Cog.listener()
     async def on_message_delete(self, message):
-        channel = self.bot.get_channel(1119185446950408232)
-        e = discord.Embed(color=0xc700ff)
-        e.set_author(name="🗑️ Message Deleted")
-        e.set_thumbnail(url=f"{message.author.avatar.url}")
-        if sniped_message.content:
+        if message.author.bot: 
+            return
+        else:
+            channel = self.bot.get_channel(1119185446950408232)
+            e = discord.Embed(color=0xc700ff)
+            e.set_author(name="🗑️ Message Deleted")
+            e.set_thumbnail(url=f"{message.author.avatar.url}")
             e.description = f"A message by {message.author.mention} was deleted \n<:Reply:1123773242327441468> In <#{message.channel.id}> \n \n> {message.content}"
-        if sniped_message.attachments:
-            attachment_url = sniped_message.attachments[0].url
-            e.set_image(url=attachment_url)
-        e.timestamp = datetime.utcnow()
-        await channel.send(embed=e)
+            e.timestamp = datetime.utcnow()
+            await channel.send(embed=e)
 
     # Edited Message Log Event
     @commands.Cog.listener()
