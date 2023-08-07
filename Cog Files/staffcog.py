@@ -8,11 +8,13 @@ import aiosqlite
 class StaffCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.db_conn = None
     
     # Creating table on startup   
     @commands.Cog.listener()
     async def on_ready(self):
         await self.create_table()
+        await self.initialize_database()
     
     # Creates database table if one doesn't exist
     async def create_table(self):
@@ -31,6 +33,18 @@ class StaffCog(commands.Cog):
             cursor = await db.execute("SELECT reason FROM warns WHERE user_id = ?", (user_id,))
             warns = await cursor.fetchall()
             return warns
+    
+    # Initialize logging database
+    async def initialize_database(self):
+        self.db_conn = await aiosqlite.connect("dbs/logging.db")
+    
+    # Get the logging channel
+    async def get_logging_channel(self, guild_id):
+        async with self.db_conn.execute(
+            "SELECT channel_id FROM logging_channels WHERE guild_id = ?", (guild_id,)
+        ) as cursor:
+            result = await cursor.fetchone()
+            return result[0] if result else None
     
     # Purge Command
     @commands.command(aliases=["egrup", "Purge", "egruP", "PURGE", "EGRUP"], pass_context=True)
@@ -81,7 +95,8 @@ class StaffCog(commands.Cog):
             await ctx.channel.send(embed=e)
             
             # Sending kick log to log channel
-            channel = self.bot.get_channel(1119185446950408232)
+            logging_channel_id = await self.get_logging_channel(ctx.guild.id)
+            channel = self.bot.get_channel(logging_channel_id)
             staff = ctx.author.mention
             kicked = member.mention
             e = discord.Embed(color=0xc700ff)
@@ -112,7 +127,8 @@ class StaffCog(commands.Cog):
             await ctx.send(embed=e)
             
             # Sending timeout log to log channel
-            channel = self.bot.get_channel(1119185446950408232)
+            logging_channel_id = await self.get_logging_channel(ctx.guild.id)
+            channel = self.bot.get_channel(logging_channel_id)
             timed = member.mention
             timer = ctx.author.mention
             time = {seconds}     
@@ -145,7 +161,8 @@ class StaffCog(commands.Cog):
             await ctx.send(embed=e)
             
             # Sending warn log to log channel
-            channel = self.bot.get_channel(1119185446950408232)
+            logging_channel_id = await self.get_logging_channel(ctx.guild.id)
+            channel = self.bot.get_channel(logging_channel_id)
             warned = member.mention
             warner = ctx.author.mention
             e = discord.Embed(color=0xc700ff)
@@ -174,7 +191,7 @@ class StaffCog(commands.Cog):
                 e.timestamp = datetime.utcnow()
                 await ctx.send(embed=e)
             else:
-                await ctx.send(f"No warns found for {member.name}.")
+                await ctx.send(f"No warns found for **{member.name}**.")
         else:
             e = discord.Embed(color=0xc700ff)
             e.description = "🚨 That is a **Staff** command! You don't have the required perms! 🚨"
@@ -201,7 +218,8 @@ class StaffCog(commands.Cog):
                 await ctx.send(embed=e)
                 
                 # Sending delwarn log to log channel
-                channel = self.bot.get_channel(1119185446950408232)
+                logging_channel_id = await self.get_logging_channel(ctx.guild.id)
+                channel = self.bot.get_channel(logging_channel_id)
                 unwarned = member.mention
                 unwarner = ctx.author.mention
                 e = discord.Embed(color=0xc700ff)
