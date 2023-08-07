@@ -92,7 +92,8 @@ se.add_field(
 ce = discord.Embed(color=0xc700ff)
 ce.add_field(
     name="⚙️ __Config Commands__",
-    value=f"> • `SetPrefix`",
+    value=f"> • `SetPrefix`"
+          f"\n> • `SetLog`",
 )
 
 # Help Menu Dropdown
@@ -105,7 +106,7 @@ class Dropdown(discord.ui.Select):
             discord.SelectOption(label="Action Commands", description="Sniff, Bite, Bonk, Vomit, Slap +16 More", emoji="🎯"),
             discord.SelectOption(label="Misc Commands", description="Whois, Avatar, Snipe, Deathhelp, Pickle +1 More", emoji="🧮"),
             discord.SelectOption(label="Staff Commands", description="Purge, Ban, Unban, Kick, Timeout +3 More", emoji="🔰"),
-            discord.SelectOption(label="Config Commands", description="SetPrefix", emoji="⚙️"),
+            discord.SelectOption(label="Config Commands", description="SetPrefix, SetLog", emoji="⚙️"),
         ]
 
         super().__init__(min_values=1, max_values=1, options=options)
@@ -134,11 +135,13 @@ class DropdownView(discord.ui.View):
 class GeneralCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.db_conn = None
     
     # Creating table on startup
     @commands.Cog.listener()
     async def on_ready(self):
         await self.create_table()
+        await self.initialize_database()
     
     # Creates database table if one doesn't exist
     async def create_table(self):
@@ -159,20 +162,37 @@ class GeneralCog(commands.Cog):
                 result = await cursor.fetchone()
                 return result[0] if result else "!"  
     
+    # Initialize logging database
+    async def initialize_database(self):
+        self.db_conn = await aiosqlite.connect("dbs/logging.db")
+    
+    # Get the logging channel
+    async def get_logging_channel(self, guild_id):
+        async with self.db_conn.execute(
+            "SELECT channel_id FROM logging_channels WHERE guild_id = ?", (guild_id,)
+        ) as cursor:
+            result = await cursor.fetchone()
+            return result[0] if result else None
+    
     # SetPrefix Command
     @commands.command(aliases=["xiferptes", "SetPrefix", "xiferPteS", "SETPREFIX", "XIFERPTES"])
     async def setprefix(self, ctx, new_prefix):
-        self.bot.command_prefix = new_prefix
-        async with aiosqlite.connect("dbs/prefix.db") as conn:
-            await conn.execute("REPLACE INTO prefixes (server_id, prefix) VALUES (?, ?)", (ctx.guild.id, new_prefix))
-            await conn.commit()
-        await ctx.send(f"**{ctx.guild.name}** server prefix is now: `{new_prefix}`")
+        if discord.utils.get(ctx.author.roles, name="🔐 Assistant Chief"):
+            self.bot.command_prefix = new_prefix
+            async with aiosqlite.connect("dbs/prefix.db") as conn:
+                await conn.execute("REPLACE INTO prefixes (server_id, prefix) VALUES (?, ?)", (ctx.guild.id, new_prefix))
+                await conn.commit()
+            await ctx.send(f"**{ctx.guild.name}** server prefix is now: `{new_prefix}`")
+        else:
+            e = discord.Embed(color=0xc700ff)
+            e.description = "🚨 That is a **High Staff** command! You don't have the required perms! 🚨"
+            await ctx.send(embed=e)
     
     # Help Command
     @commands.command(aliases=["pleh", "Help", "pleH", "HELP", "PLEH"])
     async def help(self, ctx):
         e = discord.Embed(color=0xc700ff)
-        e.set_author(name="Bot Commands", icon_url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
+        e.set_author(name="Bot Commands", icon_url=self.bot.user.display_avatar.url)
         e.set_thumbnail(url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
         e.add_field(
             name="✧ __Command Menus__",
@@ -191,6 +211,8 @@ class GeneralCog(commands.Cog):
     # Info Command
     @commands.command(aliases=["ofni", "Info", "ofnI", "INFO", "OFNI"])
     async def info(self, ctx):
+        logging_channel_id = await self.get_logging_channel(ctx.guild.id)
+        logging_channel = self.bot.get_channel(logging_channel_id)
         current_prefix = await self.get_prefix(ctx.message)
         delta_uptime = datetime.utcnow() - bot.launch_time
         hours, remainder = divmod(int(delta_uptime.total_seconds()), 3600)
@@ -210,9 +232,14 @@ class GeneralCog(commands.Cog):
         e.set_author(name="Bot Information", icon_url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
         e.set_thumbnail(url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
         e.add_field(
-            name="✧ __Statistics__",
+            name="✧ __Server__",
             value=f"> **Prefix:** {current_prefix}"
-                  f"\n> **Commands:** [50]"
+                  f"\n> **Logging:** {logging_channel.mention}",
+            inline=False
+        )
+        e.add_field(
+            name="✧ __Statistics__",
+            value=f"> **Commands:** [51]"
 			      f"\n> **Code:** {total_lines} Lines"
                   f"\n> **Ping:** {round(self.bot.latency * 1000)}ms"
                   f"\n> **Users:** {true_member_count}"
@@ -285,6 +312,6 @@ class GeneralCog(commands.Cog):
         for i in range(len(options)):
             await msg.add_reaction(emoji_list[i])
         
-
+        
 async def setup(bot):
     await bot.add_cog(GeneralCog(bot))
