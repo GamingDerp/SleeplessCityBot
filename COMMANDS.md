@@ -77,3 +77,4 @@ delwarn | Deletes a specified warn from a users warn list | `delwarn @user <warn
 Command | Description | Usage
 --- | --- | ---
 setprefix | Changes server prefix | `setprefix <prefix>`
+setlog | Sets server logging channel | `setlog <channel mention>`
