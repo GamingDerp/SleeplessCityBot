@@ -38,7 +38,10 @@ class EventsCog(commands.Cog):
     async def on_message(self, message):
         if str(bot_id) in message.content:
             await message.channel.send("I've been summoned! If you need me do `!help` <:CatWave:1123898399557693470>")
-        if message.channel.id == 1065502975499440168 and message.content == '69':
+        if message.author.bot:
+            return
+        else:
+            if message.channel.id == 1065502975499440168 and "69" in message.content:
                 await message.add_reaction('<:Troll:1065453655588884520>')
                 await self.bot.process_commands(message)
             
@@ -71,7 +74,6 @@ class EventsCog(commands.Cog):
             e.title = f"<a:DiscordBoost:1121298549657829436> {after.name} boosted the server!"
             e.set_thumbnail(url=after.avatar.url)
             e.description = f"Thank you {after.mention}! \nYou'll now recieve these perks: \n> Image Perms \n> Embed Perms \n> Video Perms \n> Streaming Perms \n*and access to the exclusive <#1065651827703554109>!*"
-            e.add_field(name="Boost Level", value=after.premium_since.boost_level)
             await channel.send(embed=e)
 
 
