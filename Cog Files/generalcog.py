@@ -11,98 +11,61 @@ bot.launch_time = datetime.utcnow()
 
 # General Commands Embed
 ge = discord.Embed(color=0xc700ff)
+ge.set_author(name="Bot Commands", icon_url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
+ge.set_thumbnail(url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
 ge.add_field(
     name="📌 __General Commands__",
-    value=f"> • `Help`"
-          f"\n> • `Info`"
-          f"\n> • `Test`"
-          f"\n> • `Ping`"
-          f"\n> • `Suggest`"
-          f"\n> • `Poll` - Slash",
+    value=f"> `Help`, `Info`, `Test`, `Ping`, `Suggest`, `/Poll`",
 )
 
 # Fun Commands Embed
 fe = discord.Embed(color=0xc700ff)
+fe.set_author(name="Bot Commands", icon_url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
+fe.set_thumbnail(url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
 fe.add_field(
     name="🎉 __Fun Commands__",
-    value=f"> • `Coinflip`"
-          f"\n> • `Ask`"
-          f"\n> • `Reverse`"
-          f"\n> • `Say`"
-          f"\n> • `Lovetest`"
-          f"\n> • `Cute`"
-          f"\n> • `Duel`"
-          f"\n> • `Rps`",
+    value=f"> `Coinflip`, `Ask`, `Reverse`, `Say`, `Lovetest`, `Cute` \n> `Duel`, `Rps`",
 )
 
 # Action Commands Embed
 ae = discord.Embed(color=0xc700ff)
+ae.set_author(name="Bot Commands", icon_url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
+ae.set_thumbnail(url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
 ae.add_field(
     name="🎯 __Action Commands__",
-    value=f"> • `Sniff`"
-          f"\n> • `Bite`"
-          f"\n> • `Bonk`"
-          f"\n> • `Vomit`"
-          f"\n> • `Slap`"
-          f"\n> • `Punch`"
-          f"\n> • `Throw`"
-          f"\n> • `Stalk`"
-          f"\n> • `Kidnap`"
-          f"\n> • `Punt`"
-          f"\n> • `Strangle`"
-          f"\n> • `Stab`"
-          f"\n> • `Shoot`"
-          f"\n> • `Deathnote`"
-          f"\n> • `Highfive`"
-          f"\n> • `Poke`"
-          f"\n> • `Pat`"
-          f"\n> • `Lick`"
-          f"\n> • `Hug`"
-          f"\n> • `Kiss`"
-          f"\n> • `Cuddle`",
+    value=f"> `Sniff`, `Bite`, `Bonk`, `Vomit`, `Slap`, `Punch` \n> `Throw`, `Stalk`, `Kidnap`, `Punt`, `Strangle`, `Stab` \n> `Shoot`, `Deathnote`, `Highfive`, `Poke`, `Pat`, `Lick` \n> `Hug`, `Kiss`, `Cuddle`",
 )
 
 # Misc Commands Embed
 me = discord.Embed(color=0xc700ff)
+me.set_author(name="Bot Commands", icon_url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
+me.set_thumbnail(url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
 me.add_field(
     name="🧮 __Misc Commands__",
-    value=f"> • `Whois`"
-          f"\n> • `Avatar`"
-          f"\n> • `Snipe`"
-          f"\n> • `Deathhelp`"
-          f"\n> • `Pickle` - /slash"
-          f"\n> • `Remind`"
-          f"\n> • `Tdadd`"
-          f"\n> • `Tdadd`"
-          f"\n> • `Tdlist`",
+    value=f"> `Whois`, `Avatar`, `Snipe`, `Deathhelp`, `/Pickle`, `Remind` \n> `Tdadd`, `Tddel`, `Tdlist`",
 )
 
 # Staff Commands Embed
 se = discord.Embed(color=0xc700ff)
+se.set_author(name="Bot Commands", icon_url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
+se.set_thumbnail(url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
 se.add_field(
     name="🔰 __Staff Commands__",
-    value=f"> • `Purge`"
-          f"\n> • `Ban`"
-          f"\n> • `Unban`"
-          f"\n> • `Kick`"
-          f"\n> • `Timeout`"
-          f"\n> • `Warn`"
-          f"\n> • `WarnList`"
-          f"\n> • `DelWarn`",
+    value=f"> `Purge`, `Ban`, `Unban`, `Kick`, `Timeout`, `Warn` \n> `WarnList`, `DelWarn`",
 )
 
 # Config Commands Embed
 ce = discord.Embed(color=0xc700ff)
+ce.set_author(name="Bot Commands", icon_url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
+ce.set_thumbnail(url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
 ce.add_field(
     name="⚙️ __Config Commands__",
-    value=f"> • `SetPrefix`"
-          f"\n> • `SetLog`",
+    value=f"> `SetPrefix`, `SetLog`",
 )
 
 # Help Menu Dropdown
 class Dropdown(discord.ui.Select):
     def __init__(self):
-
         options = [
             discord.SelectOption(label="General Commands",description="Help, Info, Test, Ping, Suggest +1 More", emoji="📌"),
             discord.SelectOption(label="Fun Commands", description="Coinflip, Ask, Reverse, Say, Lovetest +2 More", emoji="🎉"),
@@ -111,23 +74,22 @@ class Dropdown(discord.ui.Select):
             discord.SelectOption(label="Staff Commands", description="Purge, Ban, Unban, Kick, Timeout +3 More", emoji="🔰"),
             discord.SelectOption(label="Config Commands", description="SetPrefix, SetLog", emoji="⚙️"),
         ]
-
         super().__init__(min_values=1, max_values=1, options=options)
 
     async def callback(self,interaction:discord.Interaction):
         if self.values[0] == "General Commands":
-            await interaction.response.send_message(embed=ge, ephemeral=True)
+            await interaction.response.edit_message(embed=ge)
         if self.values[0] == "Fun Commands":
-            await interaction.response.send_message(embed=fe, ephemeral=True)
+            await interaction.response.edit_message(embed=fe)
         if self.values[0] == "Action Commands":
-            await interaction.response.send_message(embed=ae, ephemeral=True)
+            await interaction.response.edit_message(embed=ae)
         if self.values[0] == "Misc Commands":
-            await interaction.response.send_message(embed=me, ephemeral=True)
+            await interaction.response.edit_message(embed=me)
         if self.values[0] == "Staff Commands":
-            await interaction.response.send_message(embed=se, ephemeral=True)
+            await interaction.response.edit_message(embed=se)
         if self.values[0] == "Config Commands":
-            await interaction.response.send_message(embed=ce, ephemeral=True)
-
+            await interaction.response.edit_message(embed=ce)   
+    
 # DropdownView Class
 class DropdownView(discord.ui.View):
     def __init__(self):
@@ -199,12 +161,12 @@ class GeneralCog(commands.Cog):
         e.set_thumbnail(url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
         e.add_field(
             name="✧ __Command Menus__",
-            value=f"> 📌 `General Commands`"
-                  f"\n> 🎉 `Fun Commands`"
-                  f"\n> 🎯 `Action Commands`"
-                  f"\n> 🧮 `Misc Commands`"
-                  f"\n> 🔰 `Staff Commands`"
-                  f"\n> ⚙️ `Config Commands`",
+            value=f"> 📌 General"
+                  f"\n> 🎉 Fun"
+                  f"\n> 🎯 Action"
+                  f"\n> 🧮 Misc"
+                  f"\n> 🔰 Staff"
+                  f"\n> ⚙️ Config",
         )
         e.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar.url)
         e.timestamp = datetime.utcnow()
@@ -243,10 +205,10 @@ class GeneralCog(commands.Cog):
         e.add_field(
             name="✧ __Statistics__",
             value=f"> **Commands:** [54]"
-		  f"\n> **Code:** {total_lines} Lines"
+		          f"\n> **Code:** {total_lines} Lines"
                   f"\n> **Ping:** {round(self.bot.latency * 1000)}ms"
                   f"\n> **Users:** {true_member_count}"
-        	  f"\n> **Uptime:** {days}**d** {hours}**h** {minutes}**m** {seconds}**s**",
+        	      f"\n> **Uptime:** {days}**d** {hours}**h** {minutes}**m** {seconds}**s**",
             inline=False
         )
         e.add_field(
