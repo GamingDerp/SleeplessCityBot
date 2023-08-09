@@ -225,7 +225,7 @@ class MiscCog(commands.Cog):
             cursor = await db.execute("SELECT todo FROM todos WHERE user_id = ?", (user.id,))
             todos = await cursor.fetchall()
         if not todos:
-            await ctx.send(f"**{user.name}** has no items in their todo list!")
+            await ctx.send(f"**{user.name}** has no tasks in their todo list!")
         else:
             todo_list = "\n".join([f"**{idx + 1})** {todo[0]}" for idx, todo in enumerate(todos)])
             e = discord.Embed(color=0xc700ff)
