@@ -227,7 +227,7 @@ class MiscCog(commands.Cog):
         if not todos:
             await ctx.send(f"**{user.name}** has no items in their todo list!")
         else:
-            todo_list = "\n".join([f"• {todo[0]}" for todo in todos])
+            todo_list = "\n".join([f"**{idx + 1})** {todo[0]}" for idx, todo in enumerate(todos)])
             e = discord.Embed(color=0xc700ff)
             e.set_author(name=f"{user.name}'s Todo List", icon_url=user.avatar.url)
             e.description=todo_list
