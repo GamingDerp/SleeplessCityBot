@@ -195,7 +195,7 @@ class GeneralCog(commands.Cog):
     @commands.command(aliases=["pleh", "Help", "pleH", "HELP", "PLEH"])
     async def help(self, ctx):
         e = discord.Embed(color=0xc700ff)
-        e.set_author(name="Bot Commands", icon_url=self.bot.user.display_avatar.url)
+        e.set_author(name="Bot Commands", icon_url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
         e.set_thumbnail(url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
         e.add_field(
             name="✧ __Command Menus__",
