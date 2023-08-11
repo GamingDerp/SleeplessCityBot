@@ -307,7 +307,7 @@ class GeneralCog(commands.Cog):
             se.description = suggestion
             se.timestamp = datetime.utcnow()
             vote = await suggestion_channel.send(embed=se)
-            for emoji in ["👍", "🤷🏻", "👎"]:
+            for emoji in ["👍", "🤷‍♂️", "👎"]:
                 await vote.add_reaction(emoji)
         else:
             await ctx.send("No suggestion channel set!")
