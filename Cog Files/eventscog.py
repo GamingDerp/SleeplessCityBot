@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 from datetime import datetime, timedelta
 import time
+import aiosqlite
 
 # Bots User ID
 bot_id = 1103103994777309205
@@ -16,22 +17,65 @@ class EventsCog(commands.Cog):
     async def on_ready(self):
         await self.bot.change_presence(activity=discord.Game(name="Helping SN Users..."))
         await self.bot.tree.sync()
-            
+        await self.create_starboard_table()
+        
+    # Creates database table if one doesn't exist
+    async def create_starboard_table(self):
+        async with aiosqlite.connect("dbs/star.db") as db:
+            await db.execute(
+                """
+                CREATE TABLE IF NOT EXISTS starboard (
+                    server_id INTEGER PRIMARY KEY,
+                    channel_id INTEGER
+                )
+                """
+            )
+            await db.commit()
+    
+    # SetStar Command
+    @commands.command(aliases=["ratstes", "SetStar", "ratSteS", "SETSTAR", "RATSTES"])
+    async def setstar(self, ctx, channel: discord.TextChannel):
+        if discord.utils.get(ctx.author.roles, name="🔐 Assistant Chief"):
+            def check(message):
+                return message.author == ctx.author and message.channel == ctx.channel
+            await ctx.send(f"Is {channel.mention} the correct channel? [Yes/No]")
+            try:
+                reply = await self.bot.wait_for("message", timeout=30.0, check=check)
+                if reply.content.lower() == "yes":
+                    async with aiosqlite.connect("dbs/star.db") as db:
+                        await db.execute("INSERT OR REPLACE INTO starboard (server_id, channel_id) VALUES (?, ?)", (ctx.guild.id, channel.id))
+                        await db.commit()
+                    await ctx.send(f"Starboard channel set to {channel.mention}!")
+                else:
+                    await ctx.send("Please retry the command and mention the correct channel!")
+            except asyncio.TimeoutError:
+                await ctx.send("Timed out. Starboard channel setting cancelled.")
+        else:
+            e = discord.Embed(color=0xc700ff)
+            e.description = "🚨 That is a **High Staff** command! You don't have the required perms! 🚨"
+            await ctx.send(embed=e)
+    
     # Starboard Event
     @commands.Cog.listener()
     async def on_reaction_add(self, reaction, user):
         if reaction.emoji == "⭐" and reaction.count >= 3:
-            channel = self.bot.get_channel(1065650482590273648)
-            e = discord.Embed(color=0xF7c11e)
-            e.set_author(name=reaction.message.author.display_name, icon_url=reaction.message.author.avatar.url)
-            e.description = reaction.message.content
-            if reaction.message.attachments:
-                e.set_image(url=reaction.message.attachments[0].url)   
-            e.add_field(name="**Posted In**", value=reaction.message.channel.mention)
-            jump_url = reaction.message.jump_url
-            e.add_field(name="**Jump URL**", value=f"[Message Link]({jump_url})")
-            e.timestamp = datetime.utcnow()
-            await channel.send(embed=e)
+            async with aiosqlite.connect("dbs/star.db") as db:
+                async with db.execute("SELECT channel_id FROM starboard WHERE server_id = ?", (reaction.message.guild.id,)) as cursor:
+                    result = await cursor.fetchone()
+                    if result:
+                        starboard_channel_id = result[0]
+                        starboard_channel = self.bot.get_channel(starboard_channel_id)
+                        if starboard_channel:
+                            e = discord.Embed(color=0xF7c11e)
+                            e.set_author(name=reaction.message.author.display_name, icon_url=reaction.message.author.avatar.url)
+                            e.description = reaction.message.content
+                            if reaction.message.attachments:
+                                e.set_image(url=reaction.message.attachments[0].url)   
+                            e.add_field(name="**Posted In**", value=reaction.message.channel.mention)
+                            jump_url = reaction.message.jump_url
+                            e.add_field(name="**Jump URL**", value=f"[Message Link]({jump_url})")
+                            e.timestamp = datetime.utcnow()
+                            await starboard_channel.send(embed=e)
     
     # Bot Mention Message Event / Counting Reaction Event
     @commands.Cog.listener()
