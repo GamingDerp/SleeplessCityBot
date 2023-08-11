@@ -60,7 +60,7 @@ ce.set_author(name="Bot Commands", icon_url="https://media.discordapp.net/attach
 ce.set_thumbnail(url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
 ce.add_field(
     name="⚙️ __Config Commands__",
-    value=f"> `SetPrefix`, `SetLog`, `SetStar`",
+    value=f"> `SetPrefix`, `SetLog`, `SetStar`, `SetSuggest`",
 )
 
 # Help Menu Dropdown
@@ -72,7 +72,7 @@ class Dropdown(discord.ui.Select):
             discord.SelectOption(label="Action Commands", description="Sniff, Bite, Bonk, Vomit, Slap +16 More", emoji="🎯"),
             discord.SelectOption(label="Misc Commands", description="Whois, Avatar, Snipe, Deathhelp, Pickle +4 More", emoji="🧮"),
             discord.SelectOption(label="Staff Commands", description="Purge, Ban, Unban, Kick, Timeout +3 More", emoji="🔰"),
-            discord.SelectOption(label="Config Commands", description="SetPrefix, SetLog, SetStar", emoji="⚙️"),
+            discord.SelectOption(label="Config Commands", description="SetPrefix, SetLog, SetStar, SetSuggest", emoji="⚙️"),
         ]
         super().__init__(min_values=1, max_values=1, options=options)
 
@@ -102,11 +102,12 @@ class GeneralCog(commands.Cog):
         self.bot = bot
         self.db_conn = None
     
-    # Creating table on startup
+    # Creating tables on startup
     @commands.Cog.listener()
     async def on_ready(self):
         await self.create_table() # Prefix DB
         await self.initialize_database() # Logging DB
+        await self.create_suggestion_table() # Suggest DB
     
     # Creates database table if one doesn't exist
     async def create_table(self):
@@ -120,7 +121,7 @@ class GeneralCog(commands.Cog):
                 """
             )
     
-    # Grabs the current server's prefix
+    # Get the current prefix
     async def get_prefix(self, message):
         async with aiosqlite.connect("dbs/prefix.db") as conn:
             async with conn.execute("SELECT prefix FROM prefixes WHERE server_id = ?", (message.guild.id,)) as cursor:
@@ -151,6 +152,19 @@ class GeneralCog(commands.Cog):
                         return starboard_channel.mention
         return "None"
     
+    # Create suggestion table
+    async def create_suggestion_table(self):
+        async with aiosqlite.connect("dbs/suggest.db") as db:
+            await db.execute("CREATE TABLE IF NOT EXISTS suggestion_channels (server_id INTEGER, channel_id INTEGER)")
+            await db.commit()
+    
+    # Get the suggestion channel
+    async def get_suggestion_channel(self, guild_id):
+        async with aiosqlite.connect("dbs/suggest.db") as db:
+            cursor = await db.execute("SELECT channel_id FROM suggestion_channels WHERE server_id = ?", (guild_id,))
+            suggestion_channel_id = await cursor.fetchone()
+        return self.bot.get_channel(suggestion_channel_id[0]) if suggestion_channel_id else None
+    
     # SetPrefix Command
     @commands.command(aliases=["xiferptes", "SetPrefix", "xiferPteS", "SETPREFIX", "XIFERPTES"])
     async def setprefix(self, ctx, new_prefix):
@@ -160,6 +174,31 @@ class GeneralCog(commands.Cog):
                 await conn.execute("REPLACE INTO prefixes (server_id, prefix) VALUES (?, ?)", (ctx.guild.id, new_prefix))
                 await conn.commit()
             await ctx.send(f"**{ctx.guild.name}** server prefix is now: `{new_prefix}`")
+        else:
+            e = discord.Embed(color=0xc700ff)
+            e.description = "🚨 That is a **High Staff** command! You don't have the required perms! 🚨"
+            await ctx.send(embed=e)
+    
+    # SetSuggest Command
+    @commands.command(aliases=["tseggustes", "SetSuggest", "tsegguSteS", "SETSUGGEST", "TSEGGUSTES"])
+    async def setsuggest(self, ctx, channel: discord.TextChannel):
+        if discord.utils.get(ctx.author.roles, name="🔐 Assistant Chief"):
+            def check(message):
+                return message.author == ctx.author and message.channel == ctx.channel and message.content.lower() in ['yes', 'no']
+            await self.create_suggestion_table()
+            await ctx.send(f"Is {channel.mention} the correct channel? [Yes/No]")
+            try:
+                reply = await self.bot.wait_for('message', check=check, timeout=30)
+                if reply.content.lower() == 'yes':
+                    async with aiosqlite.connect("dbs/suggest.db") as db:
+                        await db.execute("DELETE FROM suggestion_channels WHERE server_id = ?", (ctx.guild.id,))
+                        await db.execute("INSERT INTO suggestion_channels (server_id, channel_id) VALUES (?, ?)", (ctx.guild.id, channel.id))
+                        await db.commit()
+                    await ctx.send(f"Suggestion channel has been set to {channel.mention}")
+                else:
+                    await ctx.send("Please retry the command and mention the correct channel!")
+            except asyncio.TimeoutError:
+                await ctx.send("Timed out. Suggestion channel setting cancelled.")
         else:
             e = discord.Embed(color=0xc700ff)
             e.description = "🚨 That is a **High Staff** command! You don't have the required perms! 🚨"
@@ -190,6 +229,7 @@ class GeneralCog(commands.Cog):
         logging_channel_id = await self.get_logging_channel(ctx.guild.id)
         logging_channel = self.bot.get_channel(logging_channel_id)
         starboard_mention = await self.get_starboard_channel(ctx.guild.id)
+        suggestion_channel = await self.get_suggestion_channel(ctx.guild.id)
         total_lines = 24
         cog_directory = "./cogs"
         for filename in os.listdir(cog_directory):
@@ -211,13 +251,14 @@ class GeneralCog(commands.Cog):
             name="✧ __Server__",
             value=f"> **Prefix:** {current_prefix}"
                   f"\n> **Logging:** {logging_channel.mention if logging_channel else 'None'}"
-                  f"\n> **Starboard:** {starboard_mention if starboard_mention else 'Not set'}",
+                  f"\n> **Starboard:** {starboard_mention if starboard_mention else 'None'}"
+                  f"\n> **Suggestion:** {suggestion_channel.mention if suggestion_channel else 'None'}",
             inline=False
         )
         e.add_field(
             name="✧ __Statistics__",
-            value=f"> **Commands:** [54]"
-		  f"\n> **Code:** {total_lines} Lines"
+            value=f"> **Commands:** [55]"
+	          f"\n> **Code:** {total_lines} Lines"
                   f"\n> **Ping:** {round(self.bot.latency * 1000)}ms"
                   f"\n> **Users:** {true_member_count}"
         	  f"\n> **Uptime:** {days}**d** {hours}**h** {minutes}**m** {seconds}**s**",
@@ -256,17 +297,20 @@ class GeneralCog(commands.Cog):
     # Suggest Command
     @commands.command(aliases=["tseggus", "Suggest", "tsegguS", "SUGGEST", "TSEGGUS"])
     async def suggest(self, ctx, *, suggestion):
-        await ctx.send("Your suggestion has been added! Check <#1065657740573286523>!")
-        se = discord.Embed(color=0xc700ff)
-        se.set_author(name=f"Suggested by {ctx.message.author}", icon_url=ctx.author.avatar.url)
-        se.set_thumbnail(url=ctx.author.avatar.url)
-        se.description = suggestion
-        se.timestamp = datetime.utcnow()
-        channel = self.bot.get_channel(1065657740573286523)
-        vote = await channel.send(embed=se)
-        await vote.add_reaction("👍")
-        await vote.add_reaction("🤷🏻")
-        await vote.add_reaction("👎")
+        await self.create_suggestion_table()
+        suggestion_channel = await self.get_suggestion_channel(ctx.guild.id)
+        if suggestion_channel:
+            await ctx.send(f"Your suggestion has been added! Check {suggestion_channel.mention}!")
+            se = discord.Embed(color=0xc700ff)
+            se.set_author(name=f"Suggested by {ctx.author}", icon_url=ctx.author.avatar.url)
+            se.set_thumbnail(url=ctx.author.avatar.url)
+            se.description = suggestion
+            se.timestamp = datetime.utcnow()
+            vote = await suggestion_channel.send(embed=se)
+            for emoji in ["👍", "🤷🏻", "👎"]:
+                await vote.add_reaction(emoji)
+        else:
+            await ctx.send("No suggestion channel set!")
         
     # Poll Command - Slash
     @commands.hybrid_command(name="poll", description="Create a poll!")
