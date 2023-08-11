@@ -250,8 +250,9 @@ class GeneralCog(commands.Cog):
         se.timestamp = datetime.utcnow()
         channel = self.bot.get_channel(1065657740573286523)
         vote = await channel.send(embed=se)
-        await vote.add_reaction("✅")
-        await vote.add_reaction("❌")
+        await vote.add_reaction("👍")
+        await vote.add_reaction("🤷🏻")
+        await vote.add_reaction("👎")
         
     # Poll Command - Slash
     @commands.hybrid_command(name="poll", description="Create a poll!")
