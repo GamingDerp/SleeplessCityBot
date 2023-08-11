@@ -60,7 +60,7 @@ ce.set_author(name="Bot Commands", icon_url="https://media.discordapp.net/attach
 ce.set_thumbnail(url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
 ce.add_field(
     name="⚙️ __Config Commands__",
-    value=f"> `SetPrefix`, `SetLog`",
+    value=f"> `SetPrefix`, `SetLog`, `SetStar`",
 )
 
 # Help Menu Dropdown
@@ -72,7 +72,7 @@ class Dropdown(discord.ui.Select):
             discord.SelectOption(label="Action Commands", description="Sniff, Bite, Bonk, Vomit, Slap +16 More", emoji="🎯"),
             discord.SelectOption(label="Misc Commands", description="Whois, Avatar, Snipe, Deathhelp, Pickle +4 More", emoji="🧮"),
             discord.SelectOption(label="Staff Commands", description="Purge, Ban, Unban, Kick, Timeout +3 More", emoji="🔰"),
-            discord.SelectOption(label="Config Commands", description="SetPrefix, SetLog", emoji="⚙️"),
+            discord.SelectOption(label="Config Commands", description="SetPrefix, SetLog, SetStar", emoji="⚙️"),
         ]
         super().__init__(min_values=1, max_values=1, options=options)
 
@@ -105,8 +105,8 @@ class GeneralCog(commands.Cog):
     # Creating table on startup
     @commands.Cog.listener()
     async def on_ready(self):
-        await self.create_table()
-        await self.initialize_database()
+        await self.create_table() # Prefix DB
+        await self.initialize_database() # Logging DB
     
     # Creates database table if one doesn't exist
     async def create_table(self):
@@ -138,6 +138,18 @@ class GeneralCog(commands.Cog):
         ) as cursor:
             result = await cursor.fetchone()
             return result[0] if result else None
+    
+    # Get the starboard channel
+    async def get_starboard_channel(self, guild_id):
+        async with aiosqlite.connect("dbs/star.db") as db:
+            async with db.execute("SELECT channel_id FROM starboard WHERE server_id = ?", (guild_id,)) as cursor:
+                result = await cursor.fetchone()
+                if result:
+                    starboard_channel_id = result[0]
+                    starboard_channel = self.bot.get_channel(starboard_channel_id)
+                    if starboard_channel:
+                        return starboard_channel.mention
+        return "None"
     
     # SetPrefix Command
     @commands.command(aliases=["xiferptes", "SetPrefix", "xiferPteS", "SETPREFIX", "XIFERPTES"])
@@ -174,15 +186,10 @@ class GeneralCog(commands.Cog):
     # Info Command
     @commands.command(aliases=["ofni", "Info", "ofnI", "INFO", "OFNI"])
     async def info(self, ctx):
+        current_prefix = await self.get_prefix(ctx.message)
         logging_channel_id = await self.get_logging_channel(ctx.guild.id)
         logging_channel = self.bot.get_channel(logging_channel_id)
-        current_prefix = await self.get_prefix(ctx.message)
-        delta_uptime = datetime.utcnow() - bot.launch_time
-        hours, remainder = divmod(int(delta_uptime.total_seconds()), 3600)
-        minutes, seconds = divmod(remainder, 60)
-        days, hours = divmod(hours, 24)
-        member_count = len(ctx.guild.members) # includes bots
-        true_member_count = len([m for m in ctx.guild.members if not m.bot]) # doesn't include bots
+        starboard_mention = await self.get_starboard_channel(ctx.guild.id)
         total_lines = 24
         cog_directory = "./cogs"
         for filename in os.listdir(cog_directory):
@@ -191,13 +198,20 @@ class GeneralCog(commands.Cog):
                     lines = file.readlines()
                     non_empty_lines = [line.strip() for line in lines if line.strip()]
                     total_lines += len(non_empty_lines)
+        member_count = len(ctx.guild.members) # includes bots
+        true_member_count = len([m for m in ctx.guild.members if not m.bot]) # doesn't include bots
+        delta_uptime = datetime.utcnow() - bot.launch_time
+        hours, remainder = divmod(int(delta_uptime.total_seconds()), 3600)
+        minutes, seconds = divmod(remainder, 60)
+        days, hours = divmod(hours, 24)
         e = discord.Embed(color=0xc700ff)
         e.set_author(name="Bot Information", icon_url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
         e.set_thumbnail(url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
         e.add_field(
             name="✧ __Server__",
             value=f"> **Prefix:** {current_prefix}"
-                  f"\n> **Logging:** {logging_channel.mention}",
+                  f"\n> **Logging:** {logging_channel.mention if logging_channel else 'None'}"
+                  f"\n> **Starboard:** {starboard_mention if starboard_mention else 'Not set'}",
             inline=False
         )
         e.add_field(
