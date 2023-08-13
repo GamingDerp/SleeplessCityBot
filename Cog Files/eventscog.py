@@ -11,6 +11,7 @@ bot_id = 1103103994777309205
 class EventsCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.processed_messages = set()
 
     # Changes bot's Discord activity when loaded and syncs slash commands
     @commands.Cog.listener()
@@ -58,7 +59,7 @@ class EventsCog(commands.Cog):
     # Starboard Event
     @commands.Cog.listener()
     async def on_reaction_add(self, reaction, user):
-        if reaction.emoji == "⭐" and reaction.count >= 3:
+        if reaction.emoji == "⭐" and reaction.count >= 3 and reaction.message.id not in self.processed_messages:
             async with aiosqlite.connect("dbs/star.db") as db:
                 async with db.execute("SELECT channel_id FROM starboard WHERE server_id = ?", (reaction.message.guild.id,)) as cursor:
                     result = await cursor.fetchone()
@@ -76,6 +77,7 @@ class EventsCog(commands.Cog):
                             e.add_field(name="**Jump URL**", value=f"[Message Link]({jump_url})")
                             e.timestamp = datetime.utcnow()
                             await starboard_channel.send(embed=e)
+                            self.processed_messages.add(reaction.message.id)
     
     # Bot Mention Message Event / Counting Reaction Event
     @commands.Cog.listener()
