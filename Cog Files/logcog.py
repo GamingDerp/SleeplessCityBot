@@ -90,15 +90,18 @@ class LogCog(commands.Cog):
     async def on_message_edit(self, before, after):
         logging_channel = await self.get_logging_channel(before.guild.id)
         if logging_channel:
-            channel = self.bot.get_channel(logging_channel)
-            e = discord.Embed(color=0xc700ff)
-            e.set_author(name="📝 Message Edited")
-            e.set_thumbnail(url=f"{before.author.avatar.url}")
-            e.description = f"{before.author.mention} edited their message \n<:Reply:1123773242327441468> In <#{before.channel.id}>" 
-            e.add_field(name="__Before__", value=f"> {before.content}")
-            e.add_field(name="__After__", value=f"> {after.content}", inline=False)
-            e.timestamp = datetime.utcnow()
-            await channel.send(embed=e)
+            if before.author.bot:
+                return
+            else:
+                channel = self.bot.get_channel(logging_channel)
+                e = discord.Embed(color=0xc700ff)
+                e.set_author(name="📝 Message Edited")
+                e.set_thumbnail(url=f"{before.author.avatar.url}")
+                e.description = f"{before.author.mention} edited their message \n<:Reply:1123773242327441468> In <#{before.channel.id}>" 
+                e.add_field(name="__Before__", value=f"> {before.content}")
+                e.add_field(name="__After__", value=f"> {after.content}", inline=False)
+                e.timestamp = datetime.utcnow()
+                await channel.send(embed=e)
 
     # Member Join Log Event
     @commands.Cog.listener()
