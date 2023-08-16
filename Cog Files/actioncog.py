@@ -64,8 +64,8 @@ class ActionCog(commands.Cog):
         await ctx.send(embed=e)
         
     # Punch Command
-    @commands.command(aliases=["hcnup", "Punch", "hcnuP", "PUNCH"])
-    async def slap(self, ctx, user:discord.Member):
+    @commands.command(aliases=["hcnup", "Punch", "hcnuP", "PUNCH", "HCNUP"])
+    async def punch(self, ctx, user:discord.Member):
         e = discord.Embed(color=0xc700ff)
         e.description = f"{ctx.author.mention} punches {user.mention}!"
         e.set_image(url="https://media.discordapp.net/attachments/807071768258805764/1131018538577039390/PunchingGif.gif"),
