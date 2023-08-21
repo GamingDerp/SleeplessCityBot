@@ -232,7 +232,16 @@ class MiscCog(commands.Cog):
             e.set_author(name=f"{user.name}'s Todo List", icon_url=user.avatar.url)
             e.description=todo_list
         await ctx.send(embed=e)
-
+        
+    # Emoji Steal Command
+    @commands.command(aliases=["laetse", "ESteal", "laetSE", "ESTEAL", "LAETSE"])
+    async def esteal(self, ctx, emoji: discord.PartialEmoji):
+        if emoji.id:
+            emoji_url = emoji.url
+            await ctx.send(f":link: {emoji_url}")
+        else:
+            await ctx.send("Please provide a custom emoji.")
+    
     
 async def setup(bot):
     await bot.add_cog(MiscCog(bot))
