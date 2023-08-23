@@ -11,12 +11,12 @@ Private commands/menus will not be counted in the "Features" section.
 
 
 # 📋 Features
-**55** commands across **6** different categories.
+**56** commands across **6** different categories.
 
 - 📌 **General:** `Help`, `Info`, `Test`, `Ping`, `Suggest`, `Poll`
 - 🎉 **Fun:** `Coinflip`, `Ask`, `Reverse`, `Say`, `Lovetest`, `Cute` and **2** more!
 - 🎯 **Action:** `Sniff`, `Bite`, `Bonk`, `Vomit`, `Slap`, `Punch` and **15** more!
-- 🧮 **Misc:** `Whois`, `Avatar`, `Snipe`, `Deathhelp`, `Pickle`, `Remind` and **3** more!
+- 🧮 **Misc:** `Whois`, `Avatar`, `Snipe`, `Deathhelp`, `Pickle`, `Remind` and **4** more!
 - 🔰 **Staff:** `Purge`, `Ban`, `Unban`, `Kick`, `Timeout`, `Warn` and **2** more!
 - ⚙️ **Config:** `SetPrefix`, `SetLog`, `SetStar`, `SetSuggest`
 - **Full list of commands:** [Here](https://github.com/GamingDerp/SleeplessNightsBot/blob/main/COMMANDS.md)
