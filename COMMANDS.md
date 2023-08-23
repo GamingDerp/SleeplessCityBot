@@ -55,7 +55,6 @@ cuddle | Cuddles another user | `cuddle @user`
 Command | Description | Usage
 --- | --- | ---
 whois | Sends information about a user's account | `whois @user`
-avatar | Sends the profile picture of another user | `avatar @user`
 snipe | Shows a recently deleted message and who sent it | `snipe`
 deathhelp | Shows the methods of death for the "deathnote" commands | `deathhelp`
 pickle | Sends the "Pickle Rick" quote | `/pickle`
@@ -63,6 +62,7 @@ remind | Sets a reminder for a user about a task | `remind <number><abbreviated 
 tdadd | Adds a task to a user's "todo list" | `tdadd <task>`
 tddel | Removes a task from a user's "todo list" | `tddel <task number>`
 tdlist | List's a mentioned user's "todo list" | `tdlist @user`
+esteal | Grabs and sends the file link from a custom emoji | `esteal :emoji:`
 
 ## 🔰 Staff
 Command | Description | Usage
