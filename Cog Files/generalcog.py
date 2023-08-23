@@ -257,7 +257,7 @@ class GeneralCog(commands.Cog):
         )
         e.add_field(
             name="✧ __Statistics__",
-            value=f"> **Commands:** [55]"
+            value=f"> **Commands:** [56]"
 	          f"\n> **Code:** {total_lines} Lines"
                   f"\n> **Ping:** {round(self.bot.latency * 1000)}ms"
                   f"\n> **Users:** {true_member_count}"
