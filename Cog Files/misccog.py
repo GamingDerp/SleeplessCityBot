@@ -27,7 +27,7 @@ class MiscCog(commands.Cog):
             await db.commit()
     
     # WhoIs Command
-    @commands.command(aliases=["siohw", "Whois", "siohW", "WHOIS", "SIOHW"])
+    @commands.hybrid_command(description="Sends information about a user")
     async def whois(self, ctx, user:discord.Member):
         e = discord.Embed(color=0xc700ff)
         e.set_author(name=f"Gathering Information..."),
@@ -102,7 +102,7 @@ class MiscCog(commands.Cog):
         sniped_message = before
         
     # Snipe Command
-    @commands.command(aliases=["epins", "Snipe", "epinS", "SNIPE", "EPINS"])
+    @commands.hybrid_command(description="Sends the most recent deleted or edited message")
     async def snipe(self, ctx):
         global sniped_message
         if sniped_message is None:
@@ -122,7 +122,7 @@ class MiscCog(commands.Cog):
         sniped_message = None  # Reset sniped message after displaying
         
     # Deathnote Help Command
-    @commands.command(aliases=["plehhtaed", "Deathhelp", "plehhtaeD", "DEATHNOTEHELP", "PLEHHTAED"])
+    @commands.hybrid_command(description="Sends the options for the deathnote command")
     async def deathhelp(self, ctx):
         e = discord.Embed(color=0xc700ff)
         e.set_author(name="☠️ Available Death Methods ☠️")
@@ -154,7 +154,7 @@ class MiscCog(commands.Cog):
             await ctx.send("I'M PICCKLLE RIIIIIICCCKKKK 🥒")
         
     # Remind Command
-    @commands.command(aliases=["dnimer", "Remind", "dnimeR", "REMIND", "DNIMER"])
+    @commands.hybrid_command(description="Set a reminder")
     async def remind(self, ctx, time, *, task):
         def convert(time):
             pos = ['s', 'm', 'h', 'd']
@@ -193,7 +193,7 @@ class MiscCog(commands.Cog):
         await ctx.send(embed=e)
         
     # Todo Add Command
-    @commands.command(aliases=["ddadt", "Tdadd", "ddadT", "TDADD", "DDADT"])
+    @commands.hybrid_command(description="Add a task to your to-do list")
     async def tdadd(self, ctx, *, text):
         author_id = ctx.author.id
         async with aiosqlite.connect("dbs/todo.db") as db:
@@ -202,7 +202,7 @@ class MiscCog(commands.Cog):
         await ctx.send(f"Added **{text}** to your todo list!")
     
     # ToDo Del Command
-    @commands.command(aliases=["leddt", "Tddel", "leddT", "TDDEL", "LEDDT"])
+    @commands.hybrid_command(description="Remove a task from your to-do list")
     async def tddel(self, ctx, todo_num: int):
         author_id = ctx.author.id
         async with aiosqlite.connect("dbs/todo.db") as db:
@@ -217,7 +217,7 @@ class MiscCog(commands.Cog):
         await ctx.send(f"Removed **{todo_text}** from your todo list!")
     
     # ToDo List Command
-    @commands.command(aliases=["tsildt", "Tdlist", "tsildT", "TDLIST", "TSILDT"])
+    @commands.hybrid_command(description="Look at your to-do list")
     async def tdlist(self, ctx, user: discord.User = None):
         if user is None:
             user = ctx.author
@@ -234,7 +234,7 @@ class MiscCog(commands.Cog):
         await ctx.send(embed=e)
         
     # Emoji Steal Command
-    @commands.command(aliases=["laetse", "ESteal", "laetSE", "ESTEAL", "LAETSE"])
+    @commands.hybrid_command(description="Get the file link to an emoji")
     async def esteal(self, ctx, emoji: discord.PartialEmoji):
         if emoji.id:
             emoji_url = emoji.url
