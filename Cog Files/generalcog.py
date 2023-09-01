@@ -4,6 +4,8 @@ from discord.ext import commands
 from datetime import datetime, timedelta
 import time
 import aiosqlite
+import random
+import asyncio
 
 # Stores when the bot was started
 bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
@@ -102,37 +104,32 @@ class GeneralCog(commands.Cog):
         self.bot = bot
         self.db_conn = None
     
-    # Creating tables on startup
     @commands.Cog.listener()
     async def on_ready(self):
         await self.create_table() # Prefix DB
         await self.initialize_database() # Logging DB
         await self.create_suggestion_table() # Suggest DB
     
-    # Creates database table if one doesn't exist
     async def create_table(self):
         async with aiosqlite.connect("dbs/prefix.db") as conn:
             await conn.execute(
-                """
+                '''
                 CREATE TABLE IF NOT EXISTS prefixes (
                     server_id INTEGER PRIMARY KEY,
                     prefix TEXT NOT NULL
                 )
-                """
+                '''
             )
     
-    # Get the current prefix
     async def get_prefix(self, message):
         async with aiosqlite.connect("dbs/prefix.db") as conn:
             async with conn.execute("SELECT prefix FROM prefixes WHERE server_id = ?", (message.guild.id,)) as cursor:
                 result = await cursor.fetchone()
                 return result[0] if result else "!"  
     
-    # Initialize logging database
     async def initialize_database(self):
         self.db_conn = await aiosqlite.connect("dbs/logging.db")
     
-    # Get the logging channel
     async def get_logging_channel(self, guild_id):
         async with self.db_conn.execute(
             "SELECT channel_id FROM logging_channels WHERE guild_id = ?", (guild_id,)
@@ -140,7 +137,6 @@ class GeneralCog(commands.Cog):
             result = await cursor.fetchone()
             return result[0] if result else None
     
-    # Get the starboard channel
     async def get_starboard_channel(self, guild_id):
         async with aiosqlite.connect("dbs/star.db") as db:
             async with db.execute("SELECT channel_id FROM starboard WHERE server_id = ?", (guild_id,)) as cursor:
@@ -152,13 +148,11 @@ class GeneralCog(commands.Cog):
                         return starboard_channel.mention
         return "None"
     
-    # Create suggestion table
     async def create_suggestion_table(self):
         async with aiosqlite.connect("dbs/suggest.db") as db:
             await db.execute("CREATE TABLE IF NOT EXISTS suggestion_channels (server_id INTEGER, channel_id INTEGER)")
             await db.commit()
     
-    # Get the suggestion channel
     async def get_suggestion_channel(self, guild_id):
         async with aiosqlite.connect("dbs/suggest.db") as db:
             cursor = await db.execute("SELECT channel_id FROM suggestion_channels WHERE server_id = ?", (guild_id,))
@@ -166,7 +160,7 @@ class GeneralCog(commands.Cog):
         return self.bot.get_channel(suggestion_channel_id[0]) if suggestion_channel_id else None
     
     # SetPrefix Command
-    @commands.command(aliases=["xiferptes", "SetPrefix", "xiferPteS", "SETPREFIX", "XIFERPTES"])
+    @commands.hybrid_command(description="Set the bot's prefix for the server")
     async def setprefix(self, ctx, new_prefix):
         if discord.utils.get(ctx.author.roles, name="🔐 Assistant Chief"):
             self.bot.command_prefix = new_prefix
@@ -180,7 +174,7 @@ class GeneralCog(commands.Cog):
             await ctx.send(embed=e)
     
     # SetSuggest Command
-    @commands.command(aliases=["tseggustes", "SetSuggest", "tsegguSteS", "SETSUGGEST", "TSEGGUSTES"])
+    @commands.hybrid_command(description="Set the suggestion channel for the server")
     async def setsuggest(self, ctx, channel: discord.TextChannel):
         if discord.utils.get(ctx.author.roles, name="🔐 Assistant Chief"):
             def check(message):
@@ -205,7 +199,7 @@ class GeneralCog(commands.Cog):
             await ctx.send(embed=e)
     
     # Help Command
-    @commands.command(aliases=["pleh", "Help", "pleH", "HELP", "PLEH"])
+    @commands.hybrid_command(description="Sends the bots help menu")
     async def help(self, ctx):
         e = discord.Embed(color=0xc700ff)
         e.set_author(name="Bot Commands", icon_url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
@@ -223,7 +217,7 @@ class GeneralCog(commands.Cog):
         await ctx.send(embed=e, view=view)
         
     # Info Command
-    @commands.command(aliases=["ofni", "Info", "ofnI", "INFO", "OFNI"])
+    @commands.hybrid_command(description="Sends information about the bot")
     async def info(self, ctx):
         current_prefix = await self.get_prefix(ctx.message)
         logging_channel_id = await self.get_logging_channel(ctx.guild.id)
@@ -279,12 +273,12 @@ class GeneralCog(commands.Cog):
         await ctx.send(embed=e)
     
     # Test Command
-    @commands.command(aliases=["tset", "Test", "tseT", "TEST", "TSET"])
+    @commands.hybrid_command(description="Test if the bot is up")
     async def test(self, ctx):
-        await ctx.send("I'm up!")
+        await ctx.send("I'm up! <a:DerpPet:1065453721200365629>")
 
     # Ping Command
-    @commands.command(aliases=["gnip", "Ping", "gniP", "PING", "GNIP"])
+    @commands.hybrid_command(description="Sends your ping")
     async def ping(self, ctx):
         e = discord.Embed(color=0xc700ff)
         e.add_field(
@@ -295,7 +289,7 @@ class GeneralCog(commands.Cog):
         await ctx.send(embed=e)
 
     # Suggest Command
-    @commands.command(aliases=["tseggus", "Suggest", "tsegguS", "SUGGEST", "TSEGGUS"])
+    @commands.hybrid_command(description="Make a suggestion")
     async def suggest(self, ctx, *, suggestion):
         await self.create_suggestion_table()
         suggestion_channel = await self.get_suggestion_channel(ctx.guild.id)
@@ -311,9 +305,9 @@ class GeneralCog(commands.Cog):
                 await vote.add_reaction(emoji)
         else:
             await ctx.send("No suggestion channel set!")
-        
+    
     # Poll Command - Slash
-    @commands.hybrid_command(name="poll", description="Create a poll!")
+    @commands.hybrid_command(description="Create a poll!")
     async def poll(self, ctx, question:str, option1:str=None, option2:str=None, option3:str=None, option4:str=None, option5:str=None):
         options = [option1, option2, option3, option4, option5]
         options = [option for option in options if option is not None]
@@ -334,6 +328,6 @@ class GeneralCog(commands.Cog):
         for i in range(len(options)):
             await msg.add_reaction(emoji_list[i])
         
-        
+    
 async def setup(bot):
     await bot.add_cog(GeneralCog(bot))
