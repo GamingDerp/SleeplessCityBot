@@ -11,7 +11,7 @@ class ActionCog(commands.Cog):
         self.bot = bot
 
     # Sniff Command
-    @commands.command(aliases=["ffins", "Sniff", "ffinS", "SNIFF", "FFINS"])
+    @commands.hybrid_command(description="Sniff another user")
     async def sniff(self, ctx, user:discord.Member):
         e = discord.Embed(color=0xc700ff)
         e.description = f"{ctx.author.mention} sniffs {user.mention}!"
@@ -19,7 +19,7 @@ class ActionCog(commands.Cog):
         await ctx.send(embed=e)
     
     # Bite Command
-    @commands.command(aliases=["etib", "Bite", "etiB", "BITE", "ETIB"])
+    @commands.hybrid_command(description="Bite another user")
     async def bite(self, ctx, user:discord.Member):
         e = discord.Embed(color=0xc700ff)
         e.description = f"{ctx.author.mention} bites {user.mention}!"
@@ -32,7 +32,7 @@ class ActionCog(commands.Cog):
         await ctx.send(embed=e)
     
     # Bonk Command
-    @commands.command(aliases=["knob", "Bonk", "knoB", "BONK", "KNOB"])
+    @commands.hybrid_command(description="Bonk another user")
     async def bonk(self, ctx, user:discord.Member):
         e = discord.Embed(color=0xc700ff)
         e.description = f"{ctx.author.mention} bonks {user.mention}!"
@@ -44,7 +44,7 @@ class ActionCog(commands.Cog):
         await ctx.send(embed=e)
         
     # Vomit Command
-    @commands.command(aliases=["timov", "Vomit", "timoV", "VOMIT", "TIMOV"])
+    @commands.hybrid_command(description="Vomit on another user")
     async def vomit(self, ctx, user:discord.Member):
         e = discord.Embed(color=0xc700ff)
         e.description = f"{ctx.author.mention} vomits on {user.mention}!"
@@ -56,7 +56,7 @@ class ActionCog(commands.Cog):
         await ctx.send(embed=e)
 
     # Slap Command
-    @commands.command(aliases=["pals", "Slap", "palS", "SLAP", "PALS"])
+    @commands.hybrid_command(description="Slap another user")
     async def slap(self, ctx, user:discord.Member):
         e = discord.Embed(color=0xc700ff)
         e.description = f"{ctx.author.mention} slaps {user.mention}!"
@@ -64,7 +64,7 @@ class ActionCog(commands.Cog):
         await ctx.send(embed=e)
         
     # Punch Command
-    @commands.command(aliases=["hcnup", "Punch", "hcnuP", "PUNCH", "HCNUP"])
+    @commands.hybrid_command(description="Punch another user")
     async def punch(self, ctx, user:discord.Member):
         e = discord.Embed(color=0xc700ff)
         e.description = f"{ctx.author.mention} punches {user.mention}!"
@@ -72,7 +72,7 @@ class ActionCog(commands.Cog):
         await ctx.send(embed=e)
 
     # Throw Command
-    @commands.command(aliases=["worht", "Throw", "worhT", "THROW", "WORHT"])
+    @commands.hybrid_command(description="Throw another user")
     async def throw(self, ctx, user:discord.Member):
         e = discord.Embed(color=0xc700ff)
         e.description = f"{ctx.author.mention} throws {user.mention} off a cliff!"
@@ -80,7 +80,7 @@ class ActionCog(commands.Cog):
         await ctx.send(embed=e)
         
     # Stalk Command
-    @commands.command(aliases=["lkats", "Stalk", "lkatS", "STALK", "LKATS"])
+    @commands.hybrid_command(description="Stalk another user")
     async def stalk(self, ctx, user:discord.Member):
         chance_response = ["they got caught", "they didn't get caught"]
         choice = random.choice(chance_response)
@@ -93,7 +93,7 @@ class ActionCog(commands.Cog):
         await ctx.send(embed=e)
 
     # Kidnap Command
-    @commands.command(aliases=["pandik", "Kidnap", "pandiK", "KIDNAP", "PANDIK"])
+    @commands.hybrid_command(description="Kidnap another user")
     async def kidnap(self, ctx, user:discord.Member):
         e = discord.Embed(color=0xc700ff)
         e.description = f"{ctx.author.mention} kidnaps {user.mention}!"
@@ -101,7 +101,7 @@ class ActionCog(commands.Cog):
         await ctx.send(embed=e)
     
     # Punt Command
-    @commands.command(aliases=["tnup", "Punt", "tnuP", "PUNT", "TNUP"])
+    @commands.hybrid_command(description="Punt another user")
     async def punt(self, ctx, user:discord.Member):
         e = discord.Embed(color=0xc700ff)
         e.description = f"{ctx.author.mention} punts {user.mention}!"
@@ -109,7 +109,7 @@ class ActionCog(commands.Cog):
         await ctx.send(embed=e)
 
     # Strangle Command
-    @commands.command(aliases=["elgnarts", "Strangle", "elgnartS", "STRANGLE", "ELGNARTS"])
+    @commands.hybrid_command(description="Strangle another user")
     async def strangle(self, ctx, user:discord.Member):
         strangle_response = ["they crush their windpipes, killing them! RIP ☠️", f"causes them to faint!", f"they're hands slip, {user.mention} gets away!", f"they grab at {ctx.author.mention}, strangling them back!"]
         strangle_owner_response = ["it kills them! RIP ☠️", f"causes {user.mention} to faint!"]
@@ -126,7 +126,7 @@ class ActionCog(commands.Cog):
             await ctx.send(embed=e)
         
     # Stab Command
-    @commands.command(aliases=["bats", "Stab", "batS", "STAB", "BATS"])
+    @commands.hybrid_command(description="Stab another user")
     async def stab(self, ctx, user:discord.Member):
         stab_response = ["it kills them! RIP ☠️", "they bleed out! RIP ☠️","they missed!", f"due to their momentum, the knife comes back and stabs {ctx.author.mention}!"]
         stab_owner_response = ["it kills them! RIP ☠️", f"{user.mention} bleeds out! RIP ☠️"]
@@ -143,7 +143,7 @@ class ActionCog(commands.Cog):
             await ctx.send(embed=e)
     
     # Shoot Command
-    @commands.command(aliases=["toohs", "Shoot", "toohS", "SHOOT", "TOOHS"])
+    @commands.hybrid_command(description="Shoot another user")
     async def shoot(self, ctx, user:discord.Member):
         shoot_response = ["it kills them! RIP ☠️", "it goes straight through their skull! RIP ☠️","it does nothing! They have a body of steel!", f"it ricochets off the wall and kills {ctx.author.mention}! RIP ☠️", "the gun jams!"]
         shoot_owner_response = ["it kills them! RIP ☠️", "it goes straight through their skull! RIP ☠️"]
@@ -158,9 +158,9 @@ class ActionCog(commands.Cog):
             e.description = f"{ctx.author.mention} shoots at {user.mention} and {random.choice(shoot_response)}"
             e.set_image(url="https://cdn.discordapp.com/attachments/807071768258805764/1106843019321282591/AnimeShootingGif.gif"),
             await ctx.send(embed=e)
-
+            
     # Deathnote Command
-    @commands.command(aliases=["etonhtaed", "Deathnote", "etonhtaeD", "DEATHNOTE", "ETONHTAED"])
+    @commands.hybrid_command(description="Choose how another user dies")
     async def deathnote(self, ctx, user:discord.Member, *, arg):
         deaths = {
             "cliff": ("fell off a cliff and died!", "https://media.discordapp.net/attachments/807071768258805764/1116815474852896890/FallOffCliffGif.gif"),
@@ -190,7 +190,7 @@ class ActionCog(commands.Cog):
             await ctx.send("Invalid death method!")
 
     # Highfive Command
-    @commands.command(aliases=["evifhgih", "Highfive", "evifhgiH", "HIGHFIVE", "EVIFHGIH"])
+    @commands.hybrid_command(description="Highfive another user")
     async def highfive(self, ctx, user:discord.Member): 
         e = discord.Embed(color=0xc700ff)
         e.description = f"{ctx.author.mention} highfives {user.mention}!"
@@ -198,7 +198,7 @@ class ActionCog(commands.Cog):
         await ctx.send(embed=e)
 
     # Poke Command
-    @commands.command(aliases=["ekop", "Poke", "ekoP", "POKE", "EKOP"])
+    @commands.hybrid_command(description="Poke another user")
     async def poke(self, ctx, user:discord.Member):
         e = discord.Embed(color=0xc700ff)
         e.description = f"{ctx.author.mention} pokes {user.mention}!"
@@ -206,7 +206,7 @@ class ActionCog(commands.Cog):
         await ctx.send(embed=e)
 
     # Pat Command
-    @commands.command(aliases=["tap", "Pat", "taP", "PAT", "TAP"])
+    @commands.hybrid_command(description="Pat another user")
     async def pat(self, ctx, user:discord.Member):
         e = discord.Embed(color=0xc700ff)
         e.description = f"{ctx.author.mention} pats {user.mention}!"
@@ -214,7 +214,7 @@ class ActionCog(commands.Cog):
         await ctx.send(embed=e)
     
     # Lick Command
-    @commands.command(aliases=["kcil", "Lick", "kciL", "LICK", "KCIL"])
+    @commands.hybrid_command(description="Lick another user")
     async def lick(self, ctx, user:discord.Member):
         e = discord.Embed(color=0xc700ff)
         e.description = f"{ctx.author.mention} lick {user.mention}!"
@@ -227,7 +227,7 @@ class ActionCog(commands.Cog):
         await ctx.send(embed=e)
 
     # Hug Command
-    @commands.command(aliases=["guh", "Hug", "guH", "HUG", "GUH"])
+    @commands.hybrid_command(description="Hug another user")
     async def hug(self, ctx, user:discord.Member):  
         e = discord.Embed(color=0xc700ff)
         e.description = f"{ctx.author.mention} hugs {user.mention}!"
@@ -235,7 +235,7 @@ class ActionCog(commands.Cog):
         await ctx.send(embed=e)
 
     # Kiss Command
-    @commands.command(aliases=["ssik", "Kiss", "ssiK", "KISS", "SSIK"])
+    @commands.hybrid_command(description="Kiss another user")
     async def kiss(self, ctx, user:discord.Member):
         e = discord.Embed(color=0xc700ff)
         e.description = f"{ctx.author.mention} kisses {user.mention}!"
@@ -243,7 +243,7 @@ class ActionCog(commands.Cog):
         await ctx.send(embed=e)
 
     # Cuddle Command
-    @commands.command(aliases=["eldduc", "Cuddle", "eldduC", "CUDDLE", "ELDDUC"])
+    @commands.hybrid_command(description="Cuddle with another user")
     async def cuddle(self, ctx, user:discord.Member): 
         e = discord.Embed(color=0xc700ff)
         e.description = f"{ctx.author.mention} cuddles with {user.mention}!"
