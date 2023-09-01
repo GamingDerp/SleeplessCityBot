@@ -34,7 +34,7 @@ class EventsCog(commands.Cog):
             await db.commit()
     
     # SetStar Command
-    @commands.command(aliases=["ratstes", "SetStar", "ratSteS", "SETSTAR", "RATSTES"])
+    @commands.hybrid_command(description="Set the starboard channel")
     async def setstar(self, ctx, channel: discord.TextChannel):
         if discord.utils.get(ctx.author.roles, name="🔐 Assistant Chief"):
             def check(message):
@@ -88,7 +88,7 @@ class EventsCog(commands.Cog):
             return
         else:
             if message.channel.id == 1065502975499440168 and "69" in message.content:
-                await message.add_reaction('<:Troll:1065453655588884520>')
+                await message.add_reaction('<:Troll:1141846474108436550>')
                 await self.bot.process_commands(message)
             
     # User Joined Message Event
