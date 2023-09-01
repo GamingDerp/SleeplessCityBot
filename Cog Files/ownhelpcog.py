@@ -2,6 +2,8 @@ import discord
 from discord.ext import commands
 from datetime import datetime, timedelta
 import asyncio
+import json
+import html
 
 # Bot Owner User ID
 owner_id = 532706491438727169
@@ -12,7 +14,7 @@ class OwnHelpCog(commands.Cog):
         self.bot = bot
         
     # Owner Help Command
-    @commands.command(aliases=["plehnwo", "Ownhelp", "plehnwO", "OWNHELP", "PLEHNWO"])
+    @commands.hybrid_command(description="Sends the help menu for the bot Owner")
     async def ownhelp(self, ctx):
         if ctx.author.id == owner_id:
             e = discord.Embed(color=0xe02da9)
@@ -33,7 +35,7 @@ class OwnHelpCog(commands.Cog):
             await ctx.send(embed=e)
 
     # Nuke Command -- OWNER (joke command)
-    @commands.command(aliases=["ekun", "Nuke", "ekuN", "NUKE", "EKUN"])
+    @commands.hybrid_command(description="Nuke the server")
     async def nuke(self, ctx):
         if ctx.author.id == owner_id:
             await ctx.send("Nuking server in...3")
@@ -49,7 +51,7 @@ class OwnHelpCog(commands.Cog):
             await ctx.send(embed=e)
 
     # Revive Command -- OWNER
-    @commands.command(aliases=["eviver", "Revive", "eviveR", "REVIVE", "EVIVER"])
+    @commands.hybrid_command(description="Revive another user")
     async def revive(self, ctx, user:discord.Member):
         if ctx.author.id == owner_id:
             e = discord.Embed(color=0xe02da9)
@@ -60,7 +62,7 @@ class OwnHelpCog(commands.Cog):
             e = discord.Embed(color=0xe02da9)
             e.description = "🚨 That is a **Owner** command! You don't have the required perms! 🚨"
             await ctx.send(embed=e)
-
+            
 
 async def setup(bot):
     await bot.add_cog(OwnHelpCog(bot))
