@@ -47,7 +47,7 @@ class StaffCog(commands.Cog):
             return result[0] if result else None
     
     # Purge Command
-    @commands.command(aliases=["egrup", "Purge", "egruP", "PURGE", "EGRUP"], pass_context=True)
+    @commands.hybrid_command(description="Purge messages", pass_context=True)
     async def purge(self, ctx, limit:int):
         if discord.utils.get(ctx.author.roles, name="💠 Sergeant"):
             await ctx.message.delete()
@@ -59,7 +59,7 @@ class StaffCog(commands.Cog):
             await ctx.message.delete()
 
     # Ban Command
-    @commands.command(aliases=["nab", "Ban", "naB", "BAN", "NAB"])
+    @commands.hybrid_command(description="Ban a user")
     async def ban(self, ctx, member:discord.Member, *, reason=None):
         if discord.utils.get(ctx.author.roles, name="🔆 Detective"):
             e = discord.Embed(color=0xFf0000)
@@ -72,7 +72,7 @@ class StaffCog(commands.Cog):
             await ctx.send(embed=e)
         
     # Unban Command
-    @commands.command(aliases=["nabnu", "Unban", "nabnU", "UNBAN", "NABNU"])
+    @commands.hybrid_command(description="Unban a user")
     async def unban(self, ctx, id:int):
         member = await self.bot.fetch_user(id)
         if discord.utils.get(ctx.author.roles, name="🔆 Detective"):
@@ -86,7 +86,7 @@ class StaffCog(commands.Cog):
             await ctx.send(embed=e)
 
     # Kick Command
-    @commands.command(aliases=["kcik", "Kick", "kciK", "KICK", "KCIK"])
+    @commands.hybrid_command(description="Kick a user")
     async def kick(self, ctx, member:discord.Member, *, reason=None):
         if discord.utils.get(ctx.author.roles, name="💠 Sergeant"):
             e = discord.Embed(color=0xc700ff)
@@ -113,7 +113,7 @@ class StaffCog(commands.Cog):
             await ctx.send(embed=e)
 
     # Timeout Command
-    @commands.command(aliases=["tuoemit", "Timeout", "tuoemiT", "TIMEOUT", "TUOEMIT"])
+    @commands.hybrid_command(description="Put a user in timeout")
     async def timeout(self, ctx, member:discord.Member, duration, *, reason=None):
         time_units = {"s": 1, "m": 60, "h": 3600, "d": 86400}  # Mapping time units to seconds
         unit = duration[-1]
@@ -147,7 +147,7 @@ class StaffCog(commands.Cog):
             await ctx.send(embed=e)
 
     # Warn Command
-    @commands.command(aliases=["nraw", "Warn", "nraW", "WARN", "NRAW"])
+    @commands.hybrid_command(description="Warn a user")
     async def warn(self, ctx, member: discord.Member, *, reason=None):
         if discord.utils.get(ctx.author.roles, name="🧸 Officer"):
             async with aiosqlite.connect("dbs/warnlist.db") as db:
@@ -179,7 +179,7 @@ class StaffCog(commands.Cog):
             await ctx.send(embed=e)
 
     # WarnList Command
-    @commands.command(aliases=["tsilnraw", "Warnlist", "tsilnraW", "WARNLIST", "TSILNRAW"])
+    @commands.hybrid_command(description="See a users warns")
     async def warnlist(self, ctx, member:discord.Member):
         if discord.utils.get(ctx.author.roles, name="🧸 Officer"):
             warns = await self.get_warns(member.id)
@@ -198,7 +198,7 @@ class StaffCog(commands.Cog):
             await ctx.send(embed=e)
 
     # Delwarn Command
-    @commands.command(aliases=["nrawled", "Delwarn", "nrawleD", "DELWARN", "NRAWLED"])
+    @commands.hybrid_command(description="Delete a users warns")
     async def delwarn(self, ctx, member:discord.Member, warn_index:int):
         if discord.utils.get(ctx.author.roles, name="🔆 Detective"):
             warns = await self.get_warns(member.id)
