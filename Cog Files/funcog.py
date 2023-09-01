@@ -2,37 +2,37 @@ import discord
 from discord.ext import commands
 import random
 import asyncio
-
+        
 # Fun Commands Class
 class FunCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-
+    
     # Coinflip Command
-    @commands.command(aliases=["pilfnioc", "Coinflip", "pilfnioC", "COINFLIP", "PILFNIOC"])
+    @commands.hybrid_command(description="Flip a coin")
     async def coinflip(self, ctx):
         choice = ["Heads", "Tails"]
         await ctx.send(f"{random.choice(choice)}!")
 
     # Ask Command
-    @commands.command(aliases=["ksa", "Ask", "ksA", "ASK", "KSA"])
+    @commands.hybrid_command(description="Ask the bot a question")
     async def ask(self, ctx):
         choice = ["Yes", "No", "Obviously", "Wtf??", "I'm not sure..", "Maybe...?", "Stop asking.", "Find out for yourself, smh", "Crabs", "Ask Derp :eyes:"]
         await ctx.send(f"{random.choice(choice)}")
 
     # Reverse Command
-    @commands.command(aliases=["esrever", "Reverse", "esreveR", "REVERSE", "ESREVER"])
-    async def reverse(self, ctx, *, arg="reverse"): # if user gives no arg, just says "reverse" backwards
+    @commands.hybrid_command(description="Reverse a message")
+    async def reverse(self, ctx, *, arg):
         await ctx.send(arg[::-1])
 
     # Say Command
-    @commands.command(aliases=["yas", "Say", "yaS", "SAY", "YAS"])
+    @commands.hybrid_command(description="Have the bot say a message")
     async def say(self, ctx, *, arg):
         await ctx.send(arg)
         await ctx.message.delete()
 
     # Love Test Command
-    @commands.command(aliases=["tsetevol", "Lovetest", "tsetevoL", "LOVETEST", "TSETEVOL"])
+    @commands.hybrid_command(description="Give two users a love test")
     async def lovetest(self, ctx, user1:discord.Member, user2:discord.Member):
     
         love_rate = str(random.randrange(0, 100))
@@ -57,7 +57,7 @@ class FunCog(commands.Cog):
             await ctx.send(embed=e)
     
     # Cute Command
-    @commands.command(aliases=["etuc", "Cute", "etuC", "CUTE", "ETUC"])
+    @commands.hybrid_command(description="Sends a cute animal picture")
     async def cute(self, ctx):
         e = discord.Embed(color=0xc700ff)
         e.set_author(name="Cute", icon_url=ctx.author.avatar.url)
@@ -67,7 +67,7 @@ class FunCog(commands.Cog):
         await ctx.send(embed=e)
     
     # Duel Command
-    @commands.command(aliases=["leud", "Duel", "leuD", "DUEL", "LEUD"])
+    @commands.hybrid_command(description="Challenges another user to a duel")
     async def duel(self, ctx, user:discord.Member):
 
         challengerid = ctx.author
@@ -149,7 +149,7 @@ class FunCog(commands.Cog):
                     await ctx.channel.send(f"{challengeeid.mention} has declined the duel!")
                 
     # Rock Paper Scissors Command
-    @commands.command(aliases=["spr", "Rps", "spR", "RPS", "SPR"])
+    @commands.hybrid_command(description="Challenge another user to a rock, paper, scissors match")
     async def rps(self, ctx, user:discord.Member):
 
         challengerid = ctx.author
