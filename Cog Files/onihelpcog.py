@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 from datetime import datetime, timedelta
 import random
+import asyncio
 
 # Oni & Kaoru's User ID's
 oni_id = 700958482454806574
@@ -13,7 +14,7 @@ class OniHelpCog(commands.Cog):
         self.bot = bot
 
     # OniHelp Command
-    @commands.command(aliases=["plehino", "Onihelp", "plehinO", "ONIHELP", "PLEHINO"])
+    @commands.hybrid_command(description="Sends the help menu for Oni")
     async def onihelp(self, ctx):
         if ctx.author.id == oni_id:
             e = discord.Embed(color=0xf28aad)
@@ -34,7 +35,7 @@ class OniHelpCog(commands.Cog):
             await ctx.send(embed=e)
 
     # Vore Command
-    @commands.command(aliases=["erov", "Vore", "eroV", "VORE", "EROV"])
+    @commands.hybrid_command(description="Vore another user")
     async def vore(self, ctx, user:discord.Member):
         if ctx.author.id == oni_id or ctx.author.id == kaoru_id:
             e = discord.Embed(color=0xf28aad)
@@ -53,7 +54,7 @@ class OniHelpCog(commands.Cog):
             await ctx.send(embed=e)
 
     # Motorboat Command
-    @commands.command(aliases=["taobrotom", "Motorboat", "taobrotoM", "MOTORBOAT", "TAOBROTOM"])
+    @commands.hybrid_command(description="Motorboat another user")
     async def motorboat(self, ctx, user:discord.Member):
         if ctx.author.id == oni_id or ctx.author.id == kaoru_id:
             e = discord.Embed(color=0xf28aad)
@@ -70,6 +71,6 @@ class OniHelpCog(commands.Cog):
             e.description = "🚨 That is a **Oni** command! You don't have the required perms! 🚨"
             await ctx.send(embed=e)
 
-
+        
 async def setup(bot):
     await bot.add_cog(OniHelpCog(bot))
