@@ -36,7 +36,7 @@ class LogCog(commands.Cog):
             return result[0] if result else None
     
     # SetLog Command
-    @commands.command(aliases=["goltes", "SetLog", "goLteS", "SETLOG", "GOLTES"])
+    @commands.hybrid_command(description="Set the servers logging channel")
     async def setlog(self, ctx, channel: discord.TextChannel):
         if discord.utils.get(ctx.author.roles, name="🔐 Assistant Chief"):
             await self.db_conn.execute(
