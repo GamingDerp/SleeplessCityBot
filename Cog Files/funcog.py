@@ -38,22 +38,18 @@ class FunCog(commands.Cog):
         love_rate = str(random.randrange(0, 100))
         derp_id = 532706491438727169
         oni_id = 700958482454806574
-    
+        
+        e = discord.Embed(color=0xc700ff)
+        e.title = "❤️ Love Test"
+        
         if user1.id == derp_id and user2.id == oni_id or user1.id == oni_id and user2.id == derp_id:
-            e = discord.Embed(color=0xc700ff)
-            e.add_field(
-                name="❤️ Love Test",
-                value=f"**{user1.mention}** and **{user2.mention}** are a **100%** match! :flushed:",
-                inline=False
-            )
+            e.description = f"**{user1.mention}** and **{user2.mention}** are a **100%** match! :flushed:"
+            await ctx.send(embed=e)
+        elif user1.id == derp_id and user2.id != oni_id or user1.id == oni_id and user2.id != derp_id:
+            e.description = f"**{user1.mention}** and **{user2.mention}** are a **0%** match! :flushed:"
             await ctx.send(embed=e)
         else:
-            e = discord.Embed(color=0xc700ff)
-            e.add_field(
-                name="❤️ Love Test",
-                value=f"**{user1.mention}** and **{user2.mention}** are a **{love_rate}%** match! :flushed:",
-                inline=False
-            )
+            e.description = f"**{user1.mention}** and **{user2.mention}** are a **{love_rate}%** match! :flushed:"
             await ctx.send(embed=e)
     
     # Cute Command
