@@ -291,20 +291,26 @@ class GeneralCog(commands.Cog):
     # Suggest Command
     @commands.hybrid_command(description="Make a suggestion")
     async def suggest(self, ctx, *, suggestion):
-        await self.create_suggestion_table()
-        suggestion_channel = await self.get_suggestion_channel(ctx.guild.id)
-        if suggestion_channel:
-            await ctx.send(f"Your suggestion has been added! Check {suggestion_channel.mention}!")
-            se = discord.Embed(color=0xc700ff)
-            se.set_author(name=f"Suggested by {ctx.author}", icon_url=ctx.author.avatar.url)
-            se.set_thumbnail(url=ctx.author.avatar.url)
-            se.description = suggestion
-            se.timestamp = datetime.utcnow()
-            vote = await suggestion_channel.send(embed=se)
-            for emoji in ["👍", "🤷‍♂️", "👎"]:
-                await vote.add_reaction(emoji)
-        else:
-            await ctx.send("No suggestion channel set!")
+        try:
+            await self.create_suggestion_table()
+            suggestion_channel = await self.get_suggestion_channel(ctx.guild.id)
+            if suggestion_channel:
+                await ctx.send(f"Your suggestion has been added! Check {suggestion_channel.mention}!")
+                se = discord.Embed(color=0xc700ff)
+                se.set_author(name=f"Suggested by {ctx.author}", icon_url=ctx.author.avatar.url)
+                se.set_thumbnail(url=ctx.author.avatar.url)
+                se.description = suggestion
+                if ctx.message.attachments:
+                    attachment_url = ctx.message.attachments[0].url
+                    se.set_image(url=attachment_url)
+                se.timestamp = datetime.utcnow()
+                vote = await suggestion_channel.send(embed=se)
+                for emoji in ["👍", "🤷‍♂️", "👎"]:
+                    await vote.add_reaction(emoji)
+            else:
+                await ctx.send("No suggestion channel set!")
+        except Exception as e:
+            print(e)
     
     # Poll Command - Slash
     @commands.hybrid_command(description="Create a poll!")
