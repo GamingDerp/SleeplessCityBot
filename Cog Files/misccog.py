@@ -80,7 +80,7 @@ class MiscCog(commands.Cog):
             e.set_image(url=banner_url)
         else:
             e.add_field(name="📰 Banner", value="None")
-        e.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar.url),
+        e.set_footer(text=f"Requested by {ctx.author}"),
         e.timestamp = datetime.utcnow()
         await ctx.send(embed=e)
 
@@ -110,13 +110,13 @@ class MiscCog(commands.Cog):
             return
         if sniped_message.content:
             e = discord.Embed(color=0xc700ff)
-            e.set_author(name=sniped_message.author.name, icon_url=sniped_message.author.avatar.url)
+            e.set_author(name=sniped_message.author.name)
             e.description = f"> {sniped_message.content}"
             await ctx.send(embed=e)
         elif sniped_message.attachments:
             attachment_url = sniped_message.attachments[0].url
             e = discord.Embed(color=0xc700ff)
-            e.set_author(name=sniped_message.author.name, icon_url=sniped_message.author.avatar.url)
+            e.set_author(name=sniped_message.author.name)
             e.set_image(url=attachment_url)
             await ctx.send(embed=e)
         sniped_message = None  # Reset sniped message after displaying
@@ -144,7 +144,7 @@ class MiscCog(commands.Cog):
                   f"\n> 🧱 Earthquake"
                   f"\n> 🌊 Hurricane",
         )
-        e.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar.url),
+        e.set_footer(text=f"Requested by {ctx.author}"),
         e.timestamp = datetime.utcnow()
         await ctx.send(embed=e)
 
@@ -180,7 +180,7 @@ class MiscCog(commands.Cog):
         e.description = "⏰ Started Reminder ⏰"
         e.add_field(name="Time", value=time)
         e.add_field(name="Task", value=task)
-        e.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar.url)
+        e.set_footer(text=f"Requested by {ctx.author}")
         e.timestamp = datetime.utcnow()
         await ctx.send(embed=e)
         
@@ -229,7 +229,7 @@ class MiscCog(commands.Cog):
         else:
             todo_list = "\n".join([f"**{idx + 1})** {todo[0]}" for idx, todo in enumerate(todos)])
             e = discord.Embed(color=0xc700ff)
-            e.set_author(name=f"{user.name}'s Todo List", icon_url=user.avatar.url)
+            e.set_author(name=f"{user.name}'s Todo List")
             e.description=todo_list
         await ctx.send(embed=e)
         
