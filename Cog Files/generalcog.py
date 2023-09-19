@@ -268,7 +268,7 @@ class GeneralCog(commands.Cog):
             value=f"<:GitHub:1123773190238392504> [Repo Link](https://github.com/GamingDerp/SleeplessNightsBot)",
             inline=False
         )
-        e.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar.url)
+        e.set_footer(text=f"Requested by {ctx.author}")
         e.timestamp = datetime.utcnow()
         await ctx.send(embed=e)
     
@@ -297,7 +297,7 @@ class GeneralCog(commands.Cog):
             if suggestion_channel:
                 await ctx.send(f"Your suggestion has been added! Check {suggestion_channel.mention}!")
                 se = discord.Embed(color=0xc700ff)
-                se.set_author(name=f"Suggested by {ctx.author}", icon_url=ctx.author.avatar.url)
+                se.set_author(name=f"Suggested by {ctx.author}")
                 se.set_thumbnail(url=ctx.author.avatar.url)
                 se.description = suggestion
                 if ctx.message.attachments:
