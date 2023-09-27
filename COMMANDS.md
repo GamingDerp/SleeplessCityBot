@@ -63,6 +63,7 @@ tdadd | Adds a task to a user's "todo list" | `tdadd <task>`
 tddel | Removes a task from a user's "todo list" | `tddel <task number>`
 tdlist | List's a mentioned user's "todo list" | `tdlist @user`
 esteal | Grabs and sends the file link from a custom emoji | `esteal :emoji:`
+cembed | Allows a user to create a custom embed | `cembed`
 
 ## 🔰 Staff
 Command | Description | Usage
