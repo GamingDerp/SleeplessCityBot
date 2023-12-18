@@ -28,7 +28,6 @@ Private commands/menus will not be counted in the "Features" section.
 - Welcome/Leaving Messages
 - Sends a message when server gets boosted
 - Adds "Troll Face" when '69' is counted to in `#counting`
-- All command names (except /slash commands) can be used backwards and in all caps, example: `!PLEH` (!help)
 
 # 📑 Credit
 - `gamingderp` - Developer
