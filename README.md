@@ -14,7 +14,7 @@ Private commands/menus will not be counted in the "Features" section.
 **56** commands across **6** different categories.
 
 - 📌 **General:** `Help`, `Info`, `Test`, `Ping`, `Suggest`, `Poll`
-- 🎉 **Fun:** `Coinflip`, `Ask`, `Reverse`, `Say`, `Lovetest`, `Cute` and **2** more!
+- 🎉 **Fun:** `Coinflip`, `Ask`, `Reverse`, `Say`, `Lovetest`, `Cute`
 - 🎯 **Action:** `Sniff`, `Bite`, `Bonk`, `Vomit`, `Slap`, `Punch` and **15** more!
 - 🧮 **Misc:** `Whois`, `Avatar`, `Snipe`, `Deathhelp`, `Pickle`, `Remind` and **5** more!
 - 🔰 **Staff:** `Purge`, `Ban`, `Unban`, `Kick`, `Timeout`, `Warn` and **2** more!
