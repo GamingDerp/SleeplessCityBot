@@ -11,7 +11,7 @@ Private commands/menus will not be counted in the "Features" section.
 
 
 # 📋 Features
-**56** commands across **6** different categories.
+**54** commands across **6** different categories.
 
 - 📌 **General:** `Help`, `Info`, `Test`, `Ping`, `Suggest`, `Poll`
 - 🎉 **Fun:** `Coinflip`, `Ask`, `Reverse`, `Say`, `Lovetest`, `Cute`
