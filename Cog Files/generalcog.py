@@ -74,7 +74,7 @@ class Dropdown(discord.ui.Select):
             discord.SelectOption(label="General Commands",description="Help, Info, Test, Ping, Suggest +1 More", emoji="📌"),
             discord.SelectOption(label="Fun Commands", description="Coinflip, Ask, Reverse, Say, Lovetest +2 More", emoji="🎉"),
             discord.SelectOption(label="Action Commands", description="Sniff, Bite, Bonk, Vomit, Slap +16 More", emoji="🎯"),
-            discord.SelectOption(label="Misc Commands", description="Whois, Snipe, Deathhelp, Pickle, Remind +5 More", emoji="🧮"),
+            discord.SelectOption(label="Misc Commands", description="Whois, Snipe, Deathhelp, Remind, Tdadd +4 More", emoji="🧮"),
             discord.SelectOption(label="Staff Commands", description="Purge, Ban, Unban, Kick, Timeout +3 More", emoji="🔰"),
             discord.SelectOption(label="Config Commands", description="SetPrefix, SetLog, SetStar, SetSuggest", emoji="⚙️"),
         ]
