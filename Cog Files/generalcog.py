@@ -11,28 +11,30 @@ import asyncio
 bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
 bot.launch_time = datetime.utcnow()
 
+sc_image = "https://media.discordapp.net/attachments/1065517294278676511/1176668287636090920/SCLogo.jpg?ex=656fb4bd&is=655d3fbd&hm=b87bdcec00843db85984116007a7ab56b44af4491c79e0dadc557e80b392b17f&="
+
 # General Commands Embed
 ge = discord.Embed(color=0xc700ff)
-ge.set_author(name="Bot Commands", icon_url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
-ge.set_thumbnail(url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
+ge.set_author(name="Bot Commands", icon_url=sc_image)
+ge.set_thumbnail(url=sc_image)
 ge.add_field(
     name="📌 __General Commands__",
-    value=f"> `Help`, `Info`, `Test`, `Ping`, `Suggest`, `/Poll`",
+    value=f"> `Help`, `Info`, `Test`, `Ping`, `Suggest`, `Poll`",
 )
 
 # Fun Commands Embed
 fe = discord.Embed(color=0xc700ff)
-fe.set_author(name="Bot Commands", icon_url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
-fe.set_thumbnail(url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
+fe.set_author(name="Bot Commands", icon_url=sc_image)
+fe.set_thumbnail(url=sc_image)
 fe.add_field(
     name="🎉 __Fun Commands__",
-    value=f"> `Coinflip`, `Ask`, `Reverse`, `Say`, `Lovetest`, `Cute` \n> `Duel`, `Rps`",
+    value=f"> `Coinflip`, `Ask`, `Reverse`, `Say`, `Lovetest`, `Cute`",
 )
 
 # Action Commands Embed
 ae = discord.Embed(color=0xc700ff)
-ae.set_author(name="Bot Commands", icon_url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
-ae.set_thumbnail(url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
+ae.set_author(name="Bot Commands", icon_url=sc_image)
+ae.set_thumbnail(url=sc_image)
 ae.add_field(
     name="🎯 __Action Commands__",
     value=f"> `Sniff`, `Bite`, `Bonk`, `Vomit`, `Slap`, `Punch` \n> `Throw`, `Stalk`, `Kidnap`, `Punt`, `Strangle`, `Stab` \n> `Shoot`, `Deathnote`, `Highfive`, `Poke`, `Pat`, `Lick` \n> `Hug`, `Kiss`, `Cuddle`",
@@ -40,17 +42,17 @@ ae.add_field(
 
 # Misc Commands Embed
 me = discord.Embed(color=0xc700ff)
-me.set_author(name="Bot Commands", icon_url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
-me.set_thumbnail(url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
+me.set_author(name="Bot Commands", icon_url=sc_image)
+me.set_thumbnail(url=sc_image)
 me.add_field(
     name="🧮 __Misc Commands__",
-    value=f"> `Whois`, `Snipe`, `Deathhelp`, `/Pickle`, `Remind` \n> `Tdadd`, `Tddel`, `Tdlist`, `ESteal`, `CEmbed`",
+    value=f"> `Whois`, `Snipe`, `Deathhelp`, `Remind`, `ESteal`, `Tdadd` \n> `Tddel`, `Tdlist`, `Tdclear`",
 )
 
 # Staff Commands Embed
 se = discord.Embed(color=0xc700ff)
-se.set_author(name="Bot Commands", icon_url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
-se.set_thumbnail(url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
+se.set_author(name="Bot Commands", icon_url=sc_image)
+se.set_thumbnail(url=sc_image)
 se.add_field(
     name="🔰 __Staff Commands__",
     value=f"> `Purge`, `Ban`, `Unban`, `Kick`, `Timeout`, `Warn` \n> `WarnList`, `DelWarn`",
@@ -58,8 +60,8 @@ se.add_field(
 
 # Config Commands Embed
 ce = discord.Embed(color=0xc700ff)
-ce.set_author(name="Bot Commands", icon_url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
-ce.set_thumbnail(url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
+ce.set_author(name="Bot Commands", icon_url=sc_image)
+ce.set_thumbnail(url=sc_image)
 ce.add_field(
     name="⚙️ __Config Commands__",
     value=f"> `SetPrefix`, `SetLog`, `SetStar`, `SetSuggest`",
@@ -202,8 +204,8 @@ class GeneralCog(commands.Cog):
     @commands.hybrid_command(description="Sends the bots help menu")
     async def help(self, ctx):
         e = discord.Embed(color=0xc700ff)
-        e.set_author(name="Bot Commands", icon_url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
-        e.set_thumbnail(url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
+        e.set_author(name="Bot Commands", icon_url=sc_image)
+        e.set_thumbnail(url=sc_image)
         e.add_field(
             name="✧ __Command Menus__",
             value=f"> 📌 General"
@@ -239,8 +241,8 @@ class GeneralCog(commands.Cog):
         minutes, seconds = divmod(remainder, 60)
         days, hours = divmod(hours, 24)
         e = discord.Embed(color=0xc700ff)
-        e.set_author(name="Bot Information", icon_url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
-        e.set_thumbnail(url="https://media.discordapp.net/attachments/1065517294278676511/1078658592024043730/zZJfouNDCkPA.jpg")
+        e.set_author(name="Bot Information", icon_url=sc_image)
+        e.set_thumbnail(url=sc_image)
         e.add_field(
             name="✧ __Server__",
             value=f"> **Prefix:** {current_prefix}"
@@ -251,7 +253,7 @@ class GeneralCog(commands.Cog):
         )
         e.add_field(
             name="✧ __Statistics__",
-            value=f"> **Commands:** [57]"
+            value=f"> **Commands:** [54]"
 	          f"\n> **Code:** {total_lines} Lines"
 		  f"\n> **Ping:** {round(self.bot.latency * 1000)}ms"
 		  f"\n> **Users:** {true_member_count}"
@@ -265,7 +267,7 @@ class GeneralCog(commands.Cog):
         )
         e.add_field(
             name="✧ __GitHub__",
-            value=f"<:GitHub:1123773190238392504> [Repo Link](https://github.com/GamingDerp/SleeplessNightsBot)",
+            value=f"<:GitHub:1123773190238392504> [Repo Link](https://github.com/GamingDerp/SleeplessCityBot/tree/main)",
             inline=False
         )
         e.set_footer(text=f"Requested by {ctx.author}")
