@@ -110,7 +110,7 @@ class MiscCog(commands.Cog):
             return
         if sniped_message.content:
             e = discord.Embed(color=0xc700ff)
-            e.set_author(name=sniped_message.author.name)
+            e.set_author(name=sniped_message.author.name, icon_url=sniped_message.avatar.url)
             e.description = f"> {sniped_message.content}"
             await ctx.send(embed=e)
         elif sniped_message.attachments:
@@ -147,11 +147,6 @@ class MiscCog(commands.Cog):
         e.set_footer(text=f"Requested by {ctx.author}"),
         e.timestamp = datetime.utcnow()
         await ctx.send(embed=e)
-
-    # Pickle Rick Command
-    @commands.hybrid_command(name="pickle", description="Sends pickle rick")
-    async def pickle(self, ctx):
-            await ctx.send("I'M PICCKLLE RIIIIIICCCKKKK 🥒")
         
     # Remind Command
     @commands.hybrid_command(description="Set a reminder")
@@ -199,7 +194,7 @@ class MiscCog(commands.Cog):
         async with aiosqlite.connect("dbs/todo.db") as db:
             await db.execute("INSERT INTO todos (user_id, todo) VALUES (?, ?)", (author_id, text))
             await db.commit()
-        await ctx.send(f"Added **{text}** to your todo list!")
+        await ctx.send(f"Added **{text}** to your todo list!", ephemeral=True)
     
     # ToDo Del Command
     @commands.hybrid_command(description="Remove a task from your to-do list")
@@ -214,7 +209,16 @@ class MiscCog(commands.Cog):
             todo_id, todo_text = rows[todo_num - 1]
             await db.execute("DELETE FROM todos WHERE rowid = ?", (todo_id,))
             await db.commit()
-        await ctx.send(f"Removed **{todo_text}** from your todo list!")
+        await ctx.send(f"Removed **{todo_text}** from your todo list!", ephemeral=True)
+    
+    # ToDo Clear Command
+    @commands.hybrid_command(description="Clear all tasks from your to-do list")
+    async def tdclear(self, ctx):
+        author_id = ctx.author.id
+        async with aiosqlite.connect("dbs/todo.db") as db:
+            await db.execute("DELETE FROM todos WHERE user_id = ?", (author_id,))
+            await db.commit()
+        await ctx.send("Cleared all tasks from your todo list!", ephemeral=True)
     
     # ToDo List Command
     @commands.hybrid_command(description="Look at your to-do list")
@@ -231,7 +235,7 @@ class MiscCog(commands.Cog):
             e = discord.Embed(color=0xc700ff)
             e.set_author(name=f"{user.name}'s Todo List")
             e.description=todo_list
-        await ctx.send(embed=e)
+        await ctx.send(embed=e, ephemeral=True)
         
     # Emoji Steal Command
     @commands.hybrid_command(description="Get the file link to an emoji")
@@ -241,94 +245,7 @@ class MiscCog(commands.Cog):
             await ctx.send(f":link: {emoji_url}")
         else:
             await ctx.send("Please provide a custom emoji.")
-
-    # Create Embed Command
-    @commands.hybrid_command(description="Create an embed")
-    async def cembed(self, ctx):
-        try:
-            if discord.utils.get(ctx.author.roles, name="🔆 Detective"):
-                color = None
-                author = None
-                title = None
-                description = None
-                image_url = None
-                timestamp = None
-
-                # Ask user for embed color
-                await ctx.send("Set the color for the embed (HEX format, e.g., ff0000):")
-                color_response = await self.bot.wait_for(
-                    "message", check=lambda message: message.author == ctx.author
-                )
-                # Check if the input is in the correct format
-                color_input = color_response.content
-                if len(color_input) == 6 and all(c in "0123456789ABCDEFabcdef" for c in color_input):
-                    color = f"0x{color_input}"
-                else:
-                    await ctx.send("Invalid color format. Please use HEX format without the '0x' prefix (e.g., ff0000).")
-                    return
-                # Ask user if they want to set an author
-                await ctx.send("Do you want to set an author? Type 'no' if not.")
-                author_response = await self.bot.wait_for(
-                    "message", check=lambda message: message.author == ctx.author
-                )
-                if author_response.content.lower() != "no":
-                    author = author_response.content
-                # Ask user if they want to set a title
-                await ctx.send("Do you want to set a title? Type 'no' if not.")
-                title_response = await self.bot.wait_for(
-                    "message", check=lambda message: message.author == ctx.author
-                )
-                if title_response.content.lower() != "no":
-                    title = title_response.content
-                # Ask user if they want to add a description
-                await ctx.send("Do you want to add a description? Type 'no' if not.")
-                description_response = await self.bot.wait_for(
-                    "message", check=lambda message: message.author == ctx.author
-                )
-                if description_response.content.lower() != "no":
-                    description = description_response.content
-                await ctx.send("Do you want to attach an image? Type 'yes' or 'no'.")
-                image_response = await self.bot.wait_for(
-                    "message", check=lambda message: message.author == ctx.author
-                    )
-                if image_response.content.lower() == "yes":
-                    await ctx.send("Please send the image!")
-                    def check_attachment(m):
-                        return m.author == ctx.author and m.attachments
-                    attachment_message = await self.bot.wait_for("message", check=check_attachment)
-                    if attachment_message.attachments:
-                        image_url = attachment_message.attachments[0].url
-                await ctx.send("Do you want to set a timestamp? Type 'yes' or 'no'.")
-                timestamp_response = await self.bot.wait_for(
-                    "message", check=lambda message: message.author == ctx.author
-                )
-                if timestamp_response.content.lower() == "yes":
-                    timestamp = datetime.utcnow()
-
-                # Create the embed
-                e = discord.Embed(
-                    title=title,
-                    description=description,
-                    color=int(color, 16) if color else None,
-                    timestamp=timestamp,
-                )
-
-                if author:
-                   e.set_author(name=author)
-
-                if image_url:
-                    e.set_image(url=image_url)
-
-                # Send the embed
-                await ctx.send(embed=e)
-            else:
-                e = discord.Embed(color=0xc700ff)
-                e.description = "🚨 That is a **High Staff** command! You don't have the required perms! 🚨"
-                await ctx.send(embed=e)
-        except Exception as e:
-            print(e)
         
-
 
 async def setup(bot):
     await bot.add_cog(MiscCog(bot))
