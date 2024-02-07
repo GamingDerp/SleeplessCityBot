@@ -1,5 +1,5 @@
 [![Join - Sleepless City](https://img.shields.io/badge/Join-Sleepless_City-7289da?logo=Discord)](https://discord.gg/UecWG8pK7r)
-[![v - 0.9.3](https://img.shields.io/badge/v-0.9.3-FF0000)](https://)
+[![v - 0.9.4](https://img.shields.io/badge/v-0.9.4-FF0000)](https://)
 [![python - 3.11.2](https://img.shields.io/badge/python-3.11.2-0096FF?logo=Python)](https://)
 [![discord.py - 2.3.1](https://img.shields.io/badge/discord.py-2.3.1-FFFF00?logo=Python)](https://github.com/Rapptz/discord.py)
 
@@ -16,10 +16,10 @@ Private commands/menus will not be counted in the "Features" section.
 - 📌 **General:** `Help`, `Info`, `Test`, `Ping`, `Suggest`, `Poll`
 - 🎉 **Fun:** `Coinflip`, `Ask`, `Reverse`, `Say`, `Lovetest`, `Cute`
 - 🎯 **Action:** `Sniff`, `Bite`, `Bonk`, `Vomit`, `Slap`, `Punch` and **15** more!
-- 🧮 **Misc:** `Whois`, `Avatar`, `Snipe`, `Deathhelp`, `Pickle`, `Remind` and **5** more!
+- 🧮 **Misc:** `Whois`, `Avatar`, `Snipe`, `Deathhelp`, `Remind`, `Tdadd` and **4** more!
 - 🔰 **Staff:** `Purge`, `Ban`, `Unban`, `Kick`, `Timeout`, `Warn` and **2** more!
 - ⚙️ **Config:** `SetPrefix`, `SetLog`, `SetStar`, `SetSuggest`
-- **Full list of commands:** [Here](https://github.com/GamingDerp/SleeplessNightsBot/blob/main/COMMANDS.md)
+- **Full list of commands:** [Here](https://github.com/GamingDerp/SleeplessCityBot/blob/main/COMMANDS.md)
 
 **Extra Features**
 - Starboard
