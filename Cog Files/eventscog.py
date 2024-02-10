@@ -13,7 +13,7 @@ class EventsCog(commands.Cog):
         self.bot = bot
         self.processed_messages = set()
 
-    # Changes bot's Discord activity when loaded and syncs slash commands
+    # Changes bot's Discord activity when loaded and syncs commands
     @commands.Cog.listener()
     async def on_ready(self):
         await self.bot.change_presence(activity=discord.Game(name="Helping SN Users..."))
@@ -46,15 +46,15 @@ class EventsCog(commands.Cog):
                     async with aiosqlite.connect("dbs/star.db") as db:
                         await db.execute("INSERT OR REPLACE INTO starboard (server_id, channel_id) VALUES (?, ?)", (ctx.guild.id, channel.id))
                         await db.commit()
-                    await ctx.send(f"Starboard channel set to {channel.mention}!")
+                    await ctx.send(f"Starboard channel set to {channel.mention}!", ephemeral=True)
                 else:
-                    await ctx.send("Please retry the command and mention the correct channel!")
+                    await ctx.send("Please retry the command and mention the correct channel!", ephemeral=True)
             except asyncio.TimeoutError:
-                await ctx.send("Timed out. Starboard channel setting cancelled.")
+                await ctx.send("Timed out. Starboard channel setting cancelled.", ephemeral=True)
         else:
             e = discord.Embed(color=0xc700ff)
             e.description = "🚨 That is a **High Staff** command! You don't have the required perms! 🚨"
-            await ctx.send(embed=e)
+            await ctx.send(embed=e, ephemeral=True)
     
     # Starboard Event
     @commands.Cog.listener()
