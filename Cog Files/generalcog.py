@@ -169,11 +169,11 @@ class GeneralCog(commands.Cog):
             async with aiosqlite.connect("dbs/prefix.db") as conn:
                 await conn.execute("REPLACE INTO prefixes (server_id, prefix) VALUES (?, ?)", (ctx.guild.id, new_prefix))
                 await conn.commit()
-            await ctx.send(f"**{ctx.guild.name}** server prefix is now: `{new_prefix}`")
+            await ctx.send(f"**{ctx.guild.name}** server prefix is now: `{new_prefix}`", ephemeral=True)
         else:
             e = discord.Embed(color=0xc700ff)
             e.description = "🚨 That is a **High Staff** command! You don't have the required perms! 🚨"
-            await ctx.send(embed=e)
+            await ctx.send(embed=e, ephemeral=True)
     
     # SetSuggest Command
     @commands.hybrid_command(description="Set the suggestion channel for the server")
@@ -190,15 +190,15 @@ class GeneralCog(commands.Cog):
                         await db.execute("DELETE FROM suggestion_channels WHERE server_id = ?", (ctx.guild.id,))
                         await db.execute("INSERT INTO suggestion_channels (server_id, channel_id) VALUES (?, ?)", (ctx.guild.id, channel.id))
                         await db.commit()
-                    await ctx.send(f"Suggestion channel has been set to {channel.mention}")
+                    await ctx.send(f"Suggestion channel has been set to {channel.mention}", ephemeral=True)
                 else:
                     await ctx.send("Please retry the command and mention the correct channel!")
             except asyncio.TimeoutError:
-                await ctx.send("Timed out. Suggestion channel setting cancelled.")
+                await ctx.send("Timed out. Suggestion channel setting cancelled.", ephemeral=True)
         else:
             e = discord.Embed(color=0xc700ff)
             e.description = "🚨 That is a **High Staff** command! You don't have the required perms! 🚨"
-            await ctx.send(embed=e)
+            await ctx.send(embed=e, ephemeral=True)
     
     # Help Command
     @commands.hybrid_command(description="Sends the bots help menu")
@@ -314,7 +314,7 @@ class GeneralCog(commands.Cog):
         except Exception as e:
             print(e)
     
-    # Poll Command - Slash
+    # Poll Command
     @commands.hybrid_command(description="Create a poll!")
     async def poll(self, ctx, question:str, option1:str=None, option2:str=None, option3:str=None, option4:str=None, option5:str=None):
         options = [option1, option2, option3, option4, option5]
