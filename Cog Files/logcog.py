@@ -51,21 +51,21 @@ class LogCog(commands.Cog):
                 response = await self.bot.wait_for("message", timeout=30.0, check=check)
             except asyncio.TimeoutError:
                 await confirm_message.delete()
-                await ctx.send("Timed out. Logging channel setting cancelled.")
+                await ctx.send("Timed out. Logging channel setting cancelled.", ephemeral=True)
                 return
             if response.content.lower() == "yes":
-                await ctx.send(f"Confirmed! Logging channel set to {channel.mention}!")
+                await ctx.send(f"Confirmed! Logging channel set to {channel.mention}!", ephemeral=True)
             else:
                 await self.db_conn.execute(
                     "DELETE FROM logging_channels WHERE guild_id = ?", (ctx.guild.id,)
                 )
                 await self.db_conn.commit()
-                await ctx.send("Logging channel setting cancelled.")
+                await ctx.send("Logging channel setting cancelled.", ephemeral=True)
             await confirm_message.delete()
         else:
             e = discord.Embed(color=0xc700ff)
             e.description = "🚨 That is a **High Staff** command! You don't have the required perms! 🚨"
-            await ctx.send(embed=e)
+            await ctx.send(embed=e, ephemeral=True)
     
     # Deleted Message Log Event
     @commands.Cog.listener()
