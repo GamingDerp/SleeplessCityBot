@@ -96,7 +96,7 @@ class EventsCog(commands.Cog):
     async def on_member_join(self, member):
         channel = self.bot.get_channel(1065466402447826984)
         e = discord.Embed(color=0xc700ff)
-        e.set_author(name=f"✨ Welcome to Sleepless Nights! ✨")
+        e.set_author(name=f"✨ Welcome to Sleepless City! ✨")
         e.description = "*~ The city of the restless ~*"
         e.set_image(url="https://media.discordapp.net/attachments/1070206894800638003/1078900669865525328/WelcomeGif.gif"),
         await channel.send(f"{member.mention} has joined! Checkout <#1065472726158037002> and <#1065473461272715344>!", embed=e)
