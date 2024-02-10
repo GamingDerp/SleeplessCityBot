@@ -1,8 +1,8 @@
 # 📋 Command List
 This is a list of all (public) commands, a description, and their usage.
 
-The bot's prefix is `!` (put it before the command name)
-If usage has a `/` it is a **Slash Command**
+The bot's default prefix is `!` (put it before the command name when using it, or use the slash command), these are customizable though.
+All commands are hybrid commands (except ones in the [main file](https://github.com/GamingDerp/SleeplessCityBot/blob/main/SCBMainFile.py))
 
 ## 📌 General
 Command | Description | Usage
@@ -12,7 +12,7 @@ info | Shows information about the bot | `info`
 test | Tests if the bot is up | `test`
 ping | Shows a users ping | `ping`
 suggest | Lets users make a suggestion for the server/bot | `suggest <suggestion>`
-poll | Creates a poll | `/poll`
+poll | Creates a poll | `poll`
 
 ## 🎉 Fun
 Command | Description | Usage
@@ -61,7 +61,8 @@ tdadd | Adds a task to a user's "todo list" | `tdadd <task>`
 tddel | Removes a task from a user's "todo list" | `tddel <task number>`
 tdlist | List's a mentioned user's "todo list" | `tdlist @user`
 esteal | Grabs and sends the file link from a custom emoji | `esteal :emoji:`
-cembed | Allows a user to create a custom embed | `cembed`
+giveaway | Starts a giveaway | `giveaway <time> <winners> <prize>`
+reroll | Rerolls the giveaway | `reroll`
 
 ## 🔰 Staff
 Command | Description | Usage
