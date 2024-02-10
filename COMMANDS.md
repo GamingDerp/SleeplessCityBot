@@ -55,7 +55,6 @@ Command | Description | Usage
 whois | Sends information about a user's account | `whois @user`
 snipe | Shows a recently deleted message and who sent it | `snipe`
 deathhelp | Shows the methods of death for the "deathnote" commands | `deathhelp`
-pickle | Sends the "Pickle Rick" quote | `/pickle`
 remind | Sets a reminder for a user about a task | `remind <number><abbreviated time length> <task>`
 tdadd | Adds a task to a user's "todo list" | `tdadd <task>`
 tddel | Removes a task from a user's "todo list" | `tddel <task number>`
