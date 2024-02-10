@@ -50,13 +50,12 @@ class StaffCog(commands.Cog):
     @commands.hybrid_command(description="Purge messages", pass_context=True)
     async def purge(self, ctx, limit:int):
         if discord.utils.get(ctx.author.roles, name="💠 Sergeant"):
-            await ctx.message.delete()
+            await ctx.defer()
             await ctx.channel.purge(limit=limit)
         else:
             e = discord.Embed(color=0xc700ff)
             e.description = "🚨 That is a **High Staff** command! You don't have the required perms! 🚨"
             await ctx.send(embed=e)
-            await ctx.message.delete()
 
     # Ban Command
     @commands.hybrid_command(description="Ban a user")
