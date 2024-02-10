@@ -42,7 +42,6 @@ class MiscCog(commands.Cog):
             e.add_field(name=f"<a:DiscordBoost:1121298549657829436> Boosting", value=user.premium_since.strftime("`%B %d, %Y %H:%M %p`"))
         e.add_field(name="👑 Top Role", value=user.top_role.mention)
         e.add_field(name="🎲 Activity", value=f"{user.activity.name}" if user.activity is not None else None)
-        e.add_field(name="🚦 Status", value=user.status)
         emotes = {
             "hypesquad_brilliance": "<:HypeSquadBrilliance:1123772502024405053>",
             "hypesquad_bravery": "<:HypeSquadBravery:1123772444994437240>",
