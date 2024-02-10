@@ -46,7 +46,7 @@ me.set_author(name="Bot Commands", icon_url=sc_image)
 me.set_thumbnail(url=sc_image)
 me.add_field(
     name="🧮 __Misc Commands__",
-    value=f"> `Whois`, `Snipe`, `Deathhelp`, `Remind`, `ESteal`, `Tdadd` \n> `Tddel`, `Tdlist`, `Tdclear`",
+    value=f"> `Whois`, `Snipe`, `Deathhelp`, `Remind`, `ESteal`, `Tdadd` \n> `Tddel`, `Tdlist`, `Tdclear`, `Giveaway`, `Reroll`",
 )
 
 # Staff Commands Embed
@@ -74,7 +74,7 @@ class Dropdown(discord.ui.Select):
             discord.SelectOption(label="General Commands",description="Help, Info, Test, Ping, Suggest +1 More", emoji="📌"),
             discord.SelectOption(label="Fun Commands", description="Coinflip, Ask, Reverse, Say, Lovetest +2 More", emoji="🎉"),
             discord.SelectOption(label="Action Commands", description="Sniff, Bite, Bonk, Vomit, Slap +16 More", emoji="🎯"),
-            discord.SelectOption(label="Misc Commands", description="Whois, Snipe, Deathhelp, Remind, Tdadd +4 More", emoji="🧮"),
+            discord.SelectOption(label="Misc Commands", description="Whois, Snipe, Deathhelp, Remind, Tdadd +6 More", emoji="🧮"),
             discord.SelectOption(label="Staff Commands", description="Purge, Ban, Unban, Kick, Timeout +3 More", emoji="🔰"),
             discord.SelectOption(label="Config Commands", description="SetPrefix, SetLog, SetStar, SetSuggest", emoji="⚙️"),
         ]
@@ -253,10 +253,10 @@ class GeneralCog(commands.Cog):
         )
         e.add_field(
             name="✧ __Statistics__",
-            value=f"> **Commands:** [54]"
+            value=f"> **Commands:** [56]"
 	          f"\n> **Code:** {total_lines} Lines"
-		  f"\n> **Ping:** {round(self.bot.latency * 1000)}ms"
-		  f"\n> **Users:** {true_member_count}"
+		      f"\n> **Ping:** {round(self.bot.latency * 1000)}ms"
+		      f"\n> **Users:** {true_member_count}"
         	  f"\n> **Uptime:** {days}**d** {hours}**h** {minutes}**m** {seconds}**s**",
             inline=False
         )
