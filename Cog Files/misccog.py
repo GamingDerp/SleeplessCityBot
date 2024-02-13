@@ -103,22 +103,24 @@ class MiscCog(commands.Cog):
     # Snipe Command
     @commands.hybrid_command(description="Sends the most recent deleted or edited message")
     async def snipe(self, ctx):
-        global sniped_message
-        if sniped_message is None:
-            await ctx.send("There are no recently deleted messages to snipe.")
-            return
-        if sniped_message.content:
+        try:
+            global sniped_message
+            if sniped_message is None:
+                await ctx.send("There are no recently deleted messages to snipe.")
+                return
             e = discord.Embed(color=0xc700ff)
-            e.set_author(name=sniped_message.author.name, icon_url=sniped_message.avatar.url)
-            e.description = f"> {sniped_message.content}"
-            await ctx.send(embed=e)
-        elif sniped_message.attachments:
-            attachment_url = sniped_message.attachments[0].url
-            e = discord.Embed(color=0xc700ff)
-            e.set_author(name=sniped_message.author.name)
-            e.set_image(url=attachment_url)
-            await ctx.send(embed=e)
-        sniped_message = None  # Reset sniped message after displaying
+            if sniped_message.content:
+                e.set_author(name=sniped_message.author.name, icon_url=sniped_message.author.avatar.url)
+                e.description = f"> {sniped_message.content}"
+                await ctx.send(embed=e)
+            elif sniped_message.attachments:
+                attachment_url = sniped_message.attachments[0].url
+                e.set_author(name=sniped_message.author.name)
+                e.set_image(url=attachment_url)
+                await ctx.send(embed=e)
+            sniped_message = None
+        except Exception as e:
+            print(e)
         
     # Deathnote Help Command
     @commands.hybrid_command(description="Sends the options for the deathnote command")
