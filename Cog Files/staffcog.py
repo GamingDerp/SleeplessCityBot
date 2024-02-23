@@ -61,10 +61,10 @@ class StaffCog(commands.Cog):
     @commands.hybrid_command(description="Ban a user")
     async def ban(self, ctx, member:discord.Member, *, reason=None):
         if discord.utils.get(ctx.author.roles, name="🔆 Detective"):
+            await member.ban()
             e = discord.Embed(color=0xFf0000)
             e.description = f"<:BanHammer:1123773333947813898> {member.mention} has been banned! <:BanHammer:1123773333947813898> \n**Reason:** {reason}"
             await ctx.channel.send(embed=e)
-            await member.ban()
         else:
             e = discord.Embed(color=0xc700ff)
             e.description = "🚨 That is a **High Staff** command! You don't have the required perms! 🚨"
@@ -88,9 +88,9 @@ class StaffCog(commands.Cog):
     @commands.hybrid_command(description="Kick a user")
     async def kick(self, ctx, member:discord.Member, *, reason=None):
         if discord.utils.get(ctx.author.roles, name="💠 Sergeant"):
+            await member.kick()
             e = discord.Embed(color=0xc700ff)
             e.description = f"{member.mention} has been kicked! \n**Reason:** {reason}"
-            await member.kick()
             await ctx.channel.send(embed=e)
             
             # Sending kick log to log channel
