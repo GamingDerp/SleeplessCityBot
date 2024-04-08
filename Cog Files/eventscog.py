@@ -91,7 +91,7 @@ class EventsCog(commands.Cog):
                     e.set_author(name=f"✨ Welcome to Sleepless City! ✨")
                     e.description = "*~ The city of the restless ~*"
                     e.set_image(url="https://media.discordapp.net/attachments/1070206894800638003/1078900669865525328/WelcomeGif.gif"),
-                    await channel.send(f"{interaction.user.mention} has been verified! Checkout <#1065472726158037002> and <#1065473461272715344>!",embed=e)
+                    await channel.send(f"{interaction.user.mention} has been verified! Checkout <#1065472726158037002> and <#1065473461272715344>!", embed=e)
         except Exception as e:
             print(e)
  
