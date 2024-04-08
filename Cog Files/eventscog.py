@@ -7,6 +7,9 @@ import aiosqlite
 # Bots User ID
 bot_id = 1103103994777309205
 
+# Bot Owner User ID
+owner_id = 532706491438727169
+
 # Events Commands Class
 class EventsCog(commands.Cog):
     def __init__(self, bot):
@@ -55,7 +58,43 @@ class EventsCog(commands.Cog):
             e = discord.Embed(color=0xc700ff)
             e.description = "🚨 That is a **High Staff** command! You don't have the required perms! 🚨"
             await ctx.send(embed=e, ephemeral=True)
+
+    # PostVerify Command
+    @commands.command()
+    async def postverify(self, ctx):
+        if ctx.author.id == owner_id:
+            e = discord.Embed(color=0xc700ff)
+            e.title = "🔎 User Verification 🔎"
+            e.description = "Welcome to ***Sleepless City***! \n\nBefore you become a full member of the server, we need you to verify that you are a real user! \n\nTo verify yourself, please just click on the green button down below that says '**Verify Me!**', thank you!"
+            e.set_thumbnail(url="https://media.discordapp.net/attachments/1065517294278676511/1176668287636090920/SCLogo.jpg?ex=656fb4bd&is=655d3fbd&hm=b87bdcec00843db85984116007a7ab56b44af4491c79e0dadc557e80b392b17f&=")
+            view = discord.ui.View()
+            view.add_item(discord.ui.Button(style=discord.ButtonStyle.success, label="✅ Verify Me!", custom_id="verify"))
+            await ctx.send(embed=e, view=view)
+        else:
+            e = discord.Embed(color=0xe02da9)
+            e.description = "🚨 That is a **Owner** command! You don't have the required perms! 🚨"
+            await ctx.send(embed=e)
     
+    # Verification Button Event
+    @commands.Cog.listener()
+    async def on_interaction(self, interaction):
+        try:
+            if interaction.type == discord.InteractionType.component:
+                if interaction.data['custom_id'] == 'verify':
+                    e = discord.Embed(color=0xc700ff)
+                    e.description = "✨ You've been verified! Welcome to ***Sleepless City!*** ✨"
+                    await interaction.response.send_message(embed=e, ephemeral=True)
+                    role = discord.utils.get(interaction.guild.roles, name="👌 Citizen")
+                    await interaction.user.add_roles(role)
+                    channel = self.bot.get_channel(1065466402447826984)
+                    e = discord.Embed(color=0xc700ff)
+                    e.set_author(name=f"✨ Welcome to Sleepless City! ✨")
+                    e.description = "*~ The city of the restless ~*"
+                    e.set_image(url="https://media.discordapp.net/attachments/1070206894800638003/1078900669865525328/WelcomeGif.gif"),
+                    await channel.send(f"{interaction.user.mention} has been verified! Checkout <#1065472726158037002> and <#1065473461272715344>!",embed=e)
+        except Exception as e:
+            print(e)
+ 
     # Starboard Event
     @commands.Cog.listener()
     async def on_reaction_add(self, reaction, user):
@@ -90,23 +129,17 @@ class EventsCog(commands.Cog):
             if message.channel.id == 1065502975499440168 and "69" in message.content:
                 await message.add_reaction('<:Troll:1141846474108436550>')
                 await self.bot.process_commands(message)
-            
+
     # User Joined Message Event
     @commands.Cog.listener()
     async def on_member_join(self, member):
-        channel = self.bot.get_channel(1065466402447826984)
-        e = discord.Embed(color=0xc700ff)
-        e.set_author(name=f"✨ Welcome to Sleepless City! ✨")
-        e.description = "*~ The city of the restless ~*"
-        e.set_image(url="https://media.discordapp.net/attachments/1070206894800638003/1078900669865525328/WelcomeGif.gif"),
-        await channel.send(f"{member.mention} has joined! Checkout <#1065472726158037002> and <#1065473461272715344>!", embed=e)
-        role = discord.utils.get(member.guild.roles, name="👌 Member")
-        await member.add_roles(role)
+        channel = self.bot.get_channel(1226687213182652416)
+        await channel.send(f"Welcome {member.mention}! To get access to the rest of the server, go to <#1226687442913067050>! <a:WooperVibe:1222370475083301015>")
 
     # User Leave Message Event
     @commands.Cog.listener()
     async def on_member_remove(self, member):
-        channel = self.bot.get_channel(1065466402447826984)
+        channel = self.bot.get_channel(1226687213182652416)
         e = discord.Embed(color=0xc700ff)
         e.description = f"👋 {member.name} left! 👋"
         await channel.send(embed=e)
@@ -122,6 +155,6 @@ class EventsCog(commands.Cog):
             e.description = f"Thank you {after.mention}! \nYou'll now recieve these perks: \n> Image Perms \n> Embed Perms \n> Video Perms \n> Streaming Perms \n*and access to the exclusive <#1065651827703554109>!*"
             await channel.send(embed=e)
 
-
+    
 async def setup(bot):
     await bot.add_cog(EventsCog(bot))
