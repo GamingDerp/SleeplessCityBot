@@ -28,6 +28,7 @@ Private commands/menus will not be counted in the "Features" section.
 - Welcome/Leaving Messages
 - Sends a message when server gets boosted
 - Adds "Troll Face" when '69' is counted to in `#counting`
+- Invite tracking
 
 # 📑 Credit
 - `gamingderp` - Developer
