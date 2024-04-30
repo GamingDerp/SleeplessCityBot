@@ -1,5 +1,5 @@
 [![Join - Sleepless City](https://img.shields.io/badge/Join-Sleepless_City-7289da?logo=Discord)](https://discord.gg/UecWG8pK7r)
-[![v - 0.9.5](https://img.shields.io/badge/v-0.9.5-FF0000)](https://)
+[![v - 0.9.6](https://img.shields.io/badge/v-0.9.6-FF0000)](https://)
 [![python - 3.11.2](https://img.shields.io/badge/python-3.11.2-0096FF?logo=Python)](https://)
 [![discord.py - 2.3.2](https://img.shields.io/badge/discord.py-2.3.2-FFFF00?logo=Python)](https://github.com/Rapptz/discord.py)
 
