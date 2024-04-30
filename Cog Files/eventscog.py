@@ -150,9 +150,9 @@ class EventsCog(commands.Cog):
     async def on_member_join(self, member):
         await self.update_invite_cache()
         try:
+            channel = self.bot.get_channel(1226687213182652416)
             vanity_url = await member.guild.vanity_invite()
             if vanity_url:
-                channel = self.bot.get_channel(1226687213182652416)
                 if channel:
                     await channel.send(f"Welcome {member.mention}! To get access to the rest of the server, go to <#1226687442913067050>! <a:WooperVibe:1222370475083301015> \n <:Reply:1123773242327441468> **{member.name}** joined from the **Vanity Code:** `{vanity_url.url}`")
                 else:
@@ -167,7 +167,6 @@ class EventsCog(commands.Cog):
                     inviter = self.invite_cache[invite.code]['inviter']
                     uses = invite.uses
                     max_uses = invite.max_uses
-                    channel = self.bot.get_channel(1226687213182652416)
                     if channel:
                         await channel.send(f"Welcome {member.mention}! To get access to the rest of the server, go to <#1226687442913067050>! <a:WooperVibe:1222370475083301015> \n <:Reply:1123773242327441468> **{member.name}** joined from **Invite:** `{invite.code}` | **Creator:** {inviter} | **Uses:** {uses}")
                     else:
@@ -179,7 +178,6 @@ class EventsCog(commands.Cog):
                     inviter = newest_invite.inviter
                     uses = newest_invite.uses
                     max_uses = newest_invite.max_uses
-                    channel = self.bot.get_channel(1226687213182652416)
                     if channel:
                         await channel.send(f"Welcome {member.mention}! To get access to the rest of the server, go to <#1226687442913067050>! <a:WooperVibe:1222370475083301015> \n <:Reply:1123773242327441468> **{member.name}** joined from **Invite:** `{newest_invite.code}` | **Creator:** {inviter} | **Uses:** {uses}")
                     else:
