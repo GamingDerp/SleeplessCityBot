@@ -50,7 +50,7 @@ class GiveawayCog(commands.Cog):
                 )
                 view = discord.ui.View()
                 view.add_item(discord.ui.Button(style=discord.ButtonStyle.secondary, label="📮 Join", custom_id="join"))
-                message = await ctx.send("<@1065457387605069834>", embed=e, view=view)
+                message = await ctx.send(embed=e, view=view)
                 await asyncio.sleep(converted_duration.total_seconds())
                 winners_list = random.sample(self.participants.get(message.id, []), winners)
                 winners_text = "\n".join([f"**👑 Winner(s):** <@{winner}>" for i, winner in enumerate(winners_list)])
