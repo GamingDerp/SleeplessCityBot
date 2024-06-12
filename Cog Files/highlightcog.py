@@ -41,7 +41,7 @@ class HighlightCog(commands.Cog):
 
     @commands.hybrid_command(description="Add a word to your highlight list")
     async def highlightadd(self, ctx, *, word: str = None):
-        if discord.utils.get(ctx.author.roles, name="💠 Sergeant"):
+        if discord.utils.get(ctx.author.roles, name="🧸 Officer"):
             try:
                 word = word.lower()
                 await self.create_user_table()
@@ -62,7 +62,7 @@ class HighlightCog(commands.Cog):
 
     @commands.hybrid_command(description="Remove a word from your highlight list")
     async def highlightremove(self, ctx, *, word: str = None):
-        if discord.utils.get(ctx.author.roles, name="💠 Sergeant"):
+        if discord.utils.get(ctx.author.roles, name="🧸 Officer"):
             try:
                 word = word.lower()
                 await self.create_user_table()
@@ -83,7 +83,7 @@ class HighlightCog(commands.Cog):
 
     @commands.hybrid_command(description="Clear your highlighted word list")
     async def highlightclear(self, ctx):
-        if discord.utils.get(ctx.author.roles, name="💠 Sergeant"):
+        if discord.utils.get(ctx.author.roles, name="🧸 Officer"):
             try:
                 await self.create_user_table()
                 _, ignored_channels, ignored_users = await self.get_user_data(ctx.author.id)
@@ -98,7 +98,7 @@ class HighlightCog(commands.Cog):
 
     @commands.hybrid_command(description="Block a user or channel from your highlight list")
     async def highlightblock(self, ctx, *, item: str):
-        if discord.utils.get(ctx.author.roles, name="💠 Sergeant"):
+        if discord.utils.get(ctx.author.roles, name="🧸 Officer"):
             try:
                 await self.create_user_table()
                 word_list, ignored_channels, ignored_users = await self.get_user_data(ctx.author.id)
@@ -136,7 +136,7 @@ class HighlightCog(commands.Cog):
 
     @commands.hybrid_command(description="Unblock a user or channel from your highlight list")
     async def highlightunblock(self, ctx, *, item: str):
-        if discord.utils.get(ctx.author.roles, name="💠 Sergeant"):
+        if discord.utils.get(ctx.author.roles, name="🧸 Officer"):
             try:
                 await self.create_user_table()
                 word_list, ignored_channels, ignored_users = await self.get_user_data(ctx.author.id)
@@ -174,7 +174,7 @@ class HighlightCog(commands.Cog):
 
     @commands.hybrid_command(description="Show your highlight list")
     async def highlightshow(self, ctx):
-        if discord.utils.get(ctx.author.roles, name="💠 Sergeant"):
+        if discord.utils.get(ctx.author.roles, name="🧸 Officer"):
             try:
                 await self.create_user_table()
                 word_list, ignored_channels, ignored_users = await self.get_user_data(ctx.author.id)
