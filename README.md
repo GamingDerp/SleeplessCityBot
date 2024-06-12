@@ -11,13 +11,13 @@ Private commands/menus will not be counted in the "Features" section.
 
 
 # 📋 Features
-**62** commands across **6** different categories.
+**63** commands across **6** different categories.
 
 - 📌 **General:** `Help`, `Info`, `Test`, `Ping`, `Suggest`, `Poll`
 - 🎉 **Fun:** `Coinflip`, `Ask`, `Reverse`, `Say`, `Lovetest`, `Cute`
 - 🎯 **Action:** `Sniff`, `Bite`, `Bonk`, `Vomit`, `Slap`, `Punch` and **15** more!
 - 🧮 **Misc:** `Whois`, `Avatar`, `Snipe`, `Deathhelp`, `Remind`, `Tdadd` and **6** more!
-- 🔰 **Staff:** `Purge`, `Ban`, `Unban`, `Kick`, `Timeout`, `Warn` and **8** more!
+- 🔰 **Staff:** `Purge`, `Ban`, `Unban`, `Kick`, `Timeout`, `Warn` and **9** more!
 - ⚙️ **Config:** `SetPrefix`, `SetLog`, `SetStar`, `SetSuggest`
 - **Full list of commands:** [Here](https://github.com/GamingDerp/SleeplessCityBot/blob/main/COMMANDS.md)
 
