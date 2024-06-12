@@ -43,7 +43,7 @@ class HighlightCog(commands.Cog):
     async def defaulthighlights(self, ctx):
         if discord.utils.get(ctx.author.roles, name="🧸 Officer"):
             try:
-                default_words = {"nigger", "nigga", "faggot", "fag", "kys"}
+                default_words = {"nigger", "nigga", "faggot", "fag", "kys", "retard" ,"retarded"}
                 await self.create_user_table()
                 word_list, ignored_channels, ignored_users = await self.get_user_data(ctx.author.id)
                 existing_words = set(word_list.split(',')) if word_list else set()
@@ -232,13 +232,22 @@ class HighlightCog(commands.Cog):
                 ignored_user_ids = [int(uid) for uid in ignored_users.split(',')] if ignored_users else []
                 if message.channel.id in ignored_channel_ids or message.author.id in ignored_user_ids:
                     continue
+                if message.author.id == user_id:
+                    continue
                 content = message.clean_content.lower()
                 for word in words:
                     if word in content:
                         user = self.bot.get_user(user_id)
                         if user:
-                            e = discord.Embed(title=f"🚨 Word Mentioned 🚨", description=f"`{word}` was mentioned!", color=0xc700ff, timestamp=datetime.utcnow())
+                            e = discord.Embed(
+                                title=f"🚨 Word Mentioned 🚨",
+                                color=0xc700ff,
+                                timestamp=datetime.utcnow()
+                            )
+                            e.add_field(name="🔍 Mentioned Word", value=f"> {word}", inline=False)
+                            e.add_field(name="💬 Message", value=f"> {message.clean_content}", inline=False)
                             e.add_field(name="👤 Mentioned By", value=f"> {message.author.mention}", inline=False)
+                            e.add_field(name="📢 In Channel", value=f"> {message.channel.mention}", inline=False)
                             e.add_field(name="🔗 Jump Link", value=f"> [Message]({message.jump_url})", inline=False)
                             await user.send(embed=e)
                         break
