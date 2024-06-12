@@ -38,6 +38,27 @@ class HighlightCog(commands.Cog):
                 VALUES (?, ?, ?, ?)
             """, (user_id, word_list, ignored_channels, ignored_users))
             await db.commit()
+    
+    @commands.hybrid_command(description="Add default words to your highlight list")
+    async def defaulthighlights(self, ctx):
+        if discord.utils.get(ctx.author.roles, name="🧸 Officer"):
+            try:
+                default_words = {"nigger", "nigga", "faggot", "kys"}
+                await self.create_user_table()
+                word_list, ignored_channels, ignored_users = await self.get_user_data(ctx.author.id)
+                existing_words = set(word_list.split(',')) if word_list else set()
+                if default_words.issubset(existing_words):
+                    await ctx.send("Those words are already in your list!")
+                else:
+                    updated_words = existing_words.union(default_words)
+                    await self.update_user_data(ctx.author.id, ','.join(updated_words), ignored_channels, ignored_users)
+                    await ctx.send("Added default words to your highlight list!")
+            except Exception as e:
+                print(e)
+        else:
+            e = discord.Embed(color=0xc700ff)
+            e.description = "🚨 That is a **Staff** command! You don't have the required perms! 🚨"
+            await ctx.send(embed=e)
 
     @commands.hybrid_command(description="Add a word to your highlight list")
     async def highlightadd(self, ctx, *, word: str = None):
