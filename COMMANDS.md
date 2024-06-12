@@ -74,6 +74,11 @@ timeout | Puts a user in "timeout" | `timeout @user <number><abbreviated time le
 warn | Warns a user | `warn @user <reason>`
 warnlist | Checks the warns of a user | `warnlist @user`
 delwarn | Deletes a specified warn from a users warn list | `delwarn @user <warn number>`
+highlightadd | Adds a word to a moderator's highlight list | `highlightadd <word>`
+hightlightremove | Removes a word from a moderator's highlight list | `highlightremove <word>`
+highlightclear | Clears a moderator's word highlight list | `highlightclear`
+highlightblock | Blocks a user or channel on a moderator's highlight list | `highlightblock @user` / `highlightblock #channel`
+highllightunblock | Unblocks a user or channel from a moderator's highlight list | `highlightunblock @user` / `highlightunblock #channel`
 
 ## ⚙️ Config
 Command | Description | Usage
