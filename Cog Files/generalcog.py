@@ -46,7 +46,7 @@ me.set_author(name="Bot Commands", icon_url=sc_image)
 me.set_thumbnail(url=sc_image)
 me.add_field(
     name="🧮 __Misc Commands__",
-    value=f"> `Whois`, `Snipe`, `Deathhelp`, `Remind`, `ESteal`, `Tdadd` \n> `Tddel`, `Tdlist`, `Tdclear`, `Giveaway`, `Reroll`",
+    value=f"> `Whois`, `Snipe`, `Deathhelp`, `Remind`, `ESteal`, `Tdadd` \n> `Tddel`, `Tdlist`, `Tdclear`, `Giveaway`, `Reroll`, `ClimateClock`",
 )
 
 # Staff Commands Embed
@@ -55,7 +55,7 @@ se.set_author(name="Bot Commands", icon_url=sc_image)
 se.set_thumbnail(url=sc_image)
 se.add_field(
     name="🔰 __Staff Commands__",
-    value=f"> `Purge`, `Ban`, `Unban`, `Kick`, `Timeout`, `Warn` \n> `WarnList`, `DelWarn`, `Highlightadd`, `Highlightremove`, `Highlightclear`, `Highlightblock` \n> `Highlightblock`, `Highlightunblock`",
+    value=f"> `Purge`, `Ban`, `Unban`, `Kick`, `Timeout`, `Warn` \n> `WarnList`, `DelWarn`, `Highlightadd`, `Highlightremove`, `Highlightclear`, `Highlightblock` \n> `Highlightblock`, `Highlightunblock`, `Defaulthighlights",
 )
 
 # Config Commands Embed
@@ -74,8 +74,8 @@ class Dropdown(discord.ui.Select):
             discord.SelectOption(label="General Commands",description="Help, Info, Test, Ping, Suggest +1 More", emoji="📌"),
             discord.SelectOption(label="Fun Commands", description="Coinflip, Ask, Reverse, Say, Lovetest +2 More", emoji="🎉"),
             discord.SelectOption(label="Action Commands", description="Sniff, Bite, Bonk, Vomit, Slap +16 More", emoji="🎯"),
-            discord.SelectOption(label="Misc Commands", description="Whois, Snipe, Deathhelp, Remind, Tdadd +6 More", emoji="🧮"),
-            discord.SelectOption(label="Staff Commands", description="Purge, Ban, Unban, Kick, Timeout +9 More", emoji="🔰"),
+            discord.SelectOption(label="Misc Commands", description="Whois, Snipe, Deathhelp, Remind, Tdadd +7 More", emoji="🧮"),
+            discord.SelectOption(label="Staff Commands", description="Purge, Ban, Unban, Kick, Timeout +10 More", emoji="🔰"),
             discord.SelectOption(label="Config Commands", description="SetPrefix, SetLog, SetStar, SetSuggest", emoji="⚙️"),
         ]
         super().__init__(min_values=1, max_values=1, options=options)
@@ -253,7 +253,7 @@ class GeneralCog(commands.Cog):
         )
         e.add_field(
             name="✧ __Statistics__",
-            value=f"> **Commands:** [62]"
+            value=f"> **Commands:** [64]"
 	          f"\n> **Code:** {total_lines} Lines"
 		  f"\n> **Ping:** {round(self.bot.latency * 1000)}ms"
 		  f"\n> **Users:** {true_member_count}"
@@ -273,7 +273,7 @@ class GeneralCog(commands.Cog):
         e.set_footer(text=f"Requested by {ctx.author}")
         e.timestamp = datetime.utcnow()
         await ctx.send(embed=e)
-    
+
     # Test Command
     @commands.hybrid_command(description="Test if the bot is up")
     async def test(self, ctx):
