@@ -147,7 +147,7 @@ class MiscCog(commands.Cog):
                     minutes, seconds = divmod(remainder, 60)
                     e = discord.Embed(
                         title='⛅️ Climate Clock ⛅️',
-                        description=f'Time left until irreversible **1.5°C** global temperature rise is reached\n\n'
+                        description=f'[**Climate Clock**](<https://climateclock.world>) shows the time left until irreversible **1.5°C** global temperature rise is reached\n\n'
                                     f'> 📅 {years}**Y** {days}**D** \n'
                                     f'> ⏳ {hours}**H** {minutes}**M** {seconds}**S**',
                         color=0xc700ff
