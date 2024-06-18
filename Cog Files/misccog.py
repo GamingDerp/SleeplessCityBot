@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 import time
 import asyncio
 import aiosqlite
+import requests
         
 # Misc Commands Class
 class MiscCog(commands.Cog):
@@ -99,7 +100,7 @@ class MiscCog(commands.Cog):
             return
         global sniped_message
         sniped_message = before
-        
+    
     # Snipe Command
     @commands.hybrid_command(description="Sends the most recent deleted or edited message")
     async def snipe(self, ctx):
@@ -121,7 +122,46 @@ class MiscCog(commands.Cog):
             sniped_message = None
         except Exception as e:
             print(e)
-        
+    
+    # ClimateClock Command
+    @commands.hybrid_command(description="Check the Climate Clock")
+    async def climateclock(self, ctx):
+        url = 'https://api.climateclock.world/v2/clock.json'
+        try:
+            response = requests.get(url)
+            if response.status_code == 200:
+                data = response.json()
+                modules = data.get('data', {}).get('modules', {})
+                module_info = modules.get('carbon_deadline_1', None)
+                if module_info:
+                    module_type = module_info.get('type')
+                    module_flavor = module_info.get('flavor')
+                    module_description = module_info.get('description')
+                    countdown_timestamp = module_info.get('timestamp')
+                    countdown_datetime = datetime.fromisoformat(countdown_timestamp.replace('Z', '+00:00')).replace(tzinfo=None)
+                    current_datetime = datetime.utcnow()
+                    remaining_time = countdown_datetime - current_datetime
+                    years = remaining_time.days // 365
+                    days = remaining_time.days % 365
+                    hours, remainder = divmod(remaining_time.seconds, 3600)
+                    minutes, seconds = divmod(remainder, 60)
+                    e = discord.Embed(
+                        title='⛅️ Climate Clock ⛅️',
+                        description=f'Time left until irreversible **1.5°C** global temperature rise is reached\n\n'
+                                    f'> 📅 {years}**Y** {days}**D** \n'
+                                    f'> ⏳ {hours}**H** {minutes}**M** {seconds}**S**',
+                        color=0xc700ff
+                    )
+                    e.set_thumbnail(url='https://media.discordapp.net/attachments/807071768258805764/1252424739788427374/favicon.png?ex=66722aee&is=6670d96e&hm=f3f945285aa7be06be8474376e4b8a05263d4a615ae7fe9d4f46878b2b66d89c&=&format=webp&quality=lossless')
+                    e.timestamp = datetime.utcnow()
+                    await ctx.send(embed=e)
+                else:
+                    print("Couldn't find information for the carbon deadline module.")
+            else:
+                print(f'Failed to fetch data from Climate Clock API. Status code: {response.status_code}')
+        except Exception as e:
+            print(f'Error fetching data from Climate Clock API: {e}')
+
     # Deathnote Help Command
     @commands.hybrid_command(description="Sends the options for the deathnote command")
     async def deathhelp(self, ctx):
