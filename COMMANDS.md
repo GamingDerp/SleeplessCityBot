@@ -62,6 +62,7 @@ tdlist | List's a mentioned user's "todo list" | `tdlist @user`
 esteal | Grabs and sends the file link from a custom emoji | `esteal :emoji:`
 giveaway | Starts a giveaway | `giveaway <time> <winners> <prize>`
 reroll | Rerolls the giveaway | `reroll`
+climateclock | Shows the [ClimateClock](https://climateclock.world) countdown | `climateclock`
 
 ## 🔰 Staff
 Command | Description | Usage
