@@ -26,7 +26,7 @@ async def main():
 # Startup Event
 @bot.listen()
 async def on_ready():
-    await print(f"Logged in as {bot.user} \nID: {bot.user.id}")
+    print(f"Logged in as {bot.user} \nID: {bot.user.id}")
 
 owner_id = 532706491438727169
 
