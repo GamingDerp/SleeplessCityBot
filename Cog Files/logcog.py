@@ -193,22 +193,6 @@ class LogCog(commands.Cog):
                 e.add_field(name="__After__", value=f"> {after.display_name}", inline=False)
                 e.timestamp = datetime.utcnow()
                 await channel.send(embed=e)
-        
-    # User Update Log Event
-    @commands.Cog.listener()
-    async def on_user_update(self, before, after):
-        logging_channel = await self.get_logging_channel(before.guild.id)
-        channel = self.bot.get_channel(logging_channel)
-        if logging_channel:
-            if before.name != after.name:
-                e = discord.Embed(color=0xc700ff)
-                e.set_author(name="🧾 Account Name Update")
-                e.set_thumbnail(url=f"{before.avatar.url}")
-                e.add_field(name="__Member__", value=f"> {before.mention}")
-                e.add_field(name="__Before__", value=f"> {before.name}#{before.discriminator}", inline=False)
-                e.add_field(name="__After__", value=f"> {after.name}#{after.discriminator}", inline=False)
-                e.timestamp = datetime.utcnow()
-                await channel.send(embed=e)
 
     # Channel Created Log Event
     @commands.Cog.listener()
