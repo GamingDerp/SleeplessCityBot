@@ -75,7 +75,7 @@ class Dropdown(discord.ui.Select):
             discord.SelectOption(label="Fun Commands", description="Coinflip, Ask, Reverse, Say, Lovetest +1 More", emoji="🎉"),
             discord.SelectOption(label="Action Commands", description="Sniff, Bite, Bonk, Vomit, Slap +16 More", emoji="🎯"),
             discord.SelectOption(label="Misc Commands", description="Whois, Snipe, Deathhelp, Remind, Tdadd +7 More", emoji="🧮"),
-            discord.SelectOption(label="Staff Commands", description="Purge, Ban, Unban, Kick, Timeout +10 More", emoji="🔰"),
+            discord.SelectOption(label="Staff Commands", description="Purge, Ban, Unban, Kick, Timeout +9 More", emoji="🔰"),
             discord.SelectOption(label="Config Commands", description="SetPrefix, SetLog, SetStar, SetSuggest", emoji="⚙️"),
         ]
         super().__init__(min_values=1, max_values=1, options=options)
