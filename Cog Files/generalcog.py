@@ -55,7 +55,7 @@ se.set_author(name="Bot Commands", icon_url=sc_image)
 se.set_thumbnail(url=sc_image)
 se.add_field(
     name="🔰 __Staff Commands__",
-    value=f"> `Purge`, `Ban`, `Unban`, `Kick`, `Timeout`, `Warn` \n> `WarnList`, `DelWarn`, `Highlightadd`, `Highlightremove`, `Highlightclear`, `Highlightblock` \n> `Highlightblock`, `Highlightunblock`, `Defaulthighlights`",
+    value=f"> `Purge`, `Ban`, `Unban`, `Kick`, `Timeout`, `Warn` \n> `WarnList`, `DelWarn`, `Highlightadd`, `Highlightremove`, `Highlightclear`, `Highlightblock` \n> `Highlightunblock`, `Defaulthighlights`",
 )
 
 # Config Commands Embed
