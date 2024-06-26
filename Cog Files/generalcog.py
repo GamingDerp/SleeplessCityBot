@@ -46,7 +46,7 @@ me.set_author(name="Bot Commands", icon_url=sc_image)
 me.set_thumbnail(url=sc_image)
 me.add_field(
     name="🧮 __Misc Commands__",
-    value=f"> `Whois`, `Snipe`, `Deathhelp`, `Remind`, `ESteal`, `Tdadd` \n> `Tddel`, `Tdlist`, `Tdclear`, `Giveaway`, `Reroll`, `ClimateClock`",
+    value=f"> `Whois`, `Snipe`, `Deathhelp`, `Remind`, `ESteal`, `Todoadd` \n> `Tododel`, `Todolist`, `Todoclear`, `Giveaway`, `Reroll`, `ClimateClock`",
 )
 
 # Staff Commands Embed
@@ -55,7 +55,7 @@ se.set_author(name="Bot Commands", icon_url=sc_image)
 se.set_thumbnail(url=sc_image)
 se.add_field(
     name="🔰 __Staff Commands__",
-    value=f"> `Purge`, `Ban`, `Unban`, `Kick`, `Timeout`, `Warn` \n> `WarnList`, `DelWarn`, `Highlightadd`, `Highlightremove`, `Highlightclear`, `Highlightblock` \n> `Highlightblock`, `Highlightunblock`, `Defaulthighlights",
+    value=f"> `Purge`, `Ban`, `Unban`, `Kick`, `Timeout`, `Warn` \n> `WarnList`, `DelWarn`, `Highlightadd`, `Highlightremove`, `Highlightclear`, `Highlightblock` \n> `Highlightblock`, `Highlightunblock`, `Defaulthighlights`",
 )
 
 # Config Commands Embed
@@ -255,7 +255,7 @@ class GeneralCog(commands.Cog):
             name="✧ __Statistics__",
             value=f"> **Commands:** [64]"
 	          f"\n> **Code:** {total_lines} Lines"
-		  f"\n> **Ping:** {round(self.bot.latency * 1000)}ms"
+	          f"\n> **Ping:** {round(self.bot.latency * 1000)}ms"
 		  f"\n> **Users:** {true_member_count}"
         	  f"\n> **Uptime:** {days}**d** {hours}**h** {minutes}**m** {seconds}**s**",
             inline=False
