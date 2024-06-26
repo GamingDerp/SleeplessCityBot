@@ -56,9 +56,10 @@ whois | Sends information about a user's account | `whois @user`
 snipe | Shows a recently deleted message and who sent it | `snipe`
 deathhelp | Shows the methods of death for the "deathnote" commands | `deathhelp`
 remind | Sets a reminder for a user about a task | `remind <number><abbreviated time length> <task>`
-tdadd | Adds a task to a user's "todo list" | `tdadd <task>`
-tddel | Removes a task from a user's "todo list" | `tddel <task number>`
-tdlist | List's a mentioned user's "todo list" | `tdlist @user`
+todoadd | Adds a task to a user's "todo list" | `todoadd <task>`
+tododel | Removes a task from a user's "todo list" | `tdoodel <task number>`
+todolist | Shows a user's "todo list" | `todolist`
+todoclear | Clears a user's "todo list" | `todoclear`
 esteal | Grabs and sends the file link from a custom emoji | `esteal :emoji:`
 giveaway | Starts a giveaway | `giveaway <time> <winners> <prize>`
 reroll | Rerolls the giveaway | `reroll`
