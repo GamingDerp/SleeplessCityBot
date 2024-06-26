@@ -33,11 +33,48 @@ class FunCog(commands.Cog):
 
     # Love Test Command
     @commands.hybrid_command(description="Give two users a love test")
-    async def lovetest(self, ctx, user1:discord.Member, user2:discord.Member):
-        love_rate = str(random.randrange(0, 100))
+    async def lovetest(self, ctx, user1: discord.Member, user2: discord.Member):
+        love_rate = random.randrange(0, 101)
+        if love_rate <= 25:
+            emoji = "😓"
+            footers = [
+                "Yikes!",
+                "Better luck next time..",
+                "Maybe just friends?"
+            ]
+        elif love_rate <= 50:
+            emoji = "😬"
+            footers = [
+                "Could be worse...right?",
+                "Not quite there yet!",
+                "Best to avoid each other..."
+            ]
+        elif love_rate <= 75:
+            emoji = "🤭"
+            footers = [
+                "Getting warmer!",
+                "There's potential!",
+                "You better slide in those DM's ;)"
+            ]
+        elif love_rate <= 99:
+            emoji = "😍"
+            footers = [
+                "Welcome to the Love Shack!",
+                "Almost perfect!",
+                "Love is in the air!"
+            ]
+        else:
+            emoji = "💍"
+            footers = [
+                "So when's the wedding?",
+                "Perfect match!",
+                "Meant to be!"
+            ]
+        footer = random.choice(footers)
         e = discord.Embed(color=0xc700ff)
-        e.title = "❤️ Love Test"
-        e.description = f"**{user1.mention}** and **{user2.mention}** are a **{love_rate}%** match! :flushed:"
+        e.title = "❤️ Love Test ❤️"
+        e.description = f"**{user1.mention}** and **{user2.mention}** are a **{love_rate}%** match! {emoji}"
+        e.set_footer(text=footer)
         await ctx.send(embed=e)
     
     # Cute Command
