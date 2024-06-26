@@ -14,15 +14,27 @@ class MiscCog(commands.Cog):
     # Creating table on startup   
     @commands.Cog.listener()
     async def on_ready(self):
-        await self.create_table()
+        await self.create_todo_table()
+        await self.create_remind_table()
     
-    # Creates database table on startup
-    async def create_table(self):
+    async def create_todo_table(self):
         async with aiosqlite.connect("dbs/todo.db") as db:
             await db.execute('''
                 CREATE TABLE IF NOT EXISTS todos (
                     user_id INTEGER, 
                     todo TEXT
+                )
+            ''')
+            await db.commit()
+
+    async def create_remind_table(self):
+        async with aiosqlite.connect("dbs/remind.db") as db:
+            await db.execute('DROP TABLE IF EXISTS reminders')
+            await db.execute('''
+                CREATE TABLE IF NOT EXISTS reminders (
+                    user_id INTEGER,
+                    time TEXT,
+                    task TEXT
                 )
             ''')
             await db.commit()
@@ -203,6 +215,7 @@ class MiscCog(commands.Cog):
             except:
                 return -2
             return val * time_dict[unit]
+
         converted_time = convert(time)
         if converted_time == -1:
             await ctx.send("You didn't input the time correctly!")
@@ -210,73 +223,106 @@ class MiscCog(commands.Cog):
         if converted_time == -2:
             await ctx.send("The time must be an integer!")
             return
-        
+
         # Timer Embed
         e = discord.Embed(color=0xc700ff)
-        e.description = "⏰ Started Reminder ⏰"
+        e.description = "⏰ **Started Reminder** ⏰"
         e.add_field(name="Time", value=time)
         e.add_field(name="Task", value=task)
         e.set_footer(text=f"Requested by {ctx.author}")
         e.timestamp = datetime.utcnow()
         await ctx.send(embed=e)
-        
+
+        # Save reminder to database
+        try:
+            async with aiosqlite.connect("dbs/remind.db") as db:
+                await db.execute("INSERT INTO reminders (user_id, time, task) VALUES (?, ?, ?)", (ctx.author.id, time, task))
+                await db.commit()
+        except Exception as e:
+            print(e)
+
         # End Timer Embed
         await asyncio.sleep(converted_time)
-        await ctx.send(ctx.author.mention)
         e = discord.Embed(color=0xc700ff)
-        e.description = "⏰ Time's Up ⏰"
-        e.add_field(name="Task", value=task)
-        await ctx.send(embed=e)
+        e.description = "⏰ **Time's Up** ⏰"
+        e.add_field(name="Task", value=f"> {task}")
+        await ctx.send(ctx.author.mention, embed=e)
+
+        # Remove reminder from database
+        try:
+            async with aiosqlite.connect("dbs/remind.db") as db:
+                await db.execute("DELETE FROM reminders WHERE user_id = ? AND time = ? AND task = ?", (ctx.author.id, time, task))
+                await db.commit()
+        except Exception as e:
+            print(e)
+
+    # Remind List Command
+    @commands.hybrid_command(description="List all your reminders")
+    async def remindlist(self, ctx):
+        try:
+            author_id = ctx.author.id
+            async with aiosqlite.connect("dbs/remind.db") as db:
+                cursor = await db.execute("SELECT time, task FROM reminders WHERE user_id = ?", (author_id,))
+                reminders = await cursor.fetchall()
+            if not reminders:
+                await ctx.send(f"**{ctx.author.name}** has no reminders set!", ephemeral=True)
+            else:
+                reminders_list = "\n".join([f"- ⏳ {time} **|** {task}" for time, task in reminders])
+                e = discord.Embed(color=0xc700ff)
+                e.set_author(name=f"📋 {ctx.author.name}'s Reminders 📋")
+                e.description = reminders_list
+                await ctx.send(embed=e, ephemeral=True)
+        except Exception as e:
+            print(e)
         
     # Todo Add Command
     @commands.hybrid_command(description="Add a task to your to-do list")
-    async def tdadd(self, ctx, *, text):
+    async def todoadd(self, ctx, *, task):
         author_id = ctx.author.id
         async with aiosqlite.connect("dbs/todo.db") as db:
-            await db.execute("INSERT INTO todos (user_id, todo) VALUES (?, ?)", (author_id, text))
+            await db.execute("INSERT INTO todos (user_id, todo) VALUES (?, ?)", (author_id, task))
             await db.commit()
-        await ctx.send(f"Added **{text}** to your todo list!", ephemeral=True)
+        await ctx.send(f"Added **{task}** to your todo list!", ephemeral=True)
     
-    # ToDo Del Command
+    # Todo Del Command
     @commands.hybrid_command(description="Remove a task from your to-do list")
-    async def tddel(self, ctx, todo_num: int):
+    async def tododel(self, ctx, todo_num: int):
         author_id = ctx.author.id
         async with aiosqlite.connect("dbs/todo.db") as db:
             cursor = await db.execute("SELECT rowid, todo FROM todos WHERE user_id = ?", (author_id,))
             rows = await cursor.fetchall()
             if todo_num <= 0 or todo_num > len(rows):
-                await ctx.send("Invalid todo number!")
+                await ctx.send("Invalid todo number!", ephemeral=True)
                 return
             todo_id, todo_text = rows[todo_num - 1]
             await db.execute("DELETE FROM todos WHERE rowid = ?", (todo_id,))
             await db.commit()
         await ctx.send(f"Removed **{todo_text}** from your todo list!", ephemeral=True)
     
-    # ToDo Clear Command
+    # Todo Clear Command
     @commands.hybrid_command(description="Clear all tasks from your to-do list")
-    async def tdclear(self, ctx):
+    async def todoclear(self, ctx):
         author_id = ctx.author.id
         async with aiosqlite.connect("dbs/todo.db") as db:
             await db.execute("DELETE FROM todos WHERE user_id = ?", (author_id,))
             await db.commit()
         await ctx.send("Cleared all tasks from your todo list!", ephemeral=True)
     
-    # ToDo List Command
+    # Todo List Command
     @commands.hybrid_command(description="Look at your to-do list")
-    async def tdlist(self, ctx, user: discord.User = None):
-        if user is None:
-            user = ctx.author
+    async def todolist(self, ctx):
+        author_id = ctx.author.id
         async with aiosqlite.connect("dbs/todo.db") as db:
-            cursor = await db.execute("SELECT todo FROM todos WHERE user_id = ?", (user.id,))
+            cursor = await db.execute("SELECT todo FROM todos WHERE user_id = ?", (author_id,))
             todos = await cursor.fetchall()
         if not todos:
-            await ctx.send(f"**{user.name}** has no tasks in their todo list!")
+            await ctx.send(f"**{ctx.author.name}** has no tasks in their todo list!", ephemeral=True)
         else:
-            todo_list = "\n".join([f"**{idx + 1})** {todo[0]}" for idx, todo in enumerate(todos)])
+            todo_list = "\n".join([f"> **{idx + 1})** {todo[0]}" for idx, todo in enumerate(todos)])
             e = discord.Embed(color=0xc700ff)
-            e.set_author(name=f"{user.name}'s Todo List")
-            e.description=todo_list
-        await ctx.send(embed=e, ephemeral=True)
+            e.set_author(name=f"📋 {ctx.author.name}'s Todo List 📋")
+            e.description = todo_list
+            await ctx.send(embed=e, ephemeral=True)
         
     # Emoji Steal Command
     @commands.hybrid_command(description="Get the file link to an emoji")
