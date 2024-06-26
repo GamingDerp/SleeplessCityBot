@@ -15,7 +15,6 @@ class EventsCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.processed_messages = set()
-        self.invite_cache = {}
 
     # Changes bot's Discord activity when loaded and syncs commands
     @commands.Cog.listener()
@@ -23,7 +22,6 @@ class EventsCog(commands.Cog):
         await self.bot.change_presence(activity=discord.Game(name="Helping SN Users..."))
         await self.bot.tree.sync()
         await self.create_starboard_table()
-        await self.update_invite_cache()
         
     # Creates database table if one doesn't exist
     async def create_starboard_table(self):
@@ -132,45 +130,11 @@ class EventsCog(commands.Cog):
                 await message.add_reaction('<:Troll:1141846474108436550>')
                 await self.bot.process_commands(message)
 
-    async def update_invite_cache(self):
-        try:
-            guild = self.bot.get_guild(1065445439475826830)
-            invites = await guild.invites()
-            for invite in invites:
-                self.invite_cache[invite.code] = {
-                    'inviter': invite.inviter,
-                    'uses': invite.uses,
-                    'max_uses': invite.max_uses
-                }
-        except Exception as e:
-            print(f"Error updating invite cache: {e}")
-    
     # User Joined Message Event
     @commands.Cog.listener()
     async def on_member_join(self, member):
-        await self.update_invite_cache()
         channel = self.bot.get_channel(1226687213182652416)
-        try:
-            invites = await member.guild.invites()
-            for invite in invites:
-                if invite.code not in self.invite_cache:
-                    await self.update_invite_cache()
-                    break
-                if invite.code in self.invite_cache and invite.uses > self.invite_cache[invite.code]['uses']:
-                    inviter = self.invite_cache[invite.code]['inviter']
-                    uses = invite.uses
-                    max_uses = invite.max_uses
-                    await channel.send(f"Welcome {member.mention}! To get access to the rest of the server, go to <#1226687442913067050>! <a:WooperVibe:1222370475083301015> \n <:Reply:1123773242327441468> **{member.name}** joined from **Invite:** {invite.code} | **Creator:** {inviter} | **Uses:** {uses}")
-                    break
-            else:
-                if invites:
-                    newest_invite = max(invites, key=lambda x: x.created_at)
-                    inviter = newest_invite.inviter
-                    uses = newest_invite.uses
-                    max_uses = newest_invite.max_uses
-                    await channel.send(f"Welcome {member.mention}! To get access to the rest of the server, go to <#1226687442913067050>! <a:WooperVibe:1222370475083301015> \n <:Reply:1123773242327441468> **{member.name}** joined from **Invite:** `{newest_invite.code}` | **Creator:** {inviter} | **Uses:** {uses}")
-        except Exception as e:
-            print(f"Error processing member join event: {e}")
+        await channel.send(f"Welcome {member.mention}! To get access to the rest of the server, go to <#1226687442913067050>! <a:WooperVibe:1222370475083301015>")
 
     # User Leave Message Event
     @commands.Cog.listener()
