@@ -75,7 +75,7 @@ class Dropdown(discord.ui.Select):
             discord.SelectOption(label="Fun Commands", description="Coinflip, Ask, Reverse, Say, Lovetest +1 More", emoji="🎉"),
             discord.SelectOption(label="Action Commands", description="Sniff, Bite, Bonk, Vomit, Slap +16 More", emoji="🎯"),
             discord.SelectOption(label="Misc Commands", description="Whois, Snipe, Deathhelp, Remind, Tdadd +7 More", emoji="🧮"),
-            discord.SelectOption(label="Staff Commands", description="Purge, Ban, Unban, Kick, Timeout +9 More", emoji="🔰"),
+            discord.SelectOption(label="Staff Commands", description="Purge, Ban, Unban, Kick, Timeout +11 More", emoji="🔰"),
             discord.SelectOption(label="Config Commands", description="SetPrefix, SetLog, SetStar, SetSuggest", emoji="⚙️"),
         ]
         super().__init__(min_values=1, max_values=1, options=options)
@@ -255,8 +255,8 @@ class GeneralCog(commands.Cog):
             name="✧ __Statistics__",
             value=f"> **Commands:** [66]"
 	          f"\n> **Code:** {total_lines} Lines"
-		  f"\n> **Ping:** {round(self.bot.latency * 1000)}ms"
-		  f"\n> **Users:** {true_member_count}"
+		      f"\n> **Ping:** {round(self.bot.latency * 1000)}ms"
+		      f"\n> **Users:** {true_member_count}"
         	  f"\n> **Uptime:** {days}**d** {hours}**h** {minutes}**m** {seconds}**s**",
             inline=False
         )
