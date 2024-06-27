@@ -55,7 +55,7 @@ se.set_author(name="Bot Commands", icon_url=sc_image)
 se.set_thumbnail(url=sc_image)
 se.add_field(
     name="🔰 __Staff Commands__",
-    value=f"> `Purge`, `Ban`, `Unban`, `Kick`, `Timeout`, `Warn` \n> `WarnList`, `DelWarn`, `Highlightadd`, `Highlightremove`, `Highlightclear`, `Highlightblock` \n> `Highlightunblock`, `Defaulthighlights`",
+    value=f"> `Purge`, `Ban`, `Unban`, `Kick`, `Timeout`, `Warn` \n> `WarnList`, `DelWarn`, `Highlightadd`, `Highlightremove`, `Highlightclear`, `Highlightblock` \n> `Highlightunblock`, `Defaulthighlights`, `Highlightignore`, `Highlightunignore`",
 )
 
 # Config Commands Embed
@@ -253,9 +253,9 @@ class GeneralCog(commands.Cog):
         )
         e.add_field(
             name="✧ __Statistics__",
-            value=f"> **Commands:** [64]"
+            value=f"> **Commands:** [66]"
 	          f"\n> **Code:** {total_lines} Lines"
-	          f"\n> **Ping:** {round(self.bot.latency * 1000)}ms"
+		  f"\n> **Ping:** {round(self.bot.latency * 1000)}ms"
 		  f"\n> **Users:** {true_member_count}"
         	  f"\n> **Uptime:** {days}**d** {hours}**h** {minutes}**m** {seconds}**s**",
             inline=False
