@@ -24,7 +24,6 @@ Private commands/menus will not be counted in the "Features" section.
 **Extra Features**
 - Starboard
 - Logging Events
-- Responds when pinged
 - Welcome/Leaving Messages
 - Sends a message when server gets boosted
 - Adds "Troll Face" when '69' is counted to in `#counting`
