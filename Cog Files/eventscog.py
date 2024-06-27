@@ -121,8 +121,6 @@ class EventsCog(commands.Cog):
     # Bot Mention Message Event / Counting Reaction Event
     @commands.Cog.listener()
     async def on_message(self, message):
-        if str(bot_id) in message.content:
-            await message.channel.send("I've been summoned! If you need me do `!help` <:CatWave:1123898399557693470>")
         if message.author.bot:
             return
         else:
