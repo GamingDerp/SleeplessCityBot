@@ -14,6 +14,7 @@ class HighlightCog(commands.Cog):
                 CREATE TABLE IF NOT EXISTS user_highlights (
                     user_id INTEGER PRIMARY KEY,
                     word_list TEXT,
+                    ignored_words_list TEXT,
                     ignored_channels TEXT,
                     ignored_users TEXT
                 )
@@ -23,35 +24,35 @@ class HighlightCog(commands.Cog):
     async def get_user_data(self, user_id):
         await self.create_user_table()
         async with aiosqlite.connect("dbs/highlight.db") as db:
-            async with db.execute("SELECT word_list, ignored_channels, ignored_users FROM user_highlights WHERE user_id = ?", (user_id,)) as cursor:
+            async with db.execute("SELECT word_list, ignored_words_list, ignored_channels, ignored_users FROM user_highlights WHERE user_id = ?", (user_id,)) as cursor:
                 row = await cursor.fetchone()
                 if row:
-                    return row[0], row[1], row[2]
+                    return row[0], row[1], row[2], row[3]
                 else:
-                    return "", "", ""
+                    return "", "", "", ""
 
-    async def update_user_data(self, user_id, word_list, ignored_channels, ignored_users):
+    async def update_user_data(self, user_id, word_list, ignored_words_list, ignored_channels, ignored_users):
         await self.create_user_table()
         async with aiosqlite.connect("dbs/highlight.db") as db:
             await db.execute("""
-                INSERT OR REPLACE INTO user_highlights (user_id, word_list, ignored_channels, ignored_users)
-                VALUES (?, ?, ?, ?)
-            """, (user_id, word_list, ignored_channels, ignored_users))
+                INSERT OR REPLACE INTO user_highlights (user_id, word_list, ignored_words_list, ignored_channels, ignored_users)
+                VALUES (?, ?, ?, ?, ?)
+            """, (user_id, word_list, ignored_words_list, ignored_channels, ignored_users))
             await db.commit()
-    
+
     @commands.hybrid_command(description="Add default words to your highlight list")
     async def defaulthighlights(self, ctx):
         if discord.utils.get(ctx.author.roles, name="🧸 Officer"):
             try:
                 default_words = {"nigger", "nigga", "faggot", "fag", "kys", "retard" ,"retarded"}
                 await self.create_user_table()
-                word_list, ignored_channels, ignored_users = await self.get_user_data(ctx.author.id)
+                word_list, ignored_words_list, ignored_channels, ignored_users = await self.get_user_data(ctx.author.id)
                 existing_words = set(word_list.split(',')) if word_list else set()
                 if default_words.issubset(existing_words):
                     await ctx.send("Those words are already in your list!")
                 else:
                     updated_words = existing_words.union(default_words)
-                    await self.update_user_data(ctx.author.id, ','.join(updated_words), ignored_channels, ignored_users)
+                    await self.update_user_data(ctx.author.id, ','.join(updated_words), ignored_words_list, ignored_channels, ignored_users)
                     await ctx.send("Added default words to your highlight list!")
             except Exception as e:
                 print(e)
@@ -66,11 +67,11 @@ class HighlightCog(commands.Cog):
             try:
                 word = word.lower()
                 await self.create_user_table()
-                word_list, ignored_channels, ignored_users = await self.get_user_data(ctx.author.id)
+                word_list, ignored_words_list, ignored_channels, ignored_users = await self.get_user_data(ctx.author.id)
                 words = word_list.split(',') if word_list else []
                 if word not in words:
                     words.append(word)
-                    await self.update_user_data(ctx.author.id, ','.join(words), ignored_channels, ignored_users)
+                    await self.update_user_data(ctx.author.id, ','.join(words), ignored_words_list, ignored_channels, ignored_users)
                     await ctx.send(f"Added **{word}** to your highlight list!")
                 else:
                     await ctx.send(f"`**{word}**` is already in your highlight list!")
@@ -87,11 +88,11 @@ class HighlightCog(commands.Cog):
             try:
                 word = word.lower()
                 await self.create_user_table()
-                word_list, ignored_channels, ignored_users = await self.get_user_data(ctx.author.id)
+                word_list, ignored_words_list, ignored_channels, ignored_users = await self.get_user_data(ctx.author.id)
                 words = word_list.split(',') if word_list else []
                 if word in words:
                     words.remove(word)
-                    await self.update_user_data(ctx.author.id, ','.join(words), ignored_channels, ignored_users)
+                    await self.update_user_data(ctx.author.id, ','.join(words), ignored_words_list, ignored_channels, ignored_users)
                     await ctx.send(f"Removed **{word}** from your highlight list!")
                 else:
                     await ctx.send(f"`**{word}**` is not in your highlight list!")
@@ -107,9 +108,51 @@ class HighlightCog(commands.Cog):
         if discord.utils.get(ctx.author.roles, name="🧸 Officer"):
             try:
                 await self.create_user_table()
-                _, ignored_channels, ignored_users = await self.get_user_data(ctx.author.id)
-                await self.update_user_data(ctx.author.id, "", ignored_channels, ignored_users)
+                _, ignored_words_list, ignored_channels, ignored_users = await self.get_user_data(ctx.author.id)
+                await self.update_user_data(ctx.author.id, "", ignored_words_list, ignored_channels, ignored_users)
                 await ctx.send("Cleared your highlight list.")
+            except Exception as e:
+                print(e)
+        else:
+            e = discord.Embed(color=0xc700ff)
+            e.description = "🚨 That is a **Staff** command! You don't have the required perms! 🚨"
+            await ctx.send(embed=e)
+
+    @commands.hybrid_command(description="Ignore a word in your highlight list")
+    async def highlightignore(self, ctx, *, word: str = None):
+        if discord.utils.get(ctx.author.roles, name="🧸 Officer"):
+            try:
+                word = word.lower()
+                await self.create_user_table()
+                word_list, ignored_words_list, ignored_channels, ignored_users = await self.get_user_data(ctx.author.id)
+                ignored_words = ignored_words_list.split(',') if ignored_words_list else []
+                if word not in ignored_words:
+                    ignored_words.append(word)
+                    await self.update_user_data(ctx.author.id, word_list, ','.join(ignored_words), ignored_channels, ignored_users)
+                    await ctx.send(f"Added **{word}** to your ignore list!")
+                else:
+                    await ctx.send(f"`**{word}**` is already ignored in your ignore list!")
+            except Exception as e:
+                print(e)
+        else:
+            e = discord.Embed(color=0xc700ff)
+            e.description = "🚨 That is a **Staff** command! You don't have the required perms! 🚨"
+            await ctx.send(embed=e)
+
+    @commands.hybrid_command(description="Unignore a word in your highlight list")
+    async def highlightunignore(self, ctx, *, word: str = None):
+        if discord.utils.get(ctx.author.roles, name="🧸 Officer"):
+            try:
+                word = word.lower()
+                await self.create_user_table()
+                word_list, ignored_words_list, ignored_channels, ignored_users = await self.get_user_data(ctx.author.id)
+                ignored_words = ignored_words_list.split(',') if ignored_words_list else []
+                if word in ignored_words:
+                    ignored_words.remove(word)
+                    await self.update_user_data(ctx.author.id, word_list, ','.join(ignored_words), ignored_channels, ignored_users)
+                    await ctx.send(f"Removed **{word}** from your ignore list!")
+                else:
+                    await ctx.send(f"`**{word}**` is not ignored in your highlight list!")
             except Exception as e:
                 print(e)
         else:
@@ -122,7 +165,7 @@ class HighlightCog(commands.Cog):
         if discord.utils.get(ctx.author.roles, name="🧸 Officer"):
             try:
                 await self.create_user_table()
-                word_list, ignored_channels, ignored_users = await self.get_user_data(ctx.author.id)
+                word_list, ignored_words_list, ignored_channels, ignored_users = await self.get_user_data(ctx.author.id)
                 id_match = re.search(r'\d+', item)
                 if id_match:
                     item_id = int(id_match.group(0))
@@ -132,7 +175,7 @@ class HighlightCog(commands.Cog):
                         ignored_channels_list = ignored_channels.split(',') if ignored_channels else []
                         if str(item_id) not in ignored_channels_list:
                             ignored_channels_list.append(str(item_id))
-                            await self.update_user_data(ctx.author.id, word_list, ','.join(ignored_channels_list), ignored_users)
+                            await self.update_user_data(ctx.author.id, word_list, ignored_words_list, ','.join(ignored_channels_list), ignored_users)
                             await ctx.send(f"Blocked channel <#{item_id}>!")
                         else:
                             await ctx.send(f"Channel <#{item_id}> is already blocked!")
@@ -140,7 +183,7 @@ class HighlightCog(commands.Cog):
                         ignored_users_list = ignored_users.split(',') if ignored_users else []
                         if str(item_id) not in ignored_users_list:
                             ignored_users_list.append(str(item_id))
-                            await self.update_user_data(ctx.author.id, word_list, ignored_channels, ','.join(ignored_users_list))
+                            await self.update_user_data(ctx.author.id, word_list, ignored_words_list, ignored_channels, ','.join(ignored_users_list))
                             await ctx.send(f"Blocked user <@{item_id}>!")
                         else:
                             await ctx.send(f"User <@{item_id}> is already blocked!")
@@ -160,7 +203,7 @@ class HighlightCog(commands.Cog):
         if discord.utils.get(ctx.author.roles, name="🧸 Officer"):
             try:
                 await self.create_user_table()
-                word_list, ignored_channels, ignored_users = await self.get_user_data(ctx.author.id)
+                word_list, ignored_words_list, ignored_channels, ignored_users = await self.get_user_data(ctx.author.id)
                 id_match = re.search(r'\d+', item)
                 if id_match:
                     item_id = int(id_match.group(0))
@@ -170,7 +213,7 @@ class HighlightCog(commands.Cog):
                         ignored_channels_list = ignored_channels.split(',') if ignored_channels else []
                         if str(item_id) in ignored_channels_list:
                             ignored_channels_list.remove(str(item_id))
-                            await self.update_user_data(ctx.author.id, word_list, ','.join(ignored_channels_list), ignored_users)
+                            await self.update_user_data(ctx.author.id, word_list, ignored_words_list, ','.join(ignored_channels_list), ignored_users)
                             await ctx.send(f"Unblocked channel <#{item_id}>!")
                         else:
                             await ctx.send(f"Channel `<#{item_id}>` is not blocked!")
@@ -178,7 +221,7 @@ class HighlightCog(commands.Cog):
                         ignored_users_list = ignored_users.split(',') if ignored_users else []
                         if str(item_id) in ignored_users_list:
                             ignored_users_list.remove(str(item_id))
-                            await self.update_user_data(ctx.author.id, word_list, ignored_channels, ','.join(ignored_users_list))
+                            await self.update_user_data(ctx.author.id, word_list, ignored_words_list, ignored_channels, ','.join(ignored_users_list))
                             await ctx.send(f"Unblocked user <@{item_id}>!")
                         else:
                             await ctx.send(f"User <@{item_id}> is not blocked!")
@@ -198,14 +241,16 @@ class HighlightCog(commands.Cog):
         if discord.utils.get(ctx.author.roles, name="🧸 Officer"):
             try:
                 await self.create_user_table()
-                word_list, ignored_channels, ignored_users = await self.get_user_data(ctx.author.id)
+                word_list, ignored_words_list, ignored_channels, ignored_users = await self.get_user_data(ctx.author.id)
                 words = word_list.split(',') if word_list else []
+                ignored_words = ignored_words_list.split(',') if ignored_words_list else []
                 channels = ignored_channels.split(',') if ignored_channels else []
                 users = ignored_users.split(',') if ignored_users else []
                 user = self.bot.get_user(ctx.author.id)
                 username = user.name if user else "Unknown User"
                 e = discord.Embed(title=f"🔍 {username}'s Highlight List 🔍", color=0xc700ff)
                 e.add_field(name="📑 Words", value='\n'.join([f"> - {word}" for word in words]) if words else "None", inline=False)
+                e.add_field(name="📑 Ignored Words", value='\n'.join([f"> - {word}" for word in ignored_words]) if ignored_words else "None", inline=False)
                 e.add_field(name="📰 Blocked Channels", value='\n'.join([f"> - <#{channel}>" for channel in channels]) if channels else "None", inline=False)
                 e.add_field(name="👤 Blocked Users", value='\n'.join([f"> - <@{user}>" for user in users]) if users else "None", inline=False)
                 await ctx.send(embed=e)
@@ -226,18 +271,21 @@ class HighlightCog(commands.Cog):
                     user_ids = await cursor.fetchall()
             for user_id in user_ids:
                 user_id = user_id[0]
-                word_list, ignored_channels, ignored_users = await self.get_user_data(user_id)
+                word_list, ignored_words_list, ignored_channels, ignored_users = await self.get_user_data(user_id)
                 words = word_list.split(',') if word_list else []
+                ignored_words = ignored_words_list.split(',') if ignored_words_list else []
                 ignored_channel_ids = [int(cid) for cid in ignored_channels.split(',')] if ignored_channels else []
                 ignored_user_ids = [int(uid) for uid in ignored_users.split(',')] if ignored_users else []
                 if message.channel.id in ignored_channel_ids or message.author.id in ignored_user_ids:
                     continue
                 if message.author.id == user_id:
                     continue
+                user = self.bot.get_user(user_id)
+                if f"<@{user_id}>" in message.content:
+                    continue
                 content = message.clean_content.lower()
                 for word in words:
-                    if word in content:
-                        user = self.bot.get_user(user_id)
+                    if word in content and word not in ignored_words:
                         if user:
                             e = discord.Embed(
                                 title=f"🚨 Word Mentioned 🚨",
