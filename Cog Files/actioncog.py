@@ -82,7 +82,7 @@ class ActionCog(commands.Cog):
     # Stalk Command
     @commands.hybrid_command(description="Stalk another user")
     async def stalk(self, ctx, user:discord.Member):
-        chance_response = ["they got caught", "they didn't get caught"]
+        chance_response = ["**they got caught**", "**they didn't get caught**"]
         choice = random.choice(chance_response)
         e = discord.Embed(color=0xc700ff)
         e.description = f"{ctx.author.mention} **stalks** {user.mention} **and** {choice}!"
@@ -111,8 +111,8 @@ class ActionCog(commands.Cog):
     # Strangle Command
     @commands.hybrid_command(description="Strangle another user")
     async def strangle(self, ctx, user:discord.Member):
-        strangle_response = ["they crush their windpipes, killing them! RIP ☠️", f"causes them to faint!", f"they're hands slip, {user.mention} gets away!", f"they grab at {ctx.author.mention}, strangling them back!"]
-        strangle_owner_response = ["it kills them! RIP ☠️", f"causes {user.mention} to faint!"]
+        strangle_response = ["**they crush their windpipes**, **killing them! RIP** ☠️", f"**causes them to faint!**", f"**they're hands slip**, {user.mention} **gets away!**", f"**they grab at** {ctx.author.mention}, **strangling them back!**"]
+        strangle_owner_response = ["**it kills them! RIP** ☠️", f"**causes** {user.mention} **to faint!**"]
         e = discord.Embed(color=0xc700ff)
         if ctx.message.author.id == owner_id:
             e.description = f"{ctx.author.mention} **strangles** {user.mention} **and** {random.choice(strangle_owner_response)}"
@@ -126,8 +126,8 @@ class ActionCog(commands.Cog):
     # Stab Command
     @commands.hybrid_command(description="Stab another user")
     async def stab(self, ctx, user:discord.Member):
-        stab_response = ["it kills them! RIP ☠️", "they bleed out! RIP ☠️","they missed!", f"due to their momentum, the knife comes back and stabs {ctx.author.mention}!"]
-        stab_owner_response = ["it kills them! RIP ☠️", f"{user.mention} bleeds out! RIP ☠️"]
+        stab_response = ["**it kills them! RIP** ☠️", "**they bleed out! RIP** ☠️","**they missed!**", f"**due to their momentum, the knife comes back and stabs** {ctx.author.mention}!"]
+        stab_owner_response = ["**it kills them! RIP** ☠️", f"{user.mention} **bleeds out! RIP** ☠️"]
         e = discord.Embed(color=0xc700ff)
         if ctx.message.author.id == owner_id:
             e.description = f"{ctx.author.mention} **stabs** {user.mention} **and** {random.choice(stab_owner_response)}"
@@ -141,8 +141,8 @@ class ActionCog(commands.Cog):
     # Shoot Command
     @commands.hybrid_command(description="Shoot another user")
     async def shoot(self, ctx, user:discord.Member):
-        shoot_response = ["it kills them! RIP ☠️", "it goes straight through their skull! RIP ☠️","it does nothing! They have a body of steel!", f"it ricochets off the wall and kills {ctx.author.mention}! RIP ☠️", "the gun jams!"]
-        shoot_owner_response = ["it kills them! RIP ☠️", "it goes straight through their skull! RIP ☠️"]
+        shoot_response = ["**it kills them! RIP** ☠️", "**it goes straight through their skull! RIP** ☠️","**it does nothing! They have a body of steel!**", f"**it ricochets off the wall and kills** {ctx.author.mention}**! RIP** ☠️", "**the gun jams!**"]
+        shoot_owner_response = ["**it kills them! RIP** ☠️", "**it goes straight through their skull! RIP** ☠️"]
         e = discord.Embed(color=0xc700ff)
         if ctx.message.author.id == owner_id:
             e.description = f"{ctx.author.mention} **shoots at** {user.mention} **and** {random.choice(shoot_owner_response)}"
@@ -157,21 +157,21 @@ class ActionCog(commands.Cog):
     @commands.hybrid_command(description="Choose how another user dies")
     async def deathnote(self, ctx, user:discord.Member, *, arg):
         deaths = {
-            "cliff": ("fell off a cliff and died!", "https://media.discordapp.net/attachments/807071768258805764/1116815474852896890/FallOffCliffGif.gif"),
-            "train": ("got ran over by a train and died!", "https://media.discordapp.net/attachments/807071768258805764/1116814851403165726/HitByTrainGif.gif"),
-            "drown": ("drowned in a 2-inch pool and died!", "https://media.discordapp.net/attachments/807071768258805764/1116822537272316004/DrowningGif.gif"),
-            "crush": ("was crushed by a boulder and died!", "https://media.discordapp.net/attachments/807071768258805764/1116944054052204584/CrushedByBoulderGif.gif"),
-            "choke": ("choked on a hot dog and died!", "https://media.discordapp.net/attachments/807071768258805764/1116944567107854336/ChokingGif.gif"),
-            "car crash": ("got into a car crash and died!", "https://media.discordapp.net/attachments/807071768258805764/1116944863032787105/CarCrashGif.gif"),
-            "murder": ("was murdered!", "https://media.discordapp.net/attachments/807071768258805764/1116945578954334228/MurderGif.gif"),
-            "shock": ("was shocked by 10,000 volts of electricity and died!", "https://media.discordapp.net/attachments/807071768258805764/1117941430439120936/ElectricShockGif.gif"),
-            "fire": ("got caught in a fire and died!", "https://media.discordapp.net/attachments/807071768258805764/1116946041422495844/FireGif.gif"),
-            "explosion": ("swallowed TNT and exploded!", "https://media.discordapp.net/attachments/807071768258805764/1116946286361456750/ExplodingGif.gif"),
-            "lightning": ("got struck by lightning and died!", "https://media.discordapp.net/attachments/807071768258805764/1116946562329882725/LightningGif.gif"),
-            "volcano": ("fell into a volcano and died!", "https://media.discordapp.net/attachments/807071768258805764/1116946885542936576/VolcanoGif.gif"),
-            "tornado": ("got sucked into a tornado and died!", "https://media.discordapp.net/attachments/807071768258805764/1116947245598781576/TornadoGif.gif"),
-            "earthquake": ("fell into a crack made by an earthquake and died!", "https://media.discordapp.net/attachments/807071768258805764/1116947453229404301/EarthquakeGif.gif"),
-            "hurricane": ("got washed away in a hurricane and died!", "https://media.discordapp.net/attachments/807071768258805764/1116947898169557002/HurricaneGif.gif"),
+            "cliff": ("**fell off a cliff and died!**", "https://media.discordapp.net/attachments/807071768258805764/1116815474852896890/FallOffCliffGif.gif"),
+            "train": ("**got ran over by a train and died!**", "https://media.discordapp.net/attachments/807071768258805764/1116814851403165726/HitByTrainGif.gif"),
+            "drown": ("**drowned in a 2-inch pool and died!**", "https://media.discordapp.net/attachments/807071768258805764/1116822537272316004/DrowningGif.gif"),
+            "crush": ("**was crushed by a boulder and died!**", "https://media.discordapp.net/attachments/807071768258805764/1116944054052204584/CrushedByBoulderGif.gif"),
+            "choke": ("**choked on a hot dog and died!**", "https://media.discordapp.net/attachments/807071768258805764/1116944567107854336/ChokingGif.gif"),
+            "car crash": ("**got into a car crash and died!**", "https://media.discordapp.net/attachments/807071768258805764/1116944863032787105/CarCrashGif.gif"),
+            "murder": ("**was murdered!**", "https://media.discordapp.net/attachments/807071768258805764/1116945578954334228/MurderGif.gif"),
+            "shock": ("**was shocked by 10,000 volts of electricity and died!**", "https://media.discordapp.net/attachments/807071768258805764/1117941430439120936/ElectricShockGif.gif"),
+            "fire": ("**got caught in a fire and died!**", "https://media.discordapp.net/attachments/807071768258805764/1116946041422495844/FireGif.gif"),
+            "explosion": ("**swallowed TNT and exploded!**", "https://media.discordapp.net/attachments/807071768258805764/1116946286361456750/ExplodingGif.gif"),
+            "lightning": ("**got struck by lightning and died!**", "https://media.discordapp.net/attachments/807071768258805764/1116946562329882725/LightningGif.gif"),
+            "volcano": ("**fell into a volcano and died!**", "https://media.discordapp.net/attachments/807071768258805764/1116946885542936576/VolcanoGif.gif"),
+            "tornado": ("**got sucked into a tornado and died!**", "https://media.discordapp.net/attachments/807071768258805764/1116947245598781576/TornadoGif.gif"),
+            "earthquake": ("**fell into a crack made by an earthquake and died!**", "https://media.discordapp.net/attachments/807071768258805764/1116947453229404301/EarthquakeGif.gif"),
+            "hurricane": ("**got washed away in a hurricane and died!**", "https://media.discordapp.net/attachments/807071768258805764/1116947898169557002/HurricaneGif.gif"),
         }
         arg = arg.lower()
         if arg in deaths:
